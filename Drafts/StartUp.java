@@ -58,9 +58,12 @@ public class StartUp extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!dropDown.getSelectedItem().equals(" ")){
-            System.out.println(dropDown.getSelectedItem());}
+        if (!(dropDown.getSelectedItem()).equals(" ")){
+            int numPlayers = Integer.parseInt((String) dropDown.getSelectedItem());
+            ChoosePieces choose = new ChoosePieces(numPlayers);
+            setVisible(false);}
     }
+
     public static void main(String[] argv){
         StartUp start = new StartUp();
     }

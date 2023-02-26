@@ -25,21 +25,34 @@ public class ChoosePieces extends JFrame {
             selection.setLayout(new GridLayout(2,2));}
 
         for (int i=0; i<numPlayers; i++) {
-            JPanel player = new JPanel(new GridLayout(3, 2));
-            player.setBorder(BorderFactory.createLineBorder(Color.white));
+            JPanel background = new JPanel(new BorderLayout());
+            JPanel choices = new JPanel(new GridLayout(3, 2));
+            JPanel player = new JPanel(new FlowLayout());
+            JLabel playerNumber = new JLabel("Player ".concat(Integer.toString(i+1)));
+
+            playerNumber.setFont(new Font("Calibre",Font.BOLD,25));
+            playerNumber.setOpaque(true);
+            playerNumber.setBackground(Color.white);
+            playerNumber.setForeground(Color.red);
+            playerNumber.setBorder(BorderFactory.createLineBorder(Color.white));
+            player.add(playerNumber);
+
+            choices.setBorder(BorderFactory.createLineBorder(Color.white));
             JLabel color = new JLabel("Color: ");
             JLabel shape = new JLabel("Shape: ");
             JLabel name = new JLabel("Name: ");
             formatLabel(color);
-            player.add(color);
+            choices.add(color);
             formatLabel(shape);
-            player.add(shape);
+            choices.add(shape);
             formatLabel(name);
-            player.add(name);
-            selection.add(player);}
-
+            choices.add(name);
+            background.add(choices, BorderLayout.CENTER);
+            background.add(player, BorderLayout.NORTH);
+            selection.add(background);}
         getContentPane().add(header, BorderLayout.NORTH);
         getContentPane().add(selection, BorderLayout.CENTER);
+
 
         setResizable(false);
         setVisible(true);

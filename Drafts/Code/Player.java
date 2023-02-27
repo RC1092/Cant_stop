@@ -1,7 +1,9 @@
 public class Player {
     private String name, color, shape;
-    public Player(){
-
+    public Player(String shape, String color, String name){
+        this.shape = shape;
+        this.name = name;
+        this.color = color;
     }
     public void setName(String name){
         this.name = name;

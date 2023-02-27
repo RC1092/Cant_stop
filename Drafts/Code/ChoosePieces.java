@@ -1,15 +1,25 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class ChoosePieces extends JFrame {
+public class ChoosePieces extends JFrame implements ActionListener {
     private int numPlayers;
     private JPanel selection;
-    private String[] shapes, colors;
+    private final String[] shapes, colors;
+    private ArrayList<JComboBox<String>> shapeLst, colorLst;
+    private ArrayList<JTextField> nameLst;
+    private Game game;
     public ChoosePieces(int numPlayers){
+        game = new Game();
         this.numPlayers = numPlayers;
         this.setLayout(new BorderLayout());
         this.shapes = new String[]{" ","Circle","Square","Triangle","Star"};
         this.colors = new String[]{" ", "Blue","Red","Yellow","Green","Orange","Purple"};
+        shapeLst = new ArrayList<>();
+        colorLst = new ArrayList<>();
+        nameLst = new ArrayList<>();
         JPanel header = new JPanel(new FlowLayout());
         header.setBackground(Color.red);
         JButton startGame = new JButton("Start Game");
@@ -18,6 +28,7 @@ public class ChoosePieces extends JFrame {
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
         header.add(startGame);
+        startGame.addActionListener(this);
 
         selection = new JPanel();
         if (numPlayers == 2) {
@@ -78,12 +89,15 @@ public class ChoosePieces extends JFrame {
                 JComboBox<String> chooseShape = new JComboBox<>(shapes);
                 chooseShape.setFont(new Font("Calibre",Font.BOLD,20));
                 chooseShape.setBackground(Color.white);
+                shapeLst.add(chooseShape);
                 JComboBox<String> chooseColor = new JComboBox<>(colors);
                 chooseColor.setFont(new Font("Calibre",Font.BOLD,20));
                 chooseColor.setBackground(Color.white);
+                colorLst.add(chooseColor);
                 JTextField chooseName = new JTextField("Type your name here");
                 chooseName.setFont(new Font("Calibre",Font.PLAIN,20));
                 chooseName.setBackground(Color.white);
+                nameLst.add(chooseName);
 
                 JPanel panel = new JPanel(new FlowLayout());
                 panel.setBackground(Color.red);
@@ -104,6 +118,15 @@ public class ChoosePieces extends JFrame {
                 panel3.add(chooseName);
             }
         }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        for (int i=0; i<numPlayers; i++){
+            game.addPlayer(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
+            , nameLst.get(i).getText()));
+
+        }
     }
+}
 
 

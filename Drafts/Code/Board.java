@@ -4,14 +4,17 @@ import java.awt.*;
 public class Board extends JFrame{
     private Tile[][] board;
     public Board(){
-        this.setSize(new Dimension(600,600));
+        this.setSize(new Dimension(900,900));
+        getContentPane().setLayout(new BorderLayout());
         buildBoard();
-        getContentPane().setLayout(new GridLayout(13,13));
+        buildSide();
         setResizable(false);
         setVisible(true);
 
     }
     private void buildBoard(){
+        JPanel boardPanel = new JPanel(new GridLayout(13,13));
+        getContentPane().add(boardPanel, BorderLayout.CENTER);
         board = new Tile[13][13];
         for (int x=0; x<13; x++) {
             for (int y = 0; y < 13; y++) {
@@ -22,7 +25,7 @@ public class Board extends JFrame{
                 }
                 else {board[x][y] = new Tile(x, y, false);}
                 setLabels(x,y);
-                getContentPane().add(board[x][y]);
+                boardPanel.add(board[x][y]);
             }
         }
 
@@ -71,5 +74,17 @@ public class Board extends JFrame{
         else if ((y==4 || y==8)&& (x<2 || x>10)){return false;}
         else if ((y==5 || y==7)&& (x<1 || x>11)){return false;}
         else {return true;}
+    }
+    private void buildSide(){
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        buttonPanel.setBackground(Color.white);
+
+        JButton dice = new JButton("Click to simulate winner");
+        dice.setFont(new Font("Calibre",Font.BOLD,20));
+        dice.setOpaque(true);
+        dice.setBackground(Color.white);
+        dice.setForeground(Color.red);
+        buttonPanel.add(dice);
+        getContentPane().add(buttonPanel, BorderLayout.EAST);
     }
 }

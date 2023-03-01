@@ -4,7 +4,7 @@ import java.awt.*;
 public class Board extends JFrame{
     private Tile[][] board;
     public Board(){
-        this.setSize(new Dimension(900,900));
+        this.setSize(new Dimension(1000,900));
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
         buildSide();

@@ -18,7 +18,7 @@ public class ChoosePieces extends JFrame implements ActionListener {
         this.numPlayers = numPlayers;
         this.setLayout(new BorderLayout());
         this.shapes = new String[]{" ","Circle","Square","Triangle","Star"};
-        this.colors = new String[]{" ", "Blue","Red","Yellow","Green","Orange","Purple"};
+        this.colors = new String[]{" ", "Blue","Yellow","Green","Pink","Orange","Purple"};
         shapeLst = new ArrayList<>();
         colorLst = new ArrayList<>();
         nameLst = new ArrayList<>();

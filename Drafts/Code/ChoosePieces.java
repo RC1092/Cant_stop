@@ -12,9 +12,9 @@ public class ChoosePieces extends JFrame implements ActionListener {
     private final String[] shapes, colors;
     private ArrayList<JComboBox<String>> shapeLst, colorLst;
     private ArrayList<JTextField> nameLst;
-    private Game game;
+    private ArrayList<Player> playerLst;
+
     public ChoosePieces(int numPlayers){
-        game = new Game();
         this.numPlayers = numPlayers;
         this.setLayout(new BorderLayout());
         this.shapes = new String[]{" ","Circle","Square","Triangle","Star"};
@@ -22,6 +22,7 @@ public class ChoosePieces extends JFrame implements ActionListener {
         shapeLst = new ArrayList<>();
         colorLst = new ArrayList<>();
         nameLst = new ArrayList<>();
+        playerLst = new ArrayList<>();
         JPanel header = new JPanel(new FlowLayout());
         header.setBackground(Color.red);
         JButton startGame = new JButton("Start Game");
@@ -124,21 +125,35 @@ public class ChoosePieces extends JFrame implements ActionListener {
         Set<String> setOfShapes = new HashSet<>();
         Set<String> setOfColors = new HashSet<>();
         Set<String> setOfNames = new HashSet<>();
-        for (int i=0; i<shapeLst.size(); i++){
-            setOfShapes.add((String) shapeLst.get(i).getSelectedItem());}
-        for (int i=0; i<colorLst.size(); i++){
-            setOfColors.add((String) colorLst.get(i).getSelectedItem());}
-        for (int i=0; i<nameLst.size(); i++){
-            setOfShapes.add(nameLst.get(i).getText());}
+        for (JComboBox<String> shape : shapeLst) {
+            setOfShapes.add((String) shape.getSelectedItem());}
+        for (JComboBox<String> color : colorLst) {
+            setOfColors.add((String) color.getSelectedItem());}
+        for (JTextField name : nameLst) {
+            setOfNames.add(name.getText());}
+        return setOfShapes.size() == shapeLst.size() && setOfColors.size() == colorLst.size() && setOfNames.size() == nameLst.size();
+    }
+    private boolean noBlanks(){
+        for (JComboBox<String> shape : shapeLst){
+            if (((String) shape.getSelectedItem()).equals(" ")){
+                return false;}}
+        for (JComboBox<String> color : colorLst) {
+            if (((String) color.getSelectedItem()).equals(" ")){
+                return false;}}
+        for (JTextField name : nameLst){
+            if (name.getText().equals("Type your name here")){
+                return false;}}
         return true;
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!checkDuplicates()){
+        if (checkDuplicates() && noBlanks()){
+            System.out.println("yay");
             for (int i=0; i<numPlayers; i++){
-                game.addPlayer(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
-                , nameLst.get(i).getText()));}
-            game.printInfo();}
+                playerLst.add(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
+                , nameLst.get(i).getText()));}}
+            Game game = new Game(playerLst);
+
 
     }
 }

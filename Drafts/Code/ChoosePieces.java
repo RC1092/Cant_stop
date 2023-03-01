@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ChoosePieces extends JFrame implements ActionListener {
     private int numPlayers;
@@ -118,14 +120,26 @@ public class ChoosePieces extends JFrame implements ActionListener {
                 panel3.add(chooseName);
             }
         }
-
+    private boolean checkDuplicates(){
+        Set<String> setOfShapes = new HashSet<>();
+        Set<String> setOfColors = new HashSet<>();
+        Set<String> setOfNames = new HashSet<>();
+        for (int i=0; i<shapeLst.size(); i++){
+            setOfShapes.add((String) shapeLst.get(i).getSelectedItem());}
+        for (int i=0; i<colorLst.size(); i++){
+            setOfColors.add((String) colorLst.get(i).getSelectedItem());}
+        for (int i=0; i<nameLst.size(); i++){
+            setOfShapes.add(nameLst.get(i).getText());}
+        return true;
+    }
     @Override
     public void actionPerformed(ActionEvent e) {
-        for (int i=0; i<numPlayers; i++){
-            game.addPlayer(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
-            , nameLst.get(i).getText()));
+        if (!checkDuplicates()){
+            for (int i=0; i<numPlayers; i++){
+                game.addPlayer(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
+                , nameLst.get(i).getText()));}
+            game.printInfo();}
 
-        }
     }
 }
 

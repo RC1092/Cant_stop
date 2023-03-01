@@ -8,4 +8,7 @@ public class Game {
     public void addPlayer(Player player){
         players.add(player);
     }
+    public void printInfo(){
+        System.out.println(players);
+    }
 }

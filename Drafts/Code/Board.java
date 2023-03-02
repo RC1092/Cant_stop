@@ -20,7 +20,7 @@ public class Board extends JFrame{
             for (int y = 0; y < 13; y++) {
                 if (checkTile(x,y)){
                     board[x][y] = new Tile(x, y, true);
-                    board[x][y].setFont(new Font("Calibre", Font.BOLD,16));
+                    board[x][y].setFont(new Font("Calibre", Font.BOLD,20));
                     board[x][y].setForeground(Color.red);
                 }
                 else {board[x][y] = new Tile(x, y, false);}

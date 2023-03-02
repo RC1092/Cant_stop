@@ -153,6 +153,7 @@ public class ChoosePieces extends JFrame implements ActionListener {
                 playerLst.add(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
                 , nameLst.get(i).getText()));}}
             Game game = new Game(playerLst);
+        setVisible(false);
 
 
     }

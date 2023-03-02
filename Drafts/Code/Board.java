@@ -1,9 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Board extends JFrame{
     private Tile[][] board;
-    public Board(){
+    private ArrayList<Player> players;
+    public Board(ArrayList<Player> players){
+        this.players = players;
         this.setSize(new Dimension(1000,900));
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
@@ -76,15 +79,54 @@ public class Board extends JFrame{
         else {return true;}
     }
     private void buildSide(){
-        JPanel buttonPanel = new JPanel(new FlowLayout());
-        buttonPanel.setBackground(Color.white);
+        JPanel buttonPanel = new JPanel(new GridLayout(3,1));
+        JPanel otherPanel = new JPanel(new FlowLayout());
+        JPanel gamePanel = new JPanel(new FlowLayout());
+        JPanel infoPanel = new JPanel(new GridLayout(players.size()+1,3));
+        gamePanel.setBackground(Color.red);
+        otherPanel.setBackground(Color.red);
+        infoPanel.setBackground(Color.red);
 
-        JButton dice = new JButton("Click to simulate winner");
+        JButton sim = new JButton("Click here to simulate a winner");
+        sim.setFont(new Font("Calibre",Font.BOLD,20));
+        sim.setOpaque(true);
+        sim.setBackground(Color.white);
+        sim.setForeground(Color.red);
+        otherPanel.add(sim);
+
+        JButton dice = new JButton("Roll Dice");
         dice.setFont(new Font("Calibre",Font.BOLD,20));
         dice.setOpaque(true);
         dice.setBackground(Color.white);
         dice.setForeground(Color.red);
-        buttonPanel.add(dice);
+        gamePanel.add(dice);
+
+        JLabel playersNames = new JLabel("Players");
+        formatLabel(playersNames);
+        infoPanel.add(playersNames);
+        JLabel scores = new JLabel("Scores");
+        formatLabel(scores);
+        infoPanel.add(scores);
+
+        for (Player player : players){
+            JLabel playerName = new JLabel(player.getName());
+            formatLabel(playerName);
+            infoPanel.add(playerName);
+            JLabel playerScore = new JLabel(Integer.toString(player.getScore()));
+            formatLabel(playerScore);
+            infoPanel.add(playerScore);
+        }
+
+        buttonPanel.add(otherPanel);
+        buttonPanel.add(gamePanel);
+        buttonPanel.add(infoPanel);
         getContentPane().add(buttonPanel, BorderLayout.EAST);
+    }
+    private void formatLabel(JLabel label){
+        label.setFont(new Font("Calibre",Font.BOLD,18));
+        label.setBorder(BorderFactory.createLineBorder(Color.white));
+        label.setOpaque(true);
+        label.setBackground(Color.red);
+        label.setForeground(Color.white);
     }
 }

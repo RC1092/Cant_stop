@@ -135,10 +135,10 @@ public class ChoosePieces extends JFrame implements ActionListener {
     }
     private boolean noBlanks(){
         for (JComboBox<String> shape : shapeLst){
-            if (((String) shape.getSelectedItem()).equals(" ")){
+            if (shape.getSelectedItem().equals(" ")){
                 return false;}}
         for (JComboBox<String> color : colorLst) {
-            if (((String) color.getSelectedItem()).equals(" ")){
+            if (color.getSelectedItem().equals(" ")){
                 return false;}}
         for (JTextField name : nameLst){
             if (name.getText().equals("Type your name here")){

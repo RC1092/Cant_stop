@@ -1,19 +1,30 @@
+import java.util.ArrayList;
+
 public class Player {
     private String name, color, shape;
+    private ArrayList<Integer> columnsCaptured;
     public Player(String shape, String color, String name){
         this.shape = shape;
         this.name = name;
         this.color = color;
+        columnsCaptured = new ArrayList<>();
     }
-    public void setName(String name){
-        this.name = name;
+    public int getScore(){
+        return columnsCaptured.size();
+    }
+    public void captureColumn(int column){
+        columnsCaptured.add(column);
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public String getName() {
+        return name;
     }
 
-    public void setShape(String shape) {
-        this.shape = shape;
+    public String getColor() {
+        return color;
+    }
+
+    public String getShape() {
+        return shape;
     }
 }

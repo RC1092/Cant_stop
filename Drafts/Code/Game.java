@@ -5,7 +5,7 @@ public class Game {
     private Board board;
     public Game(ArrayList<Player> players){
         this.players = players;
-        board = new Board();
+        board = new Board(players);
     }
     public void addPlayer(Player player){
         players.add(player);

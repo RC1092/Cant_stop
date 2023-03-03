@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 
 public class Board extends JFrame{
@@ -92,6 +93,7 @@ public class Board extends JFrame{
         sim.setOpaque(true);
         sim.setBackground(Color.white);
         sim.setForeground(Color.red);
+        sim.addActionListener((ActionEvent e) -> {displayWinner();});
         otherPanel.add(sim);
 
         JButton dice = new JButton("Roll Dice");
@@ -128,5 +130,9 @@ public class Board extends JFrame{
         label.setOpaque(true);
         label.setBackground(Color.red);
         label.setForeground(Color.white);
+    }
+    private void displayWinner(){
+        Player winner = players.get((int) Math.random()*players.size());
+        winningDisplay winningmessage = new winningDisplay(this,winner);
     }
 }

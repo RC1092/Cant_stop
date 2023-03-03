@@ -18,6 +18,7 @@ public class Board extends JFrame{
     }
     private void buildBoard(){
         JPanel boardPanel = new JPanel(new GridLayout(13,13));
+        boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
         board = new Tile[13][13];
         for (int x=0; x<13; x++) {

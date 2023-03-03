@@ -4,13 +4,19 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class StartUp extends JFrame implements ActionListener {
+public class StartUp extends JFrame {
     private String[] numberOptions;
     private JComboBox<String> dropDown;
     public StartUp(){
         this.setLayout(new GridLayout(3,1));
         this.setSize(new Dimension(600,600));
         numberOptions = new String[]{" ","2","3","4"};
+        buildPanels();
+        setResizable(false);
+        setVisible(true);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+    private void buildPanels(){
         JPanel title = new JPanel(new GridBagLayout());
         title.setBackground(Color.red);
         JPanel select = new JPanel(new FlowLayout());
@@ -29,7 +35,7 @@ public class StartUp extends JFrame implements ActionListener {
         startGame.setOpaque(true);
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
-        startGame.addActionListener(this);
+        startGame.addActionListener(e -> setNumPlayers());
 
         JLabel numPlayers = new JLabel("Number of Players: ");
         numPlayers.setFont(new Font("Calibre",Font.BOLD,25));
@@ -50,14 +56,9 @@ public class StartUp extends JFrame implements ActionListener {
         select.add(numPlayers);
         select.add(dropDown);
         start.add(startGame);
-
-        setResizable(false);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    public void setNumPlayers() {
         if (!(dropDown.getSelectedItem()).equals(" ")){
             int numPlayers = Integer.parseInt((String) dropDown.getSelectedItem());
             ChoosePieces choose = new ChoosePieces(numPlayers);

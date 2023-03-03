@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ChoosePieces extends JFrame implements ActionListener {
+public class ChoosePieces extends JFrame {
     private int numPlayers;
     private JPanel selection;
     private final String[] shapes, colors;
@@ -31,7 +31,7 @@ public class ChoosePieces extends JFrame implements ActionListener {
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
         header.add(startGame);
-        startGame.addActionListener(this);
+        startGame.addActionListener(e->checkValidChoices());
 
         selection = new JPanel();
         if (numPlayers == 2) {
@@ -145,14 +145,16 @@ public class ChoosePieces extends JFrame implements ActionListener {
                 return false;}}
         return true;
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void createPlayer(int playerNumber){
+        playerLst.add(new Player((String) shapeLst.get(playerNumber).getSelectedItem(), (String) colorLst.get(playerNumber).getSelectedItem()
+                , nameLst.get(playerNumber).getText()));
+    }
+    private void checkValidChoices() {
         if (checkDuplicates() && noBlanks()){
             System.out.println("yay");
             for (int i=0; i<numPlayers; i++){
-                playerLst.add(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
-                , nameLst.get(i).getText()));}}
-            Game game = new Game(playerLst);
+                createPlayer(i);}
+            Game game = new Game(playerLst);}
         setVisible(false);
 
 

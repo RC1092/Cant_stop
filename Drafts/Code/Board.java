@@ -12,7 +12,7 @@ public class Board extends JFrame{
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
         buildSide();
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
 
     }

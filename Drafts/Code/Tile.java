@@ -16,7 +16,6 @@ public class Tile extends JButton {
             this.setBorder(BorderFactory.createLineBorder(Color.white));
         }
         else {
-            this.setBackground(new Color(149, 240, 252));
-            this.setBorderPainted(false);}
+            this.setVisible(false);}
     }
 }

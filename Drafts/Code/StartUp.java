@@ -3,8 +3,10 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 
-public class StartUp extends JFrame implements ActionListener {
+public class StartUp extends JFrame {
     private String[] numberOptions;
     private JComboBox<String> dropDown;
     private Timer timer;
@@ -64,9 +66,7 @@ public class StartUp extends JFrame implements ActionListener {
         select.add(dropDown);
         start.add(startGame);
 
-        setResizable(false);
-        setVisible(true);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
     }
 
     public void setNumPlayers() {

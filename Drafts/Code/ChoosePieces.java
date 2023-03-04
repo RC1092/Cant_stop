@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ChoosePieces extends JFrame implements ActionListener {
+public class ChoosePieces extends JFrame {
     private int numPlayers;
     private JPanel selection;
     private final String[] shapes, colors;
@@ -31,19 +31,10 @@ public class ChoosePieces extends JFrame implements ActionListener {
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
         header.add(startGame);
-        startGame.addActionListener(this);
+        startGame.addActionListener(e->checkValidChoices());
 
         selection = new JPanel();
-        if (numPlayers == 2) {
-            this.setSize(new Dimension(800, 500));
-            selection.setLayout(new GridLayout(1,2));}
-        else if (numPlayers == 3){
-            this.setSize(new Dimension(1200,500));
-            selection.setLayout(new GridLayout(1,3));}
-        else if (numPlayers == 4){
-            this.setSize(800,900);
-            selection.setLayout(new GridLayout(2,2));}
-
+        setFrameSize();
         buildChoicePanel();
 
         getContentPane().add(header, BorderLayout.NORTH);
@@ -121,6 +112,17 @@ public class ChoosePieces extends JFrame implements ActionListener {
                 panel3.add(chooseName);
             }
         }
+    private void setFrameSize(){
+        if (numPlayers == 2) {
+            this.setSize(new Dimension(800, 500));
+            selection.setLayout(new GridLayout(1,2));}
+        else if (numPlayers == 3){
+            this.setSize(new Dimension(1200,500));
+            selection.setLayout(new GridLayout(1,3));}
+        else if (numPlayers == 4){
+            this.setSize(800,900);
+            selection.setLayout(new GridLayout(2,2));}
+    }
     private boolean checkDuplicates(){
         Set<String> setOfShapes = new HashSet<>();
         Set<String> setOfColors = new HashSet<>();
@@ -145,14 +147,18 @@ public class ChoosePieces extends JFrame implements ActionListener {
                 return false;}}
         return true;
     }
-    @Override
-    public void actionPerformed(ActionEvent e) {
+    private void createPlayer(int playerNumber){
+        String playerShape = (String) shapeLst.get(playerNumber).getSelectedItem();
+        String playerColor = (String) colorLst.get(playerNumber).getSelectedItem();
+        String playerName = nameLst.get(playerNumber).getText();
+        playerLst.add(new Player(playerShape,playerColor,playerName));
+    }
+    private void checkValidChoices() {
         if (checkDuplicates() && noBlanks()){
-            System.out.println("yay");
+            //System.out.println("yay");
             for (int i=0; i<numPlayers; i++){
-                playerLst.add(new Player((String) shapeLst.get(i).getSelectedItem(), (String) colorLst.get(i).getSelectedItem()
-                , nameLst.get(i).getText()));}}
-            Game game = new Game(playerLst);
+                createPlayer(i);}
+            Game game = new Game(playerLst);}
         setVisible(false);
 
 

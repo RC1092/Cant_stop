@@ -12,12 +12,13 @@ public class Board extends JFrame{
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
         buildSide();
-        setResizable(false);
+        setResizable(true);
         setVisible(true);
 
     }
     private void buildBoard(){
         JPanel boardPanel = new JPanel(new GridLayout(13,13));
+        boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
         board = new Tile[13][13];
         for (int x=0; x<13; x++) {

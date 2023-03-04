@@ -3,10 +3,14 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 public class StartUp extends JFrame implements ActionListener {
     private String[] numberOptions;
     private JComboBox<String> dropDown;
+    private Timer timer;
+    private JLabel cantStop;
+
     public StartUp(){
         this.setLayout(new GridLayout(3,1));
         this.setSize(new Dimension(600,600));
@@ -18,7 +22,7 @@ public class StartUp extends JFrame implements ActionListener {
         JPanel start = new JPanel(new FlowLayout());
         start.setBackground(Color.red);
 
-        JLabel cantStop = new JLabel("Can't Stop!");
+        cantStop = new JLabel("");
         cantStop.setFont(new Font("Calibre",Font.BOLD,50));
         cantStop.setOpaque(true);
         cantStop.setBackground(Color.red);
@@ -41,6 +45,10 @@ public class StartUp extends JFrame implements ActionListener {
         dropDown.setFont(new Font("Calibre",Font.BOLD,25));
         dropDown.setBackground(Color.white);
 
+        ArrayList<String> titleList = new ArrayList<String>(Arrays.asList("C","a","n","'","t"," ","S","t","o","p","!"));
+        ArrayList<String> displayList = new ArrayList<String>();
+        timer = new Timer(100, (ActionEvent e) -> {renderTitle(titleList,displayList);});
+        timer.start();
         getContentPane().add(title);
         getContentPane().add(select);
         getContentPane().add(start);
@@ -50,7 +58,6 @@ public class StartUp extends JFrame implements ActionListener {
         select.add(numPlayers);
         select.add(dropDown);
         start.add(startGame);
-
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +69,24 @@ public class StartUp extends JFrame implements ActionListener {
             int numPlayers = Integer.parseInt((String) dropDown.getSelectedItem());
             ChoosePieces choose = new ChoosePieces(numPlayers);
             setVisible(false);}
+    }
+
+    public void renderTitle(ArrayList<String> title, ArrayList<String> displayed){
+        if (title.size() == displayed.size()){
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                
+                e.printStackTrace();
+            }
+            displayed.clear();
+            cantStop.setText("");
+        }
+        else {
+            displayed.add(title.get(displayed.size()));
+            //System.out.println(String.join("",displayed));
+            cantStop.setText(String.join("",displayed));
+        }
     }
 
     public static void main(String[] argv){

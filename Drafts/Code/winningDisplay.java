@@ -6,11 +6,13 @@ import javax.swing.GroupLayout.Alignment;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class winningDisplay extends JFrame{
-    JLabel winningMessage;
-    JButton restart;
-    JPanel panel;
+    private JLabel winningMessage;
+    private JButton restart;
+    private JPanel panel;
+    private Timer timer;
 
 
     public winningDisplay(JFrame board,Player winner){
@@ -18,6 +20,7 @@ public class winningDisplay extends JFrame{
         this.setBackground(Color.RED);
         panel = new JPanel(new GridBagLayout());
 
+        
         panel.setBackground(new Color(240, 0, 0));
 
         GridBagConstraints c = new GridBagConstraints();
@@ -44,17 +47,9 @@ public class winningDisplay extends JFrame{
         restart.setPreferredSize(new Dimension(120,40));
         restart.setFont(new Font("Arial", Font.BOLD, 14));
         restart.setBackground(new Color(144, 238,144 ));
-        
-        
-      /*   c.gridy = 5;
-        c.gridx = 1;
-        c.ipady = 0;
-        
-        c.insets= new Insets(10,20,150,10);
-        c.gridwidth = 2;
-         */
-        
-        
+
+        Color [] colorList = {new Color(255, 182, 193), new Color(144,238,144), new Color(203,195,227)};
+        timer = new Timer(100, (ActionEvent e) -> {changeColor(colorList);});
         restart.addActionListener((ActionEvent e) -> {startNewGame(board);});
         footer.add(restart,c);
         this.getContentPane().add(panel);
@@ -62,6 +57,7 @@ public class winningDisplay extends JFrame{
         setLocationRelativeTo(board);
         setVisible(true);
         setResizable(false);
+        timer.start();
     }
 
     public void startNewGame(JFrame parent){
@@ -69,10 +65,11 @@ public class winningDisplay extends JFrame{
         parent.dispose();
         this.dispose();    
     }
-    
-    public static void main(String [] argv){
-        Player p1 = new Player("square", "red", "adbc");
-        JFrame temp = new JFrame();
-        winningDisplay w1 = new winningDisplay(temp,p1);
+
+    public void changeColor(Color [] list){
+        Random rand = new Random();
+        Color newCo = list[rand.nextInt(list.length)];
+        winningMessage.setForeground((newCo));
     }
+    
 }

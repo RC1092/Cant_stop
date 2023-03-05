@@ -104,6 +104,13 @@ public class Board extends JFrame{
         dice.setForeground(Color.red);
         gamePanel.add(dice);
 
+        JButton endTurn = new JButton("End Turn");
+        endTurn.setFont(new Font("Calibre",Font.BOLD,20));
+        endTurn.setOpaque(true);
+        endTurn.setBackground(Color.white);
+        endTurn.setForeground(Color.red);
+        gamePanel.add(endTurn);
+
         JLabel playersNames = new JLabel("Players");
         formatLabel(playersNames);
         infoPanel.add(playersNames);
@@ -132,6 +139,7 @@ public class Board extends JFrame{
         label.setBackground(Color.red);
         label.setForeground(Color.white);
     }
+
     private void displayWinner(){
         Player winner = players.get((int) Math.random()*players.size());
         winningDisplay winningmessage = new winningDisplay(this,winner);

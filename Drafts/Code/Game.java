@@ -14,10 +14,10 @@ public class Game {
     public Game(ArrayList<Player> players){
         this.players = players;
         currentTurn = 1;
+        dice = new Dice();
         turn = new Turn(players, dice);
         turnOrder = turn.getTurnOrder();
         board = new Board(players);
-        dice = new Dice();
     }
 
     //Indexes into the turnOrder Hashmap using currentTurn to get the player whose turn it is

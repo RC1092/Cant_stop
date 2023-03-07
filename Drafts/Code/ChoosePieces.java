@@ -164,8 +164,8 @@ public class ChoosePieces extends JFrame {
             //System.out.println("yay");
             for (int i=0; i<numPlayers; i++){
                 createPlayer(i);}
-            Game game = new Game(playerLst);}
-        setVisible(false);
+            Game game = new Game(playerLst);
+        setVisible(false);}
 
 
     }

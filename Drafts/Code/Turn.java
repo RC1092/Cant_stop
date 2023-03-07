@@ -6,13 +6,17 @@ import java.util.HashMap;
 public class Turn {
     private ArrayList<Player> players;
     private Dice dice;
+    private int currentTurn;
+    private HashMap<Integer, Player> turnOrder;
 
     public Turn(ArrayList<Player> players, Dice dice){
         this.players = players;
         this.dice = dice;
+        turnOrder = this.setTurnOrder();
+        currentTurn = 1;
     }
 
-    public HashMap<Integer, Player> getTurnOrder(){
+    private HashMap<Integer, Player> setTurnOrder(){
         HashMap<Integer, Player> turnOrder = new HashMap<Integer, Player>();
         ArrayList<Integer> orderRolls = dice.getTurnOrderRolls(players.size());
         for (int i =0; i < orderRolls.size(); i++){
@@ -21,6 +25,10 @@ public class Turn {
             turnOrder.put(i + 1,players.get(index));
             orderRolls.set(index, 0);
         }
+        return turnOrder;
+    }
+
+    public HashMap<Integer, Player> getTurnOrder(){
         return turnOrder;
     }
 
@@ -41,7 +49,21 @@ public class Turn {
     }
 
     //Called when a player elects to end their turn. Once called will set all moved pieces to their new location.
-    public void endTurn(){
+    public void endTurn(){ //Arg will be movementPieces: ArrayList<MovementPieces> once movementPieces are implemented
+        //move pieces
+        //for each piece getPosition(): Tile
+        //for each postion; tile
+        /*
+        if(tile.checkEndTile()){
+            Player currentPlayer = turnOrder.get(currentTurn);
+            currentPlayer.captureColumn(); //(Arg) Tile Position
+        }
 
+        if (currentTurn < players.size()){
+            currentTurn ++;
+        } else{
+            currentTurn = 1;
+        }
+        */
     }
 }

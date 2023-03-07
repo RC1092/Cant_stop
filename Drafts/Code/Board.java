@@ -39,38 +39,61 @@ public class Board extends JFrame{
     private void setLabels(int x, int y){
         if ((x==5&&y==1)){
             board[x][y].setText("2");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==4&&y==2)){
             board[x][y].setText("3");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==3&&y==3)){
             board[x][y].setText("4");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==2&&y==4)){
             board[x][y].setText("5");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==1&&y==5)){
             board[x][y].setText("6");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==0&&y==6)){
             board[x][y].setText("7");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==1&&y==7)){
             board[x][y].setText("8");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==2&&y==8)){
             board[x][y].setText("9");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==3&&y==9)){
             board[x][y].setText("10");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==4&&y==10)){
             board[x][y].setText("11");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
         else if ((x==5&&y==11)){
             board[x][y].setText("12");
-            board[x][y].setBackground(Color.white);}
+            board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
+        }
     }
+
     private boolean checkTile(int x, int y){
         if (y==0 || y==12) {return false;}
         else if ((y==1 || y==11)&& (x<5 || x>7)){return false;}
@@ -80,6 +103,7 @@ public class Board extends JFrame{
         else if ((y==5 || y==7)&& (x<1 || x>11)){return false;}
         else {return true;}
     }
+
     private void buildSide(){
         JPanel buttonPanel = new JPanel(new GridLayout(3,1));
         JPanel otherPanel = new JPanel(new FlowLayout());
@@ -132,6 +156,7 @@ public class Board extends JFrame{
         buttonPanel.add(infoPanel);
         getContentPane().add(buttonPanel, BorderLayout.EAST);
     }
+    
     private void formatLabel(JLabel label){
         label.setFont(new Font("Calibre",Font.BOLD,18));
         label.setBorder(BorderFactory.createLineBorder(Color.white));
@@ -140,6 +165,7 @@ public class Board extends JFrame{
         label.setForeground(Color.white);
     }
 
+    //Temp simulator until some missing classes are implemented. Actual logic is in Player
     private void displayWinner(){
         Player winner = players.get((int) Math.random()*players.size());
         winningDisplay winningmessage = new winningDisplay(this,winner);

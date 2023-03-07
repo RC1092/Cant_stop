@@ -30,6 +30,11 @@ public class ChoosePieces extends JFrame {
         startGame.setOpaque(true);
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
+        JLabel dupeWarning = new JLabel("Note each Shape, Color, Name must be unique for game to begin", SwingConstants.CENTER);
+        dupeWarning.setFont(new Font("Calibre",Font.BOLD,15));
+        dupeWarning.setOpaque(true);
+        dupeWarning.setBackground(Color.white);
+        dupeWarning.setForeground(Color.red);
         header.add(startGame);
         startGame.addActionListener(e->checkValidChoices());
 
@@ -39,6 +44,7 @@ public class ChoosePieces extends JFrame {
 
         getContentPane().add(header, BorderLayout.NORTH);
         getContentPane().add(selection, BorderLayout.CENTER);
+        getContentPane().add(dupeWarning, BorderLayout.SOUTH);
 
         setResizable(false);
         setVisible(true);

@@ -6,11 +6,7 @@ import java.awt.*;
 public class pieces extends JButton{
     private String shape;
     private String color;
-<<<<<<< HEAD
-
-=======
     private Tile location;
->>>>>>> 97150c705495f788c057c1cadc45eb45dd0f5312
     public pieces(String shape, String color){
         this.setPreferredSize(new Dimension(120,120));
         this.shape = shape;

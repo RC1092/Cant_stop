@@ -3,11 +3,15 @@ import java.util.ArrayList;
 public class Player {
     private String name, color, shape;
     private ArrayList<Integer> columnsCaptured;
+    private ArrayList<pieces> piecesList = new ArrayList<pieces>();
     public Player(String shape, String color, String name){
         this.shape = shape;
         this.name = name;
         this.color = color;
         columnsCaptured = new ArrayList<>();
+        for (int i =0; i< 11; i++){
+            piecesList.add(new pieces(this.shape, this.color));
+        }
     }
 
     public int getScore(){

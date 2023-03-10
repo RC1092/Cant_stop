@@ -6,7 +6,11 @@ import java.awt.*;
 public class pieces extends JButton{
     private String shape;
     private String color;
+<<<<<<< HEAD
 
+=======
+    private Tile location;
+>>>>>>> 97150c705495f788c057c1cadc45eb45dd0f5312
     public pieces(String shape, String color){
         this.setPreferredSize(new Dimension(120,120));
         this.shape = shape;
@@ -78,26 +82,17 @@ public class pieces extends JButton{
             case "Purple":
                 this.setForeground(new Color(255,0,255));
                 break;
+            case "White":
+                this.setForeground(Color.WHITE);
             
 
         }
     }
 
-    public static void main(String [] args){
-        // FlatLightLaf.setup();
-            JFrame frame = new JFrame();
-            JPanel panel = new JPanel(new FlowLayout());
-            pieces square = new pieces("Square", "Blue");
-            pieces triangle = new pieces("Triangle","Green");
-            pieces circle = new pieces("Circle","Purple");
-            pieces star = new pieces ("Star", "Orange");
-            pieces arrow = new pieces ("Arrow", "Pink");
-            panel.add(square);
-            panel.add(triangle);
-            panel.add(circle);
-            panel.add(star);
-            panel.add(arrow);
-            frame.getContentPane().add(panel);
-            frame.setVisible(true);
-        }
+<<<<<<< HEAD
+
+    public void setLocation (Tile tile){
+        location = tile;
+    }
+>>>>>>> 97150c705495f788c057c1cadc45eb45dd0f5312
 }

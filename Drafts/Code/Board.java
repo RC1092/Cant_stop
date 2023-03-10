@@ -1,4 +1,7 @@
 import javax.swing.*;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.border.Border;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -6,8 +9,12 @@ import java.util.ArrayList;
 public class Board extends JFrame{
     private Tile[][] board;
     private ArrayList<Player> players;
-    public Board(ArrayList<Player> players){
+    private Game game;
+    private JPanel gamePanel;
+    private JPanel otherPanel;
+    public Board(Game game,ArrayList<Player> players){
         this.players = players;
+        this.game = game;
         this.setSize(new Dimension(1000,900));
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
@@ -106,23 +113,16 @@ public class Board extends JFrame{
 
     private void buildSide(){
         JPanel buttonPanel = new JPanel(new GridLayout(3,1));
-        JPanel otherPanel = new JPanel(new FlowLayout());
-        JPanel gamePanel = new JPanel(new FlowLayout());
+        otherPanel = new JPanel(new GridLayout(3, 1));
+        gamePanel = new JPanel(new GridLayout(3,1));
         JPanel infoPanel = new JPanel(new GridLayout(players.size()+1,3));
         gamePanel.setBackground(Color.red);
         otherPanel.setBackground(Color.red);
         infoPanel.setBackground(Color.red);
 
-        JButton sim = new JButton("Click here to simulate a winner");
-        sim.setFont(new Font("Calibre",Font.BOLD,20));
-        sim.setOpaque(true);
-        sim.setBackground(Color.white);
-        sim.setForeground(Color.red);
-        sim.addActionListener((ActionEvent e) -> {displayWinner();});
-        otherPanel.add(sim);
-
         JButton dice = new JButton("Roll Dice");
         dice.setFont(new Font("Calibre",Font.BOLD,20));
+        dice.addActionListener(e-> {RollDice();});
         dice.setOpaque(true);
         dice.setBackground(Color.white);
         dice.setForeground(Color.red);
@@ -165,9 +165,71 @@ public class Board extends JFrame{
         label.setForeground(Color.white);
     }
 
-    //Temp simulator until some missing classes are implemented. Actual logic is in Player
-    private void displayWinner(){
-        Player winner = players.get((int) Math.random()*players.size());
-        winningDisplay winningmessage = new winningDisplay(this,winner);
+    private void RollDice(){
+        Turn turn = game.getTurn();
+        ArrayList<ArrayList<Integer>> dices =  turn.getDiceCombinations();
+        gamePanel.setVisible(false);
+        otherPanel.setVisible(false);
+        gamePanel.removeAll();
+        otherPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+        //gamePanel.setLayout((new GridLayout(5, 5)));
+        gamePanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+        
+        System.out.println(dices.get(0).get(0));
+        System.out.println(dices.get(0).get(1));
+        System.out.println(dices.get(0).get(2));
+        System.out.println(dices.get(0).get(3));
+        JPanel dicePanel = new JPanel(new FlowLayout());
+        dicePanel.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
+        JLabel label1 = new JLabel("You have rolled! ");
+        label1.setFont(new Font(getName(), Font.BOLD, 25));
+        label1.setHorizontalAlignment(SwingConstants.CENTER);
+        JLabel label2 = new JLabel("Select a combination! ");
+        label2.setFont(new Font(getName(), Font.BOLD, 25));
+        label2.setHorizontalAlignment(SwingConstants.CENTER);
+        dicePanel.add(new diceImage(dices.get(0).get(0)));
+        dicePanel.add(new diceImage(dices.get(0).get(1)));
+        dicePanel.add(new diceImage(dices.get(0).get(2)));
+        dicePanel.add(new diceImage(dices.get(0).get(3)));
+        otherPanel.add(label1);
+        otherPanel.add(dicePanel);
+        otherPanel.add(label2);
+        dicePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
+        
+        
+        
+
+        JPanel combinationPanel1 = new JPanel(new FlowLayout());
+        combinationPanel1.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
+        JPanel combinationPanel2 = new JPanel(new FlowLayout());
+        combinationPanel2.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
+        JPanel combinationPanel3 = new JPanel(new FlowLayout());
+        combinationPanel3.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
+
+        combinationPanel1.add(new diceImage(dices.get(0).get(0)));
+        combinationPanel1.add(new diceImage(dices.get(0).get(1)));
+        combinationPanel1.add(new JButton());
+        combinationPanel1.add(new diceImage(dices.get(0).get(2)));
+        combinationPanel1.add(new diceImage(dices.get(0).get(3)));
+        gamePanel.add(combinationPanel1);
+
+        combinationPanel2.add(new diceImage(dices.get(0).get(0)));
+        combinationPanel2.add(new diceImage(dices.get(0).get(2)));
+        combinationPanel2.add(new JButton());
+        combinationPanel2.add(new diceImage(dices.get(0).get(1)));
+        combinationPanel2.add(new diceImage(dices.get(0).get(3)));
+        gamePanel.add(combinationPanel2);
+
+        combinationPanel3.add(new diceImage(dices.get(0).get(0)));
+        combinationPanel3.add(new diceImage(dices.get(0).get(3)));
+        combinationPanel3.add(new JButton());
+        combinationPanel3.add(new diceImage(dices.get(0).get(1)));
+        combinationPanel3.add(new diceImage(dices.get(0).get(2)));
+
+        gamePanel.add(combinationPanel3);
+        otherPanel.setVisible(true);
+        gamePanel.setVisible(true);
+
     }
+
 }

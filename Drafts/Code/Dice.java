@@ -11,6 +11,7 @@ public class Dice {
 
     //todo Dice Swing interfacing so that we see dice images on the board
 
+    
     public ArrayList<Integer> makeTurnRoll(){
         ArrayList<Integer> turnRolls = new ArrayList<Integer>();
         for (int i = 0; i < 4; i++){

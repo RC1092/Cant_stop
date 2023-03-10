@@ -14,13 +14,16 @@ public class Game {
         this.players = players;
         dice = new Dice();
         turn = new Turn(players, dice);
-        board = new Board(players);
+        board = new Board(this,players);
     }
 
     public void addPlayer(Player player){
         players.add(player);
     }
 
+    public Turn getTurn(){
+        return turn;
+    }
     public void printInfo(){
         System.out.println(players);
     }

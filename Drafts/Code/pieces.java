@@ -6,6 +6,7 @@ import java.awt.*;
 public class pieces extends JButton{
     private String shape;
     private String color;
+    private Tile location;
     public pieces(String shape, String color){
         this.setPreferredSize(new Dimension(120,120));
         this.shape = shape;
@@ -68,9 +69,14 @@ public class pieces extends JButton{
             case "Purple":
                 this.setForeground(new Color(255,0,255));
                 break;
+            case "White":
+                this.setForeground(Color.WHITE);
             
 
         }
     }
 
+    public void setLocation (Tile tile){
+        location = tile;
+    }
 }

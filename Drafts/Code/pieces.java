@@ -85,10 +85,8 @@ public class pieces extends JButton{
         }
     }
 
-<<<<<<< HEAD
 
     public void setLocation (Tile tile){
         location = tile;
     }
->>>>>>> 97150c705495f788c057c1cadc45eb45dd0f5312
 }

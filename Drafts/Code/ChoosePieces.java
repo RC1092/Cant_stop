@@ -62,7 +62,7 @@ public class ChoosePieces extends JFrame {
         private void buildChoicePanel(){
             for (int i=0; i<numPlayers; i++) {
                 JPanel background = new JPanel(new BorderLayout());
-                JPanel choices = new JPanel(new GridLayout(3, 1));
+                JPanel choices = new JPanel(new GridLayout(4, 1));
                 JPanel player = new JPanel(new FlowLayout());
                 JLabel playerNumber = new JLabel("Player ".concat(Integer.toString(i+1)));
 
@@ -99,6 +99,20 @@ public class ChoosePieces extends JFrame {
                 chooseName.setBackground(Color.white);
                 nameLst.add(chooseName);
 
+                JRadioButton notAi = new JRadioButton("Player");
+                notAi.setBackground(Color.red);
+                notAi.setForeground(Color.white);
+                notAi.setFont(new Font("Calibre", Font.BOLD, 20));
+                JRadioButton aiEasy = new JRadioButton("AI Easy");
+                aiEasy.setBackground(Color.red);
+                aiEasy.setForeground(Color.white);
+                aiEasy.setFont(new Font("Calibre", Font.BOLD, 20));
+                JRadioButton aiHard = new JRadioButton("AI Hard");
+                aiHard.setBackground(Color.red);
+                aiHard.setForeground(Color.white);
+                aiHard.setFont(new Font("Calibre", Font.BOLD, 20));
+
+
                 JPanel panel = new JPanel(new FlowLayout());
                 panel.setBackground(Color.red);
                 choices.add(panel);
@@ -116,6 +130,13 @@ public class ChoosePieces extends JFrame {
                 choices.add(panel3);
                 panel3.add(name);
                 panel3.add(chooseName);
+
+                JPanel panel4 = new JPanel(new FlowLayout());
+                panel4.setBackground(Color.red);
+                choices.add(panel4);
+                panel4.add(notAi);
+                panel4.add(aiEasy);
+                panel4.add(aiHard);
             }
         }
     private void setFrameSize(){

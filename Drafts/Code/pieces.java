@@ -6,6 +6,7 @@ import java.awt.*;
 public class pieces extends JButton{
     private String shape;
     private String color;
+
     public pieces(String shape, String color){
         this.setPreferredSize(new Dimension(120,120));
         this.shape = shape;
@@ -13,9 +14,9 @@ public class pieces extends JButton{
         this.setText(color);
         this.setBackground(Color.white);
         this.setForeground(Color.getColor(color,Color.BLACK));
-        setColor();
-        
+        setColor();    
     }
+    
     
     @Override
     protected void paintComponent(Graphics g) {
@@ -45,7 +46,16 @@ public class pieces extends JButton{
                 int[] YCoords2 = {this.getHeight()/2,8*this.getHeight()/14,  this.getHeight(),  8*this.getHeight()/14, this.getHeight()/2, 6*this.getHeight()/14,   0,                 6*this.getHeight()/14};
                 CustomShape.fillPolygon(XCoords2, YCoords2, 8);
                 break;
-            }
+
+            case "Arrow":
+                //System.out.println("ArrowGenerat");
+                int[] XCoords3 = {this.getWidth()/6, this.getWidth()/2, 5*this.getWidth()/6,4*this.getWidth()/6,4*this.getWidth()/6,2*this.getWidth()/6,2*this.getWidth()/6};
+                int[] YCoords3 = {2*this.getHeight()/3, 0, 2*this.getHeight()/3,2*this.getHeight()/3,this.getHeight(),this.getHeight(),2*this.getHeight()/3 }; 
+                //int[] XCoords4 = {(1/6)*this.getWidth(), this.getWidth()/2, (5/6)*this.getWidth(), };
+                //int[] YCoords4 = {(2/3)*this.getHeight(), 0, (2/3)*this.getHeight()}; 
+                CustomShape.fillPolygon(XCoords3, YCoords3, 7);
+                break;
+        }            
     }
 
     private void setColor(){
@@ -73,4 +83,21 @@ public class pieces extends JButton{
         }
     }
 
+    public static void main(String [] args){
+        // FlatLightLaf.setup();
+            JFrame frame = new JFrame();
+            JPanel panel = new JPanel(new FlowLayout());
+            pieces square = new pieces("Square", "Blue");
+            pieces triangle = new pieces("Triangle","Green");
+            pieces circle = new pieces("Circle","Purple");
+            pieces star = new pieces ("Star", "Orange");
+            pieces arrow = new pieces ("Arrow", "Pink");
+            panel.add(square);
+            panel.add(triangle);
+            panel.add(circle);
+            panel.add(star);
+            panel.add(arrow);
+            frame.getContentPane().add(panel);
+            frame.setVisible(true);
+        }
 }

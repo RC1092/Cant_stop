@@ -30,4 +30,8 @@ public class Tile extends JButton {
     public void setEndTile(){
         endTile = true;
     }
+
+    public String getPosition(){
+        return "{" + x + "," + y + "}";
+    }
 }

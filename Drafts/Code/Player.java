@@ -42,6 +42,9 @@ public class Player {
         return shape;
     }
 
+    public ArrayList<pieces> gPieces() {
+        return piecesList;
+    }
     private void displayWinner(){
 
         //This is and Winnerdisplay are proboably gonna have to change or this get moved so that we have access to board

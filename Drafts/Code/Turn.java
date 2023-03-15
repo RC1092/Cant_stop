@@ -28,6 +28,10 @@ public class Turn {
         return turnOrder;
     }
 
+    public int getCurrentPlayerKey(){
+        return currentTurn;
+    }
+
     public HashMap<Integer, Player> getTurnOrder(){
         return turnOrder;
     }

@@ -183,9 +183,11 @@ public class Board extends JFrame{
         dicePanel.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
         JLabel label1 = new JLabel("You have rolled! ");
         label1.setFont(new Font(getName(), Font.BOLD, 25));
+        label1.setForeground(Color.white);
         label1.setHorizontalAlignment(SwingConstants.CENTER);
         JLabel label2 = new JLabel("Select a combination! ");
         label2.setFont(new Font(getName(), Font.BOLD, 25));
+        label2.setForeground(Color.white);
         label2.setHorizontalAlignment(SwingConstants.CENTER);
         dicePanel.add(new diceImage(dices.get(0).get(0)));
         dicePanel.add(new diceImage(dices.get(0).get(1)));

@@ -13,6 +13,7 @@ public class ChoosePieces extends JFrame {
     private ArrayList<JComboBox<String>> shapeLst, colorLst;
     private ArrayList<JTextField> nameLst;
     private ArrayList<Player> playerLst;
+    private JLabel dupeWarning;
 
     public ChoosePieces(int numPlayers){
         this.numPlayers = numPlayers;
@@ -30,7 +31,7 @@ public class ChoosePieces extends JFrame {
         startGame.setOpaque(true);
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
-        JLabel dupeWarning = new JLabel("Note each Shape, Color, Name must be unique for game to begin", SwingConstants.CENTER);
+        dupeWarning = new JLabel("Note: Each Shape, Color, Name must be unique for game to begin", SwingConstants.CENTER);
         dupeWarning.setFont(new Font("Calibre",Font.BOLD,15));
         dupeWarning.setOpaque(true);
         dupeWarning.setBackground(Color.white);
@@ -187,6 +188,7 @@ public class ChoosePieces extends JFrame {
                 createPlayer(i);}
             Game game = new Game(playerLst);
         setVisible(false);}
+        else{ dupeWarning.setText("Make sure you have selected unique choices. (Name, Shape and Color must be different)");}
 
 
     }

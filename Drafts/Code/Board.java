@@ -12,10 +12,16 @@ public class Board extends JFrame{
     private Game game;
     private JPanel gamePanel;
     private JPanel otherPanel;
+    private JMenuBar saveMenu;
     public Board(Game game,ArrayList<Player> players){
         this.players = players;
         this.game = game;
         this.setSize(new Dimension(1000,900));
+        saveMenu = new JMenuBar();
+        JMenuItem saveButton = new JMenuItem("Save");
+        saveButton.addActionListener(e -> {game.saveGame();});
+        saveMenu.add(saveButton);
+        this.setJMenuBar(saveMenu);
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
         buildSide();
@@ -175,10 +181,6 @@ public class Board extends JFrame{
         //gamePanel.setLayout((new GridLayout(5, 5)));
         gamePanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
         
-        System.out.println(dices.get(0).get(0));
-        System.out.println(dices.get(0).get(1));
-        System.out.println(dices.get(0).get(2));
-        System.out.println(dices.get(0).get(3));
         JPanel dicePanel = new JPanel(new FlowLayout());
         dicePanel.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
         JLabel label1 = new JLabel("You have rolled! ");

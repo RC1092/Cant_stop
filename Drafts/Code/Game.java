@@ -31,4 +31,9 @@ public class Game {
     public void printInfo(){
         System.out.println(players);
     }
+
+    public void saveGame(){
+        FileManager fm = new FileManager(turn, players);
+        fm.writeSave();
+    }
 }

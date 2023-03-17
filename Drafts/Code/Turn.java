@@ -8,15 +8,20 @@ public class Turn {
     private Dice dice;
     private int currentTurn;
     private HashMap<Integer, Player> turnOrder;
+    private ArrayList<pieces> movementPieces = new ArrayList<pieces>();
 
     public Turn(ArrayList<Player> players, Dice dice){
         this.players = players;
         this.dice = dice;
-        turnOrder = this.setTurnOrder();
+        turnOrder = this.setTurnOrder(new HashMap<Integer, Player>());
         currentTurn = 1;
+        while (movementPieces.size() < 3){
+            movementPieces.add(new pieces("Arrow", "White"));
+        }
     }
 
-    private HashMap<Integer, Player> setTurnOrder(){
+    private HashMap<Integer, Player> setTurnOrder(HashMap<Integer,Player> order){
+
         HashMap<Integer, Player> turnOrder = new HashMap<Integer, Player>();
         ArrayList<Integer> orderRolls = dice.getTurnOrderRolls(players.size());
         for (int i =0; i < orderRolls.size(); i++){
@@ -32,6 +37,9 @@ public class Turn {
         return currentTurn;
     }
 
+    public void setCurrentPlayerkey(int key){
+        currentTurn = key;
+    }
     public HashMap<Integer, Player> getTurnOrder(){
         return turnOrder;
     }
@@ -48,7 +56,7 @@ public class Turn {
     }
 
     //Called when a player selects their dice combination and moves their pieces appropriately
-    public void movePiece(){
+    public void movePiece(int x, int y){
         
     }
 

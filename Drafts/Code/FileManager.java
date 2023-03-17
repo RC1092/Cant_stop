@@ -35,11 +35,11 @@ public class FileManager {
         }
     }
 
+
     public void loadSave() {
         fileWindow(tempBuildPlayerLst());
     }
-    //Idk how we want this to work
-    //}
+
     private void fileWindow(ArrayList<Player> playerLst){
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(600,600));
@@ -61,5 +61,6 @@ public class FileManager {
         playerLst.add(new Player("Circle","Yellow","Emily"));
         playerLst.add(new Player("Square", "Blue", "Rushi"));
         return playerLst;
+
     }
 }

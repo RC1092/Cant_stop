@@ -1,3 +1,5 @@
+import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -6,12 +8,13 @@ import java.util.ArrayList;
 public class FileManager {
     private Turn turn;
     private ArrayList<Player> players;
-    public FileManager (Turn turn, ArrayList<Player> players){
-        this.turn = turn;
-        this.players = players;
+    public FileManager (){
+
     }
 
-    public void writeSave(){
+    public void writeSave(Turn turn, ArrayList<Player> players){
+        this.turn = turn;
+        this.players = players;
         try {
             String userDirectory = System.getProperty("user.dir");
             String fileDir = userDirectory + "\\CantStopSave.txt";
@@ -32,7 +35,17 @@ public class FileManager {
         }
     }
 
-    //public loadSave() {
+    public void loadSave() {
+        fileWindow(null);
+    }
     //Idk how we want this to work
     //}
+    private void fileWindow(ArrayList<Player> playerLst){
+        JFrame frame = new JFrame();
+        frame.setSize(new Dimension(600,600));
+        JPanel panel = new JPanel(new FlowLayout());
+        panel.setBackground(Color.red);
+        frame.getContentPane().add(panel);
+        frame.setVisible(true);
+    }
 }

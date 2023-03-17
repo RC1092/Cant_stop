@@ -33,7 +33,7 @@ public class Game {
     }
 
     public void saveGame(){
-        FileManager fm = new FileManager(turn, players);
-        fm.writeSave();
+        FileManager fm = new FileManager();
+        fm.writeSave(turn, players);
     }
 }

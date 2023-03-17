@@ -58,72 +58,97 @@ public class Board extends JFrame {
         if ((x == 5 && y == 1)) {
             board[x][y].setText("2");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 4 && y == 2)) {
             board[x][y].setText("3");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 3 && y == 3)) {
             board[x][y].setText("4");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 2 && y == 4)) {
             board[x][y].setText("5");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 1 && y == 5)) {
             board[x][y].setText("6");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 0 && y == 6)) {
             board[x][y].setText("7");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 1 && y == 7)) {
             board[x][y].setText("8");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 2 && y == 8)) {
             board[x][y].setText("9");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 3 && y == 9)) {
             board[x][y].setText("10");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 4 && y == 10)) {
             board[x][y].setText("11");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 5 && y == 11)) {
             board[x][y].setText("12");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 8 && y == 1)) {
             board[x][y].setText("C");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 9 && y == 2)) {
             board[x][y].setText("A");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 10 && y == 3)) {
             board[x][y].setText("N");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 11 && y == 4)) {
             board[x][y].setText("'T");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 11 && y == 8)) {
             board[x][y].setText("S");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 10 && y == 9)) {
             board[x][y].setText("T");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 9 && y == 10)) {
             board[x][y].setText("O");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 8 && y == 11)) {
             board[x][y].setText("P");
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 6 && y == 0)) {
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 7 && y == 0)) {
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 7 && y == 12)) {
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 6 && y == 12)) {
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 12 && y == 5)) {
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         } else if ((x == 12 && y == 7)) {
             board[x][y].setBackground(Color.white);
+            board[x][y].setEndTile();
         }
     }
 

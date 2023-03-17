@@ -36,16 +36,30 @@ public class FileManager {
     }
 
     public void loadSave() {
-        fileWindow(null);
+        fileWindow(tempBuildPlayerLst());
     }
     //Idk how we want this to work
     //}
     private void fileWindow(ArrayList<Player> playerLst){
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(600,600));
-        JPanel panel = new JPanel(new FlowLayout());
+        JPanel panel = new JPanel(new BorderLayout());
+        JLabel gameSummary = new JLabel("Game Summary");
+        gameSummary.setFont(new Font("Calibre",Font.BOLD,25));
+        gameSummary.setOpaque(true);
+        gameSummary.setBackground(Color.white);
+        gameSummary.setForeground(Color.red);
+
+        panel.add(gameSummary, BorderLayout.NORTH);
+
         panel.setBackground(Color.red);
         frame.getContentPane().add(panel);
         frame.setVisible(true);
+    }
+    private ArrayList<Player> tempBuildPlayerLst(){
+        ArrayList<Player> playerLst = new ArrayList<>();
+        playerLst.add(new Player("Circle","Yellow","Emily"));
+        playerLst.add(new Player("Square", "Blue", "Rushi"));
+        return playerLst;
     }
 }

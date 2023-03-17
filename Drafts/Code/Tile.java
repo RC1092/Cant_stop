@@ -52,7 +52,7 @@ public class Tile extends JButton {
             int[] xPoints = { getWidth(), 0, getWidth() }; // x-coordinates of triangle vertices
             int[] yPoints = { getHeight(), getHeight(), 0 }; // y-coordinates of triangle vertices
             setBackground(new Color(149, 240, 252));
-            g.setColor(Color.WHITE); // set color to red
+            g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
             setBorderPainted(false);
 
@@ -66,7 +66,7 @@ public class Tile extends JButton {
             int[] xPoints = { getWidth(), 0, 0 }; // x-coordinates of triangle vertices
             int[] yPoints = { getHeight(), getHeight(), 0 }; // y-coordinates of triangle vertices
             setBackground(new Color(149, 240, 252));
-            g.setColor(Color.WHITE); // set color to red
+            g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
             setBorderPainted(false);
         }
@@ -79,7 +79,7 @@ public class Tile extends JButton {
             int[] xPoints = { getWidth(), getWidth(), 0 }; // x-coordinates of triangle vertices
             int[] yPoints = { getHeight(), 0, 0 }; // y-coordinates of triangle vertices
             setBackground(new Color(149, 240, 252));
-            g.setColor(Color.WHITE); // set color to red
+            g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
             setBorderPainted(false);
         }
@@ -92,7 +92,7 @@ public class Tile extends JButton {
             int[] xPoints = { 0, 0, getWidth() }; // x-coordinates of triangle vertices
             int[] yPoints = { 0, getHeight(), 0 }; // y-coordinates of triangle vertices
             setBackground(new Color(149, 240, 252));
-            g.setColor(Color.WHITE); // set color to red
+            g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
             setBorderPainted(false);
         } else {

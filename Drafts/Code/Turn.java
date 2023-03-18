@@ -7,13 +7,16 @@ public class Turn {
     private ArrayList<Player> players;
     private Dice dice;
     private int currentTurn;
+    
     private HashMap<Integer, Player> turnOrder;
+    private ArrayList<pieces> runners;
 
     public Turn(ArrayList<Player> players, Dice dice){
         this.players = players;
         this.dice = dice;
         turnOrder = this.setTurnOrder();
         currentTurn = 1;
+        //players.forEach(e -> InvalidColumns.addAll(e.getColumns()));
     }
 
     private HashMap<Integer, Player> setTurnOrder(){
@@ -41,9 +44,30 @@ public class Turn {
         ArrayList<ArrayList<Integer>> combinations = new ArrayList<>();
         ArrayList<Integer> values = dice.makeTurnRoll();
         //Stores the dice pairs into combinations as ordered ArrayList. So [1,2,3,4] means the pairs 1,2 + 3,4
-        combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
-        combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(2), values.get(3), values.get(0))));
-        combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(3), values.get(2), values.get(0))));
+        
+        if (runners.size() < 3){
+            combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
+            combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(2), values.get(3), values.get(0))));
+            combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(3), values.get(2), values.get(0))));
+            //return combinations;
+        }
+        else if(runners.size() == 3){
+            ArrayList<Integer> valids = new ArrayList<>();
+            runners.forEach(e -> valids.add(e.getColumn()));
+            if(valids.contains(values.get(0)+values.get(1))||valids.contains(values.get(2)+values.get(3))){
+                combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
+                
+            }
+            if(valids.contains(values.get(0)+values.get(2))||valids.contains(values.get(1)+values.get(3))){
+                combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(2), values.get(3), values.get(1))));
+                
+            }
+            if(valids.contains(values.get(0)+values.get(3))||valids.contains(values.get(1)+values.get(2))){
+                combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(3), values.get(1), values.get(2))));    
+            }
+
+
+        }
         return combinations;
     }
 

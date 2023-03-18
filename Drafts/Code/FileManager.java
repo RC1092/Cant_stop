@@ -18,7 +18,7 @@ public class FileManager {
             File saveFile = new File(fileDir);
             FileWriter saveWriter = new FileWriter(fileDir);
             for (Player player: players){
-                String saveData = player.getName() + ":" + player.getShape() + ":" + player.getColor() + ":";
+                String saveData = player.getName() + ":" + player.getShape() + ":" + player.getColor() + ":"+  Integer.toString(player.getScore()) ;
                 // for (pieces piece: player.getPieces()){
                 //     saveData += piece.getTile().getPosition();
                 // }

@@ -34,4 +34,8 @@ public class Tile extends JButton {
     public String getPosition(){
         return "{" + x + "," + y + "}";
     }
+
+    public int getColumn(){
+        return y;
+    }
 }

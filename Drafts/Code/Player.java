@@ -53,4 +53,8 @@ public class Player {
         winningDisplay winningmessage = new winningDisplay(this,winner);
         */
     }
+
+    public ArrayList<Integer> getColumns(){
+        return columnsCaptured;
+    }
 }

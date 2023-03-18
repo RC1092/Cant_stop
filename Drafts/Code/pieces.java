@@ -93,4 +93,7 @@ public class pieces extends JButton{
     public Tile getTile () {
         return location;
     }
+    public int getColumn(){
+        return location.getColumn();
+    }
 }

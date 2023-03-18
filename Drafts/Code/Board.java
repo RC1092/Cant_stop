@@ -196,12 +196,23 @@ public class Board extends JFrame{
         dicePanel.add(new diceImage(dices.get(0).get(2)));
         dicePanel.add(new diceImage(dices.get(0).get(3)));
         otherPanel.add(label1);
+        if (dices == null){
+            JLabel label3 = new JLabel("You Have busted!");
+            JButton next_turn = new JButton("Next Turn");
+            next_turn.addActionListener((ActionEvent e)->{turn_end_bust();});
+            label3.setFont(new Font(getName(), Font.BOLD, 25));
+            label3.setForeground(Color.white);
+            label3.setHorizontalAlignment(SwingConstants.CENTER);
+            dicePanel.add(label3);
+            dicePanel.add(next_turn);
+            
+            return;
+        }
         otherPanel.add(dicePanel);
-        otherPanel.add(label2);
+        //otherPanel.add(label2);
         dicePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
         
-        
-        
+    
 
         JPanel combinationPanel1 = new JPanel(new FlowLayout());
         combinationPanel1.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
@@ -210,29 +221,40 @@ public class Board extends JFrame{
         JPanel combinationPanel3 = new JPanel(new FlowLayout());
         combinationPanel3.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight()/4));
 
+        if (dices.size() >1 ){
         combinationPanel1.add(new diceImage(dices.get(0).get(0)));
         combinationPanel1.add(new diceImage(dices.get(0).get(1)));
         combinationPanel1.add(new JButton());
         combinationPanel1.add(new diceImage(dices.get(0).get(2)));
         combinationPanel1.add(new diceImage(dices.get(0).get(3)));
+        //combinationPanel1.addActionListener(ActionEvent());
         gamePanel.add(combinationPanel1);
+        }
 
-        combinationPanel2.add(new diceImage(dices.get(0).get(0)));
-        combinationPanel2.add(new diceImage(dices.get(0).get(2)));
+        if(dices.size()>2){
+        combinationPanel2.add(new diceImage(dices.get(1).get(0)));
+        combinationPanel2.add(new diceImage(dices.get(1).get(1)));
         combinationPanel2.add(new JButton());
-        combinationPanel2.add(new diceImage(dices.get(0).get(1)));
-        combinationPanel2.add(new diceImage(dices.get(0).get(3)));
+        combinationPanel2.add(new diceImage(dices.get(1).get(2)));
+        combinationPanel2.add(new diceImage(dices.get(1).get(3)));
         gamePanel.add(combinationPanel2);
+        }
 
-        combinationPanel3.add(new diceImage(dices.get(0).get(0)));
-        combinationPanel3.add(new diceImage(dices.get(0).get(3)));
+        if(dices.size()>3){
+        combinationPanel3.add(new diceImage(dices.get(2).get(0)));
+        combinationPanel3.add(new diceImage(dices.get(2).get(1)));
         combinationPanel3.add(new JButton());
-        combinationPanel3.add(new diceImage(dices.get(0).get(1)));
-        combinationPanel3.add(new diceImage(dices.get(0).get(2)));
+        combinationPanel3.add(new diceImage(dices.get(2).get(2)));
+        combinationPanel3.add(new diceImage(dices.get(2).get(3)));
+        }
 
         gamePanel.add(combinationPanel3);
         otherPanel.setVisible(true);
         gamePanel.setVisible(true);
+
+    }
+
+    public void turn_end_bust(){
 
     }
 

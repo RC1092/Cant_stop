@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class FileManager {
@@ -38,7 +39,7 @@ public class FileManager {
             FileWriter saveWriter = new FileWriter(fileDir);
             saveWriter.write(turn.getCurrentPlayerKey() + System.getProperty("line.separator"));
             String turnOrderString = "";
-            for (int i = 0; i<players.size(); i++){
+            for (int i = 1; i<players.size() + 1; i++){
                 turnOrderString += i + "," + turn.getTurnOrder().get(i).getName() + ":";
             }
             saveWriter.write(turnOrderString + System.getProperty( "line.separator" ));
@@ -169,7 +170,23 @@ public class FileManager {
             }
             pieceLocations.add(individualPieceLocations);
         }
-        game.loadPieces(pieceLocations);
+        HashMap<Integer, Player> playOrder = new HashMap<>();
+        String[] playOrderLst = lines.get(1).split(":");
+        ArrayList<String[]> tempPlayParser = new ArrayList<>();
+        for (String item: playOrderLst){
+            tempPlayParser.add(item.split(","));
+        }
+
+        for (int i=0; i < tempPlayParser.size(); i++){
+            for (Player player: players){
+                if (player.getName().equals(tempPlayParser.get(i)[1])){
+                    playOrder.put(i+1,player);
+                }
+            }
+        }
+
+
+        game.loadGame(pieceLocations, Integer.parseInt(lines.get(0)), playOrder);
 
         frame.dispose();
     }

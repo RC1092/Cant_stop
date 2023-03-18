@@ -23,7 +23,9 @@ public class Game {
         fm.writeSave(turn, players);
     }
 
-    public void loadPieces(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations){
+    public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer, HashMap<Integer, Player> turnOrder){
+        turn.setCurrentPlayerkey(currentPlayer);
+        turn.setTurnOrder(turnOrder);
         for (int i = 0; i < players.size(); i++){
             ArrayList<pieces> pieces = players.get(i).getPieces();
             ArrayList<ArrayList<Integer>> playerPieceLocations = pieceLocations.get(i);

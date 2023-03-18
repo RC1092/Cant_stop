@@ -1,7 +1,4 @@
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-import javax.swing.border.Border;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
@@ -233,7 +230,6 @@ public class Board extends JFrame {
         otherPanel.setVisible(false);
         gamePanel.removeAll();
         otherPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
-        // gamePanel.setLayout((new GridLayout(5, 5)));
         gamePanel.setBorder(BorderFactory.createLineBorder(Color.GREEN));
 
         JPanel dicePanel = new JPanel(new FlowLayout());
@@ -288,4 +284,7 @@ public class Board extends JFrame {
 
     }
 
+    public Tile getTile(int x, int y){
+        return board[x][y];
+    }
 }

@@ -11,6 +11,7 @@ public class pieces extends JButton{
         this.setPreferredSize(new Dimension(120,120));
         this.shape = shape;
         this.color = color;
+        location = new Tile(-1,-1, false);
         this.setText(color);
         this.setBackground(Color.white);
         this.setForeground(Color.getColor(color,Color.BLACK));

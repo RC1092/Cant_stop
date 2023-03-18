@@ -4,28 +4,49 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class FileManager {
-    private Turn turn;
     private ArrayList<Player> players;
     private JPanel gridPanel;
+    ArrayList<String> lines;
     public FileManager (){
 
     }
 
+
+    //Save in following Format
+
+    /*  currentTurn (single integer)
+        turnOrder (0,firstPlayer:1,secondPlayer:...)
+        player1 (name:shape:color:score:)
+        player1PieceLocations (x,y:x,y:....)
+        player2 (name:shape:color:score)
+        player2PieceLocations (x,y:x,y:....)
+        player3 (name:shape:color:score:)
+        player3PieceLocations (x,y:x,y:....)
+        player4 (name:shape:color:score:)
+        player4PieceLocations (x,y:x,y:....)
+    */
+
     public void writeSave(Turn turn, ArrayList<Player> players){
-        this.turn = turn;
         this.players = players;
         try {
             String userDirectory = System.getProperty("user.dir");
             String fileDir = userDirectory + "\\CantStopSave.txt";
             File saveFile = new File(fileDir);
             FileWriter saveWriter = new FileWriter(fileDir);
+            saveWriter.write(turn.getCurrentPlayerKey() + System.getProperty("line.separator"));
+            String turnOrderString = "";
+            for (int i = 0; i<players.size(); i++){
+                turnOrderString += i + "," + turn.getTurnOrder().get(i).getName() + ":";
+            }
+            saveWriter.write(turnOrderString + System.getProperty( "line.separator" ));
             for (Player player: players){
-                String saveData = player.getName() + ":" + player.getShape() + ":" + player.getColor() + ":";
-                // for (pieces piece: player.getPieces()){
-                //     saveData += piece.getTile().getPosition();
-                // }
+                String saveData = player.getName() + ":" + player.getShape() + ":" + player.getColor() + ":" + player.getScore() + ":" + System.getProperty( "line.separator" );
+                for (pieces piece: player.getPieces()){
+                    saveData += piece.getTile().getPosition() + ":";
+                }
                 saveWriter.write(saveData + System.getProperty( "line.separator" ));
             }
             saveWriter.close();
@@ -38,10 +59,46 @@ public class FileManager {
 
 
     public void loadSave() {
-        fileWindow(tempBuildPlayerLst());
+        String userDirectory = System.getProperty("user.dir");
+        File saveFile = new File(userDirectory + "\\CantStopSave.txt");
+        ArrayList<String> scores = new ArrayList<>();
+        if (saveFile.exists()){
+            try{
+                lines = new ArrayList<>();
+                Scanner myReader = new Scanner(saveFile);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    lines.add(data);
+                }
+                myReader.close();
+            } catch (IOException e) {
+                System.out.println("IOException reading file");
+            }
+            players = new ArrayList<>();
+            String[] p1 = lines.get(2).split(":");
+            String[] p2 = lines.get(4).split(":");
+            players.add(new Player(p1[1], p1[2], p1[0]));
+            scores.add(p1[3]);
+            players.add(new Player(p2[1], p2[2], p2[0]));
+            scores.add(p2[3]);
+            if (lines.size() > 6){
+                String[] p3 = lines.get(6).split(":");
+                players.add(new Player(p3[1], p3[2], p3[0]));
+                scores.add(p3[3]);
+            }
+            if (lines.size() > 8){
+                String[] p4 = lines.get(8).split(":");
+                players.add(new Player(p4[1], p4[2], p4[0]));
+                scores.add(p4[3]);
+            }
+            fileWindow(players, scores);
+        } else{
+            players = new ArrayList<>();
+            fileWindow(players, scores);;
+        }
     }
 
-    private void fileWindow(ArrayList<Player> playerLst){
+    private void fileWindow(ArrayList<Player> playerLst, ArrayList<String>scores){
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(800,200+100*playerLst.size()));
         JPanel panel = new JPanel(new BorderLayout());
@@ -53,8 +110,8 @@ public class FileManager {
         gridPanel = new JPanel(new GridLayout(playerLst.size()+1,4));
 
         buildHeader();
-        for(Player player : playerLst){
-            readInfo(player);
+        for(int i = 0; i<playerLst.size(); i++){
+            readInfo(playerLst.get(i), scores.get(i));
         }
         JPanel buttonPanel = new JPanel(new FlowLayout());
         buttonPanel.setBackground(Color.red);
@@ -63,14 +120,14 @@ public class FileManager {
         loadGame.setOpaque(true);
         loadGame.setBackground(Color.white);
         loadGame.setForeground(Color.red);
-        loadGame.addActionListener(e-> loadGame());
+        loadGame.addActionListener(e-> loadGame(frame));
 
         JButton back = new JButton("<- Back");
         back.setFont(new Font("Calibre",Font.BOLD,20));
         back.setOpaque(true);
         back.setBackground(Color.white);
         back.setForeground(Color.red);
-        back.addActionListener(e->newGame());
+        back.addActionListener(e->newGame(frame));
         buttonPanel.add(back);
         buttonPanel.add(loadGame);
 
@@ -83,10 +140,38 @@ public class FileManager {
         frame.setVisible(true);
     }
 
-    private void newGame() {
+    private void newGame(JFrame frame) {
+        new StartUp();
+        frame.dispose();
     }
 
-    private void loadGame() {
+    private void loadGame(JFrame frame) {
+        Game game = new Game(players);
+        ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations = new ArrayList<>();
+        ArrayList<String[]> tempPlayerPieces = new ArrayList<>();
+        tempPlayerPieces.add(lines.get(3).split(":"));
+        tempPlayerPieces.add(lines.get(5).split(":"));
+        if (lines.size() > 6){
+            tempPlayerPieces.add(lines.get(7).split(":"));
+        }
+        if (lines.size() > 8){
+            tempPlayerPieces.add(lines.get(9).split(":"));
+        }
+        for (String[] playerPieces: tempPlayerPieces){
+            ArrayList<ArrayList<Integer>> individualPieceLocations = new ArrayList<>();
+            for (int i = 0; i<playerPieces.length; i++){
+                String[] strLoc = playerPieces[i].split(",");
+                ArrayList<Integer> intLoc = new ArrayList<>();
+                for (int j = 0; j<strLoc.length;j++){
+                    intLoc.add(Integer.parseInt(strLoc[j]));
+                }
+                individualPieceLocations.add(intLoc);
+            }
+            pieceLocations.add(individualPieceLocations);
+        }
+        game.loadPieces(pieceLocations);
+
+        frame.dispose();
     }
 
     private void buildHeader() {
@@ -109,11 +194,11 @@ public class FileManager {
         gridPanel.add(label);
     }
 
-    private void readInfo(Player player) {
+    private void readInfo(Player player, String playerScore) {
         JLabel name = new JLabel(player.getName());
         JLabel color = new JLabel(player.getColor());
         JLabel shape = new JLabel(player.getShape());
-        JLabel score = new JLabel(Integer.toString(player.getScore()));
+        JLabel score = new JLabel(playerScore);
         formatLabel(name);
         formatLabel(color);
         formatLabel(shape);
@@ -126,12 +211,4 @@ public class FileManager {
         label.setForeground(Color.white);
         label.setBorder(BorderFactory.createLineBorder(Color.white,4));
         gridPanel.add(label);}
-
-    private ArrayList<Player> tempBuildPlayerLst(){
-        ArrayList<Player> playerLst = new ArrayList<>();
-        playerLst.add(new Player("Circle","Yellow","Emily"));
-        playerLst.add(new Player("Square", "Blue", "Rushi"));
-        return playerLst;
-
-    }
 }

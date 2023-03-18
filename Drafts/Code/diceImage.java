@@ -1,6 +1,4 @@
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-
 import java.awt.*;
 
 
@@ -64,23 +62,4 @@ public class diceImage extends JButton{
 
             }
     }
-
-/*     public static void main(String[] args) {
-        JFrame frame = new JFrame();
-        JPanel panel = new JPanel(new FlowLayout());
-        diceImage d1 = new diceImage(1);
-        diceImage d2 = new diceImage(2);
-        diceImage d3 = new diceImage(3);
-        diceImage d4 = new diceImage(4);
-        diceImage d5 = new diceImage(5);
-        diceImage d6 = new diceImage(6);
-        panel.add(d1);
-        panel.add(d2);
-        panel.add(d3);
-        panel.add(d4);
-        panel.add(d5);
-        panel.add(d6);
-        frame.getContentPane().add(panel);
-        frame.setVisible(true);
-    } */
 }

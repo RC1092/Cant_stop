@@ -7,7 +7,10 @@ public class Turn {
     private ArrayList<Player> players;
     private Dice dice;
     private int currentTurn;
+
+    //Stores the turn order as a key value pair, keys are 1-numberofplayers (e.g 1,2,3,4) indicating the order they move in. Values are the Player objects. 
     private HashMap<Integer, Player> turnOrder;
+
     private ArrayList<pieces> movementPieces = new ArrayList<pieces>();
 
     public Turn(ArrayList<Player> players, Dice dice){
@@ -21,16 +24,19 @@ public class Turn {
     }
 
     private HashMap<Integer, Player> setTurnOrder(HashMap<Integer,Player> order){
-
-        HashMap<Integer, Player> turnOrder = new HashMap<Integer, Player>();
-        ArrayList<Integer> orderRolls = dice.getTurnOrderRolls(players.size());
-        for (int i =0; i < orderRolls.size(); i++){
-            int highest_remaining = Collections.max(orderRolls);
-            int index = orderRolls.indexOf(highest_remaining);
-            turnOrder.put(i + 1,players.get(index));
-            orderRolls.set(index, 0);
+        HashMap<Integer, Player> turnOrderSetter = new HashMap<Integer, Player>();
+        if (order.size() != 0){
+            turnOrder = order;
+        } else {
+            ArrayList<Integer> orderRolls = dice.getTurnOrderRolls(players.size());
+            for (int i =0; i < orderRolls.size(); i++){
+                int highest_remaining = Collections.max(orderRolls);
+                int index = orderRolls.indexOf(highest_remaining);
+                turnOrderSetter.put(i + 1,players.get(index));
+                orderRolls.set(index, 0);
+            }
         }
-        return turnOrder;
+        return turnOrderSetter;
     }
 
     public int getCurrentPlayerKey(){

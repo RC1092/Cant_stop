@@ -1,11 +1,8 @@
 
 
 import javax.swing.*;
-import javax.swing.GroupLayout.Alignment;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.util.ArrayList;
 import java.util.Random;
 
 public class winningDisplay extends JFrame{

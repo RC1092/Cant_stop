@@ -1,6 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.GradientPaint;
 
 public class Tile extends JButton {
     private int x, y;
@@ -30,7 +29,7 @@ public class Tile extends JButton {
     }
 
     public String getPosition() {
-        return "{" + x + "," + y + "}";
+        return x + "," + y;
     }
 
     public int getXValue() {

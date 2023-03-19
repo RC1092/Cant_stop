@@ -65,15 +65,16 @@ public class FileManager {
         if (saveFile.exists()){
             try{
                 Scanner myReader = new Scanner(saveFile);
-                while (myReader.hasNextLine()) {
-                    String data = myReader.nextLine();
-                    lines.add(data);
+                if (myReader.hasNextLine()) {
+                    myReader.close();
+                    return true;
+                    //lines.add(data);
                 }
-                myReader.close();
+
             } catch (IOException e) {
                 System.out.println("IOException reading file");
             }
-    }return lines.size()>0;}
+    }return false;}
     public void loadSave() {
         String userDirectory = System.getProperty("user.dir");
         File saveFile = new File(userDirectory + "\\CantStopSave.txt");
@@ -222,7 +223,7 @@ public class FileManager {
         label.setOpaque(true);
         label.setBackground(Color.white);
         label.setForeground(Color.red);
-        label.setBorder(BorderFactory.createLineBorder(Color.red,10));
+        label.setBorder(BorderFactory.createLineBorder(Color.red,4));
         gridPanel.add(label);
     }
 

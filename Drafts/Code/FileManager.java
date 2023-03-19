@@ -75,29 +75,30 @@ public class FileManager {
             } catch (IOException e) {
                 System.out.println("IOException reading file");
             }
-            players = new ArrayList<>();
-            String[] p1 = lines.get(2).split(":");
-            String[] p2 = lines.get(4).split(":");
-            players.add(new Player(p1[1], p1[2], p1[0]));
-            scores.add(p1[3]);
-            players.add(new Player(p2[1], p2[2], p2[0]));
-            scores.add(p2[3]);
-            if (lines.size() > 6){
-                String[] p3 = lines.get(6).split(":");
-                players.add(new Player(p3[1], p3[2], p3[0]));
-                scores.add(p3[3]);
+            if (lines.size()>0){
+                players = new ArrayList<>();
+                String[] p1 = lines.get(2).split(":");
+                String[] p2 = lines.get(4).split(":");
+                players.add(new Player(p1[1], p1[2], p1[0]));
+                scores.add(p1[3]);
+                players.add(new Player(p2[1], p2[2], p2[0]));
+                scores.add(p2[3]);
+                if (lines.size() > 6){
+                    String[] p3 = lines.get(6).split(":");
+                    players.add(new Player(p3[1], p3[2], p3[0]));
+                    scores.add(p3[3]);
             }
-            if (lines.size() > 8){
-                String[] p4 = lines.get(8).split(":");
-                players.add(new Player(p4[1], p4[2], p4[0]));
-                scores.add(p4[3]);
+                if (lines.size() > 8){
+                    String[] p4 = lines.get(8).split(":");
+                    players.add(new Player(p4[1], p4[2], p4[0]));
+                    scores.add(p4[3]);
             }
-            fileWindow(players, scores);
-        } else{
-            players = new ArrayList<>();
-            fileWindow(players, scores);;
+                fileWindow(players, scores);
+        }       else{
+                    players = new ArrayList<>();
+                    fileWindow(players, scores);;
         }
-    }
+    }}
 
     private void fileWindow(ArrayList<Player> playerLst, ArrayList<String>scores){
         JFrame frame = new JFrame();

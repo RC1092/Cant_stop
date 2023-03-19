@@ -10,6 +10,7 @@ public class StartUp extends JFrame {
     private JComboBox<String> dropDown;
     private Timer timer;
     private JLabel cantStop;
+    private JPanel start;
 
     public StartUp(){
         this.setLayout(new GridLayout(3,1));
@@ -26,7 +27,7 @@ public class StartUp extends JFrame {
         title.setBackground(Color.red);
         JPanel select = new JPanel(new FlowLayout());
         select.setBackground(Color.red);
-        JPanel start = new JPanel(new FlowLayout());
+        start = new JPanel(new FlowLayout());
         start.setBackground(Color.red);
 
         cantStop = new JLabel("");
@@ -78,9 +79,17 @@ public class StartUp extends JFrame {
     }
 
     private void loadSaveGame() {
-        setVisible(false);
         FileManager file = new FileManager();
-        file.loadSave();
+        if (file.loadSave()){
+            setVisible(false);
+        }
+        else{
+            JLabel noGame = new JLabel("       No Saved Games       ");
+            noGame.setFont(new Font("Calibre",Font.BOLD,25));
+            noGame.setForeground(Color.white);
+            start.add(noGame);
+
+        }
     }
 
     public void setNumPlayers() {

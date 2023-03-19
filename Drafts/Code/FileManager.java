@@ -59,9 +59,10 @@ public class FileManager {
     }
 
 
-    public void loadSave() {
+    public boolean loadSave() {
         String userDirectory = System.getProperty("user.dir");
         File saveFile = new File(userDirectory + "\\CantStopSave.txt");
+        boolean isFile = false;
         ArrayList<String> scores = new ArrayList<>();
         if (saveFile.exists()){
             try{
@@ -75,7 +76,8 @@ public class FileManager {
             } catch (IOException e) {
                 System.out.println("IOException reading file");
             }
-            if (lines.size()>0){
+            if (lines.size()>0) {
+                isFile = true;
                 players = new ArrayList<>();
                 String[] p1 = lines.get(2).split(":");
                 String[] p2 = lines.get(4).split(":");
@@ -83,22 +85,22 @@ public class FileManager {
                 scores.add(p1[3]);
                 players.add(new Player(p2[1], p2[2], p2[0]));
                 scores.add(p2[3]);
-                if (lines.size() > 6){
+                if (lines.size() > 6) {
                     String[] p3 = lines.get(6).split(":");
                     players.add(new Player(p3[1], p3[2], p3[0]));
                     scores.add(p3[3]);
-            }
-                if (lines.size() > 8){
+                }
+                if (lines.size() > 8) {
                     String[] p4 = lines.get(8).split(":");
                     players.add(new Player(p4[1], p4[2], p4[0]));
                     scores.add(p4[3]);
-            }
+                }
                 fileWindow(players, scores);
-        }       else{
+            }     else{
                     players = new ArrayList<>();
                     fileWindow(players, scores);;
         }
-    }}
+    }return isFile;}
 
     private void fileWindow(ArrayList<Player> playerLst, ArrayList<String>scores){
         JFrame frame = new JFrame();

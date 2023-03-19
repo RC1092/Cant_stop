@@ -3,7 +3,7 @@ import java.awt.*;
 
 
 
-public class pieces extends JButton{
+public class pieces extends Tile{
     private String shape;
     private String color;
     private Tile location;
@@ -93,6 +93,9 @@ public class pieces extends JButton{
 
     public Tile getTile () {
         return location;
+    }
+    public int getRow(){
+        return location.getRow();
     }
     public int getColumn(){
         return location.getColumn();

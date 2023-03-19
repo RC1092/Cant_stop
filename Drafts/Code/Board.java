@@ -1,6 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Board extends JFrame {
@@ -10,11 +12,14 @@ public class Board extends JFrame {
     private JPanel gamePanel;
     private JPanel otherPanel;
     private JMenuBar saveMenu;
+    private JButton dice;
+    private JButton endTurn;
 
     public Board(Game game, ArrayList<Player> players) {
         this.players = players;
         this.game = game;
         this.setSize(new Dimension(1000, 900));
+        
         saveMenu = new JMenuBar();
         JMenuItem saveButton = new JMenuItem("Save");
         saveButton.addActionListener(e -> {
@@ -169,14 +174,17 @@ public class Board extends JFrame {
 
     private void buildSide() {
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
+        buttonPanel.setVisible(false);
+        buttonPanel.removeAll();
         otherPanel = new JPanel(new GridLayout(3, 1));
         gamePanel = new JPanel(new GridLayout(3, 1));
+    
         JPanel infoPanel = new JPanel(new GridLayout(players.size() + 1, 3));
         gamePanel.setBackground(Color.red);
         otherPanel.setBackground(Color.red);
         infoPanel.setBackground(Color.red);
 
-        JButton dice = new JButton("Roll Dice");
+        dice = new JButton("Roll Dice");
         dice.setFont(new Font("Calibre", Font.BOLD, 20));
         dice.addActionListener(e -> {
             RollDice();
@@ -186,7 +194,7 @@ public class Board extends JFrame {
         dice.setForeground(Color.red);
         gamePanel.add(dice);
 
-        JButton endTurn = new JButton("End Turn");
+        endTurn = new JButton("End Turn");
         endTurn.setFont(new Font("Calibre", Font.BOLD, 20));
         endTurn.setOpaque(true);
         endTurn.setBackground(Color.white);
@@ -209,9 +217,11 @@ public class Board extends JFrame {
             infoPanel.add(playerScore);
         }
 
+    
         buttonPanel.add(otherPanel);
         buttonPanel.add(gamePanel);
         buttonPanel.add(infoPanel);
+        buttonPanel.setVisible(true);
         getContentPane().add(buttonPanel, BorderLayout.EAST);
     }
 
@@ -248,18 +258,7 @@ public class Board extends JFrame {
         dicePanel.add(new diceImage(dices.get(0).get(3)));
         otherPanel.add(label1);
 
-        if (dices == null){
-            JLabel label3 = new JLabel("You Have busted!");
-            JButton next_turn = new JButton("Next Turn");
-            next_turn.addActionListener((ActionEvent e)->{turn_end_bust();});
-            label3.setFont(new Font(getName(), Font.BOLD, 25));
-            label3.setForeground(Color.white);
-            label3.setHorizontalAlignment(SwingConstants.CENTER);
-            dicePanel.add(label3);
-            dicePanel.add(next_turn);
-            
-            return;
-        }
+
         otherPanel.add(dicePanel);
         //otherPanel.add(label2);
         dicePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
@@ -271,37 +270,58 @@ public class Board extends JFrame {
         JPanel combinationPanel3 = new JPanel(new FlowLayout());
         combinationPanel3.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight() / 4));
 
-        if (dices.size() >1 ){
+        if (dices.size() >0 ){
         combinationPanel1.add(new diceImage(dices.get(0).get(0)));
         combinationPanel1.add(new diceImage(dices.get(0).get(1)));
         combinationPanel1.add(new JButton());
         combinationPanel1.add(new diceImage(dices.get(0).get(2)));
         combinationPanel1.add(new diceImage(dices.get(0).get(3)));
-        //combinationPanel1.addActionListener(ActionEvent());
+        combinationPanel1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {movePiece(dices.get(0));}});
         gamePanel.add(combinationPanel1);
         }
 
-        if(dices.size()>2){
+        if(dices.size()>1){
         combinationPanel2.add(new diceImage(dices.get(1).get(0)));
         combinationPanel2.add(new diceImage(dices.get(1).get(1)));
         combinationPanel2.add(new JButton());
         combinationPanel2.add(new diceImage(dices.get(1).get(2)));
         combinationPanel2.add(new diceImage(dices.get(1).get(3)));
+        combinationPanel2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {movePiece(dices.get(1));}});
         gamePanel.add(combinationPanel2);
         }
 
-        if(dices.size()>3){
+        if(dices.size()>2){
         combinationPanel3.add(new diceImage(dices.get(2).get(0)));
         combinationPanel3.add(new diceImage(dices.get(2).get(1)));
         combinationPanel3.add(new JButton());
         combinationPanel3.add(new diceImage(dices.get(2).get(2)));
         combinationPanel3.add(new diceImage(dices.get(2).get(3)));
+        combinationPanel3.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {movePiece(dices.get(2));}});
+        gamePanel.add(combinationPanel3);
         }
 
-        gamePanel.add(combinationPanel3);
         otherPanel.setVisible(true);
         gamePanel.setVisible(true);
 
+    }
+
+    public void movePiece(ArrayList<Integer> selected_combintion){
+        gamePanel.setVisible(false);
+        otherPanel.setVisible(false);
+        gamePanel.removeAll();
+        otherPanel.removeAll();
+        gamePanel.add(dice);
+        gamePanel.add(endTurn);
+        gamePanel.setVisible(true);
+        otherPanel.setVisible(true);
+        
+        game.getTurn().movePiece(selected_combintion);
     }
 
     public void turn_end_bust(){
@@ -310,5 +330,10 @@ public class Board extends JFrame {
 
     public Tile getTile(int x, int y){
         return board[x][y];
+    }
+    public void updateGameBoard(ArrayList<pieces> pieces){
+        pieces.forEach((e) -> {
+            board[e.getColumn()][e.getRow()] = e;
+        });
     }
 }

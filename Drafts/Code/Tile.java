@@ -102,4 +102,7 @@ public class Tile extends JButton {
     public int getColumn(){
         return y;
     }
+    public int getRow(){
+        return x;
+    }
 }

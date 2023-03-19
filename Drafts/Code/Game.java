@@ -1,5 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
+import javax.swing.ImageIcon;
 
 public class Game {
     private ArrayList<Player> players;
@@ -21,6 +23,11 @@ public class Game {
     public void saveGame(){
         FileManager fm = new FileManager();
         fm.writeSave(turn, players);
+        ImageIcon originalIcon = new ImageIcon(Game.class.getResource("success.png"));
+        ImageIcon resizedIcon = new ImageIcon(originalIcon.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
+        JOptionPane.showMessageDialog(null, "Game saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
+
+        
     }
 
     public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer, HashMap<Integer, Player> turnOrder){

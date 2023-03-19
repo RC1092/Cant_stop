@@ -30,7 +30,7 @@ public class Board extends JFrame {
         buildSide();
         setResizable(true);
         setVisible(true);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void buildBoard() {

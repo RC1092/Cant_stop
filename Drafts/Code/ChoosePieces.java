@@ -207,7 +207,10 @@ public class ChoosePieces extends JFrame {
                 createPlayer(i);}
             Game game = new Game(playerLst);
         setVisible(false);}
-        else{ dupeWarning.setText("Make sure you have selected unique choices. (Name, Shape and Color must be different)");}
+        else{ 
+            dupeWarning.setText("Make sure you have selected unique choices. (Name, Shape and Color must be different)");
+            JOptionPane.showMessageDialog(null, "Make sure you have selected unique choices. (Name, Shape and Color must be different)", "Game Failed",JOptionPane.ERROR_MESSAGE);
+        }
 
 
     }

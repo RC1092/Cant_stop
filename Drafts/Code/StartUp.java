@@ -1,5 +1,4 @@
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -43,6 +42,13 @@ public class StartUp extends JFrame {
         startGame.setForeground(Color.red);
         startGame.addActionListener(e -> setNumPlayers());
 
+        JButton loadGame = new JButton("Load Game");
+        loadGame.setFont(new Font("Calibre",Font.BOLD,20));
+        loadGame.setOpaque(true);
+        loadGame.setBackground(Color.white);
+        loadGame.setForeground(Color.red);
+        loadGame.addActionListener(e -> loadSaveGame());
+
         JLabel numPlayers = new JLabel("Number of Players: ");
         numPlayers.setFont(new Font("Calibre",Font.BOLD,25));
         numPlayers.setOpaque(true);
@@ -66,8 +72,15 @@ public class StartUp extends JFrame {
         select.add(numPlayers);
         select.add(dropDown);
         start.add(startGame);
+        start.add(loadGame);
 
 
+    }
+
+    private void loadSaveGame() {
+        setVisible(false);
+        FileManager file = new FileManager();
+        file.loadSave();
     }
 
     public void setNumPlayers() {

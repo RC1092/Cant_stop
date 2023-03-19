@@ -42,7 +42,7 @@ public class Player {
         return shape;
     }
 
-    public ArrayList<pieces> gPieces() {
+    public ArrayList<pieces> getPieces() {
         return piecesList;
     }
     private void displayWinner(){

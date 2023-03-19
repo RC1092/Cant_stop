@@ -26,16 +26,26 @@ public class ChoosePieces extends JFrame {
         playerLst = new ArrayList<>();
         JPanel header = new JPanel(new FlowLayout());
         header.setBackground(Color.red);
+
+        JButton back = new JButton("<- Back");
+        back.setFont(new Font("Calibre",Font.BOLD,20));
+        back.setOpaque(true);
+        back.setBackground(Color.white);
+        back.setForeground(Color.red);
+        back.addActionListener(e-> back());
+
         JButton startGame = new JButton("Start Game");
         startGame.setFont(new Font("Calibre",Font.BOLD,20));
         startGame.setOpaque(true);
         startGame.setBackground(Color.white);
         startGame.setForeground(Color.red);
+
         dupeWarning = new JLabel("Note: Each Shape, Color, Name must be unique for game to begin", SwingConstants.CENTER);
         dupeWarning.setFont(new Font("Calibre",Font.BOLD,15));
         dupeWarning.setOpaque(true);
         dupeWarning.setBackground(Color.white);
         dupeWarning.setForeground(Color.red);
+        header.add(back);
         header.add(startGame);
         startGame.addActionListener(e->checkValidChoices());
 
@@ -52,6 +62,11 @@ public class ChoosePieces extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         }
+
+    private void back() {
+        setVisible(false);
+        StartUp start = new StartUp();
+    }
 
     private void formatLabel(JLabel label){
             label.setFont(new Font("Calibre",Font.BOLD,25));

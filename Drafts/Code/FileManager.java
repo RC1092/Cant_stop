@@ -61,7 +61,7 @@ public class FileManager {
     public boolean isFile(){
         String userDirectory = System.getProperty("user.dir");
         File saveFile = new File(userDirectory + "\\CantStopSave.txt");
-        lines = new ArrayList<>();
+        //lines = new ArrayList<>();
         if (saveFile.exists()){
             try{
                 Scanner myReader = new Scanner(saveFile);

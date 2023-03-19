@@ -58,7 +58,22 @@ public class FileManager {
         }
     }
 
-
+    public boolean isFile(){
+        String userDirectory = System.getProperty("user.dir");
+        File saveFile = new File(userDirectory + "\\CantStopSave.txt");
+        lines = new ArrayList<>();
+        if (saveFile.exists()){
+            try{
+                Scanner myReader = new Scanner(saveFile);
+                while (myReader.hasNextLine()) {
+                    String data = myReader.nextLine();
+                    lines.add(data);
+                }
+                myReader.close();
+            } catch (IOException e) {
+                System.out.println("IOException reading file");
+            }
+    }return lines.size()>0;}
     public boolean loadSave() {
         String userDirectory = System.getProperty("user.dir");
         File saveFile = new File(userDirectory + "\\CantStopSave.txt");

@@ -11,11 +11,13 @@ public class StartUp extends JFrame {
     private Timer timer;
     private JLabel cantStop;
     private JPanel start;
+    private FileManager file;
 
     public StartUp(){
         this.setLayout(new GridLayout(3,1));
         this.setSize(new Dimension(600,600));
         numberOptions = new String[]{" ","2","3","4"};
+        file = new FileManager();
         buildPanels();
         setResizable(false);
         setVisible(true);
@@ -43,12 +45,6 @@ public class StartUp extends JFrame {
         startGame.setForeground(Color.red);
         startGame.addActionListener(e -> setNumPlayers());
 
-        JButton loadGame = new JButton("Load Game");
-        loadGame.setFont(new Font("Calibre",Font.BOLD,20));
-        loadGame.setOpaque(true);
-        loadGame.setBackground(Color.white);
-        loadGame.setForeground(Color.red);
-        loadGame.addActionListener(e -> loadSaveGame());
 
         JLabel numPlayers = new JLabel("Number of Players: ");
         numPlayers.setFont(new Font("Calibre",Font.BOLD,25));
@@ -73,7 +69,15 @@ public class StartUp extends JFrame {
         select.add(numPlayers);
         select.add(dropDown);
         start.add(startGame);
-        start.add(loadGame);
+
+        if(file.isFile()){
+            JButton loadGame = new JButton("Load Game");
+            loadGame.setFont(new Font("Calibre",Font.BOLD,20));
+            loadGame.setOpaque(true);
+            loadGame.setBackground(Color.white);
+            loadGame.setForeground(Color.red);
+            loadGame.addActionListener(e -> loadSaveGame());
+            start.add(loadGame);}
 
 
     }

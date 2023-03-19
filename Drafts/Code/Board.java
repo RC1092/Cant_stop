@@ -17,6 +17,9 @@ public class Board extends JFrame {
         this.setSize(new Dimension(1000, 900));
         saveMenu = new JMenuBar();
         JMenuItem saveButton = new JMenuItem("Save");
+        saveButton.setBackground(Color.red);
+        saveButton.setForeground(Color.white);
+        saveButton.setFont(new Font("Calibrie",Font.BOLD,15));
         saveButton.addActionListener(e -> {
             game.saveGame();
         });

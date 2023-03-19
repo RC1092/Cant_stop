@@ -84,17 +84,17 @@ public class StartUp extends JFrame {
 
     private void loadSaveGame() {
         FileManager file = new FileManager();
-        if (file.loadSave()){
-            setVisible(false);
+        setVisible(false);
+        file.loadSave();
         }
-        else{
+        /*else{
             JLabel noGame = new JLabel("       No Saved Games       ");
             noGame.setFont(new Font("Calibre",Font.BOLD,25));
             noGame.setForeground(Color.white);
             start.add(noGame);
 
-        }
-    }
+        }*/
+
 
     public void setNumPlayers() {
         if (!(dropDown.getSelectedItem()).equals(" ")){

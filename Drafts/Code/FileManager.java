@@ -118,6 +118,7 @@ public class FileManager {
     private void fileWindow(ArrayList<Player> playerLst, ArrayList<String>scores){
         JFrame frame = new JFrame();
         frame.setSize(new Dimension(800,200+100*playerLst.size()));
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = new JPanel(new BorderLayout());
         JLabel gameSummary = new JLabel("Game Summary");
         gameSummary.setFont(new Font("Calibre",Font.BOLD,25));

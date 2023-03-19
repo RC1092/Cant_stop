@@ -23,7 +23,7 @@ public class Turn {
         }
     }
 
-    private HashMap<Integer, Player> setTurnOrder(HashMap<Integer,Player> order){
+    public HashMap<Integer, Player> setTurnOrder(HashMap<Integer,Player> order){
         HashMap<Integer, Player> turnOrderSetter = new HashMap<Integer, Player>();
         if (order.size() != 0){
             turnOrder = order;

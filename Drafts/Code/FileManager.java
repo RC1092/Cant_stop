@@ -143,7 +143,7 @@ public class FileManager {
 
     private void newGame(JFrame frame) {
         new StartUp();
-        frame.dispose();
+        frame.setVisible(false);
     }
 
     private void loadGame(JFrame frame) {

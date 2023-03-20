@@ -18,7 +18,7 @@ public class Turn {
         this.players = players;
         this.dice = dice;
         this.board = board;
-        turnOrder = this.setTurnOrder(new HashMap<Integer, Player>());
+        this.setTurnOrder(new HashMap<Integer, Player>());
         currentTurn = 1;
         //players.forEach(e -> InvalidColumns.addAll(e.getColumns()));
         while (movementPieces.size() < 3){
@@ -26,7 +26,7 @@ public class Turn {
         }
     }
 
-    public HashMap<Integer, Player> setTurnOrder(HashMap<Integer,Player> order){
+    public void setTurnOrder(HashMap<Integer,Player> order){
         HashMap<Integer, Player> turnOrderSetter = new HashMap<Integer, Player>();
         if (order.size() != 0){
             turnOrder = order;
@@ -38,8 +38,8 @@ public class Turn {
                 turnOrderSetter.put(i + 1,players.get(index));
                 orderRolls.set(index, 0);
             }
+            turnOrder = turnOrderSetter;
         }
-        return turnOrderSetter;
     }
 
     public int getCurrentPlayerKey(){

@@ -22,6 +22,9 @@ public class Board extends JFrame {
         
         saveMenu = new JMenuBar();
         JMenuItem saveButton = new JMenuItem("Save");
+        saveButton.setBackground(Color.red);
+        saveButton.setForeground(Color.white);
+        saveButton.setFont(new Font("Calibrie",Font.BOLD,15));
         saveButton.addActionListener(e -> {
             game.saveGame();
         });
@@ -33,7 +36,7 @@ public class Board extends JFrame {
         buildSide();
         setResizable(true);
         setVisible(true);
-
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     private void buildBoard() {

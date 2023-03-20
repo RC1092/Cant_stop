@@ -27,6 +27,7 @@ public class Board extends JFrame {
         });
         saveMenu.add(saveButton);
         this.setJMenuBar(saveMenu);
+        board = new Tile[13][13];
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
         buildSide();
@@ -39,7 +40,7 @@ public class Board extends JFrame {
         JPanel boardPanel = new JPanel(new GridLayout(13, 13));
         boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
-        board = new Tile[13][13];
+        
         for (int x = 0; x < 13; x++) {
             for (int y = 0; y < 13; y++) {
                 if (checkTile(x, y)) {
@@ -199,6 +200,9 @@ public class Board extends JFrame {
         endTurn.setOpaque(true);
         endTurn.setBackground(Color.white);
         endTurn.setForeground(Color.red);
+        endTurn.addActionListener(e -> {
+            game.getTurn().endTurn();;
+        });
         gamePanel.add(endTurn);
 
         JLabel playersNames = new JLabel("Players");
@@ -259,8 +263,9 @@ public class Board extends JFrame {
         otherPanel.add(label1);
 
 
+
         otherPanel.add(dicePanel);
-        //otherPanel.add(label2);
+        otherPanel.add(label2);
         dicePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
         JPanel combinationPanel1 = new JPanel(new FlowLayout());
@@ -333,7 +338,7 @@ public class Board extends JFrame {
     }
     public void updateGameBoard(ArrayList<pieces> pieces){
         pieces.forEach((e) -> {
-            board[e.getColumn()][e.getRow()] = e;
+            board[e.getColumn()][e.getRow()].add(e);
         });
     }
 }

@@ -10,7 +10,7 @@ public class Turn {
     private Board board;
     //Stores the turn order as a key value pair, keys are 1-numberofplayers (e.g 1,2,3,4) indicating the order they move in. Values are the Player objects. 
     private HashMap<Integer, Player> turnOrder;
-    private ArrayList<pieces> runners;
+    private ArrayList<pieces> runners = new ArrayList<pieces>();
 
     private ArrayList<pieces> movementPieces = new ArrayList<pieces>();
 
@@ -89,66 +89,72 @@ public class Turn {
     public void movePiece(ArrayList<Integer> selected_combination){
         int col1 = selected_combination.get(0) + selected_combination.get(1); 
         int col2 = selected_combination.get(2) + selected_combination.get(3); 
+        System.out.println("Combinations selected: "+col1+" "+col2);
+        runners.forEach(e -> System.out.println("Runner location before change"+" "+e.getColumn()+" " +e.getRow()));
         ArrayList<Integer> cols= new ArrayList<Integer>(){{add(col1); add(col2);}};
-        if (runners == null){
+        if (runners.size() == 0){
             if(col1 == col2){
+                System.out.println("Case with no runners and same combination.");
                 pieces runner = new pieces("Arrow", "White");
-                runner.setLocation(board.getTile(col1,Math.abs(7-col1)+1));
+                runner.setLocation(board.getTile(col1-1,12-Math.abs(7-col1)-1));
                 runners.add(runner);
             }else {
+                System.out.println("Case with no runners and different combination.");
                 pieces runner1 = new pieces("Arrow", "White");
-                runner1.setLocation(board.getTile(col1,Math.abs(7-col1)));
+                runner1.setLocation(board.getTile(col1-1,12-Math.abs(7-col1)));
                 runners.add(runner1);
                 pieces runner2 = new pieces("Arrow", "White");
-                runner2.setLocation(board.getTile(col2,Math.abs(7-col2)));
+                runner2.setLocation(board.getTile(col2-1,12-Math.abs(7-col2)));
                 runners.add(runner2);
             }
     
         }
         else if(runners.size() == 3){
-            runners.forEach((e) -> {if(e.getColumn() == col1 || e.getColumn() == col2){e.setLocation(board.getTile(e.getColumn(),e.getRow()+1));}});   
+            System.out.println("Case with 3 runners");
+            runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
+                System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});   
+            runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
+                    System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});
 
-        }
+                }
         else {
-            runners.forEach(e -> { if(e.getColumn() == col1 || e.getColumn() == col2){e.setLocation(board.getTile(e.getColumn(),e.getRow()+1));cols.removeIf(r ->  r==e.getColumn());}});
-            if (cols != null && cols.size() == 1){
+
+            System.out.println("Case with 3 runners");
+            runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
+                System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});   
+            runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
+                    System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});
+            if (cols.size() == 1){
+                    System.out.println("Case with 1 or 2 runners where the one column is new ");
                     pieces runner2 = new pieces("Arrow", "White");
-                    runner2.setLocation(board.getTile(cols.get(0),Math.abs(7-cols.get(0))));
+                    runner2.setLocation(board.getTile(cols.get(0)-1,12-Math.abs(7-cols.get(0))));
                     runners.add(runner2);    
             }
-            if (cols != null && cols.size() == 2){
-                
+            if (cols.size() == 2){
+                        System.out.println("Case with 1 or 2 runners where the both column are new ");
                         pieces runner2 = new pieces("Arrow", "White");
-                        runner2.setLocation(board.getTile(cols.get(0),Math.abs(7-cols.get(0))));
+                        runner2.setLocation(board.getTile(cols.get(0)-1,12-Math.abs(7-cols.get(0))));
                         runners.add(runner2);
                     
                         if (runners.size() < 3 ){
                             pieces runner3 = new pieces("Arrow", "White");
-                            runner3.setLocation(board.getTile(cols.get(1),Math.abs(7-cols.get(1))));
+                            runner3.setLocation(board.getTile(cols.get(1)-1,12-Math.abs(7-cols.get(1))));
                             runners.add(runner3);
                         }
             }
         
         }
+        runners.forEach(e -> System.out.println("Runner location after change"+" "+e.getColumn()+" " +e.getRow()));
         board.updateGameBoard(runners);
     }
 
-    //Called when a player elects to end their turn. Once called will set all moved pieces to their new location.
-    public void endTurn(){ //Arg will be movementPieces: ArrayList<MovementPieces> once movementPieces are implemented
-        //move pieces
-        //for each piece getPosition(): Tile
-        //for each postion; tile
-        /*
-        if(tile.checkEndTile()){
-            Player currentPlayer = turnOrder.get(currentTurn);
-            currentPlayer.captureColumn(); //(Arg) Tile Position
-        }
-
-        if (currentTurn < players.size()){
-            currentTurn ++;
-        } else{
-            currentTurn = 1;
-        }
-        */
+  
+    public void endTurn(){ 
+        int num = turnOrder.size();
+        Player current_player = turnOrder.get(currentTurn);
+        ArrayList<pieces> player_Pieces = turnOrder.get(currentTurn).getPieces();
+        runners.forEach(e -> {e.setAttributes(current_player.getColor(), current_player.getShape());player_Pieces.add(e);});
+        runners = new ArrayList<pieces>();
+        board.updateGameBoard(player_Pieces);
     }
 }

@@ -3,17 +3,19 @@ import java.awt.*;
 
 
 
-public class pieces extends Tile{
+public class pieces extends JButton{
     private String shape;
     private String color;
     private Tile location;
     public pieces(String shape, String color){
-        this.setPreferredSize(new Dimension(120,120));
+
+        //this.setPreferredSize(new Dimension(120,120));
+        
         this.shape = shape;
         this.color = color;
         location = new Tile(-1,-1, false);
         this.setText(color);
-        this.setBackground(Color.white);
+        this.setBackground(Color.RED);
         this.setForeground(Color.getColor(color,Color.BLACK));
         setColor();    
     }
@@ -89,6 +91,12 @@ public class pieces extends Tile{
 
     public void setLocation (Tile tile){
         location = tile;
+    }
+    public void setAttributes(String color, String shape){
+        this.color = color;
+        this.shape = shape;
+        paintComponent(getGraphics());
+        setColor();
     }
 
     public Tile getTile () {

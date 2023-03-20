@@ -1,14 +1,14 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class Tile extends JButton {
+public class Tile extends JPanel {
     private int x, y;
     private boolean endTile;
 
     public Tile(int x, int y, boolean gameTile) {
         this.x = x;
         this.y = y;
-
+        setLayout(new GridLayout(1, 1));
         endTile = false;
 
         setOpaque(true);
@@ -53,7 +53,7 @@ public class Tile extends JButton {
             setBackground(new Color(149, 240, 252));
             g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
-            setBorderPainted(false);
+            //setBorderPainted(false);
 
         }
         // Upper right part of game
@@ -67,7 +67,7 @@ public class Tile extends JButton {
             setBackground(new Color(149, 240, 252));
             g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
-            setBorderPainted(false);
+            //setBorderPainted(false);
         }
         // Lower left part of game
         else if ((getXValue() == 8 && getYValue() == 0) || (getXValue() == 9 && getYValue() == 1)
@@ -80,7 +80,7 @@ public class Tile extends JButton {
             setBackground(new Color(149, 240, 252));
             g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
-            setBorderPainted(false);
+            //setBorderPainted(false);
         }
         // Lower Right part of game
         else if ((getXValue() == 8 && getYValue() == 12) || (getXValue() == 9 && getYValue() == 11)
@@ -93,7 +93,7 @@ public class Tile extends JButton {
             setBackground(new Color(149, 240, 252));
             g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
-            setBorderPainted(false);
+            //setBorderPainted(false);
         } else {
             super.paintComponent(g);
         }
@@ -104,5 +104,9 @@ public class Tile extends JButton {
     }
     public int getRow(){
         return x;
+    }
+    public void setText(String text){
+        JLabel label= new JLabel(text);
+        this.add(label);
     }
 }

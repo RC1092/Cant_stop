@@ -44,12 +44,4 @@ public class Game {
         }
     }
 
-    public static void main(String[] argv){
-        Player p1 = new  Player("Square","Green","chaman1");
-        Player p2 = new  Player("Triangle","Orange","chaman2");
-        ArrayList<Player> list = new ArrayList<Player>();
-        list.add(p1);
-        list.add(p2);
-        Game game = new Game(list);
-    }
 }

@@ -60,18 +60,16 @@ public class Turn {
         ArrayList<ArrayList<Integer>> combinations = new ArrayList<>();
         ArrayList<Integer> values = dice.makeTurnRoll();
         //Stores the dice pairs into combinations as ordered ArrayList. So [1,2,3,4] means the pairs 1,2 + 3,4
-        combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
-
-        if (runners.size() == 1 || runners.size() == 0 || runners.size() == 2){
+        
+        if (runners == null || runners.size() < 3){
             combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
             combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(2), values.get(3), values.get(0))));
             combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(3), values.get(2), values.get(0))));
-            
+            //return combinations;
         }
         else if(runners.size() == 3){
             ArrayList<Integer> valids = new ArrayList<>();
-            runners.forEach(e -> valids.add(e.getRow()+1));
-
+            runners.forEach(e -> valids.add(e.getColumn()));
             if(valids.contains(values.get(0)+values.get(1))||valids.contains(values.get(2)+values.get(3))){
                 combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
                 
@@ -116,18 +114,18 @@ public class Turn {
         else if(runners.size() == 3){
             System.out.println("Case with 3 runners");
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});   
+                System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});   
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                    System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});
+                    System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});
 
                 }
         else {
 
-            
+            System.out.println("Case with 3 runners");
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});   
+                System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});   
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                    System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});
+                    System.out.println("Column Match");cols.removeIf(r ->  r==e.getRow()+1);}});
             if (cols.size() == 1){
                     System.out.println("Case with 1 or 2 runners where the one column is new ");
                     pieces runner2 = new pieces("Arrow", "White");
@@ -139,13 +137,11 @@ public class Turn {
                         pieces runner2 = new pieces("Arrow", "White");
                         runner2.setLocation(board.getTile(cols.get(0)-1,12-Math.abs(7-cols.get(0))));
                         runners.add(runner2);
-
+                    
                         if (runners.size() < 3 ){
-                            if (col1 == col2){runner2.setLocation(board.getTile(cols.get(0)-1,12+1-Math.abs(7-cols.get(0))));}
-                            else {
                             pieces runner3 = new pieces("Arrow", "White");
                             runner3.setLocation(board.getTile(cols.get(1)-1,12-Math.abs(7-cols.get(1))));
-                            runners.add(runner3);}
+                            runners.add(runner3);
                         }
             }
         
@@ -159,25 +155,13 @@ public class Turn {
         int num = turnOrder.size();
         Player current_player = turnOrder.get(currentTurn);
         ArrayList<pieces> player_Pieces = turnOrder.get(currentTurn).getPieces();
-        runners.forEach(e -> {e.setAttributes(current_player.getColor(), current_player.getShape());player_Pieces.set(e.getRow()-1,e);});
+    runners.forEach(e -> {e.setAttributes(current_player.getColor(), current_player.getShape()); /*player_Pieces.add(e);*/});
         runners = new ArrayList<pieces>();
-        if(currentTurn == num +1){
+        //board.updateGameBoard(player_Pieces);
+        if (currentTurn == turnOrder.size()){
             currentTurn = 1;
-        }else {
-            currentTurn +=1 ;
+        } else {
+            currentTurn++;
         }
-        board.updateGameBoard(player_Pieces);    
-    }
-
-    public void endTurnBust(){
-        int num = turnOrder.size();
-        if(currentTurn == num +1){
-            currentTurn = 1;
-        }else {
-            currentTurn +=1 ;
-        }
-        board.movePiece(null);
-        board.removeRunners(runners);
-        runners = new ArrayList<pieces>();
     }
 }

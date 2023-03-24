@@ -11,7 +11,13 @@ public class Board extends JFrame {
     private Game game;
     private JPanel gamePanel;
     private JPanel otherPanel;
-    private JMenuBar saveMenu;
+        // create "Option" menu
+    private JMenu gameMenu;
+    private JMenuItem newGameItem;
+    private JMenuItem saveItem;
+    private JMenuItem quitItem;
+    private JMenuBar menuBar;
+
     private JButton dice;
     private JButton endTurn;
 
@@ -19,17 +25,37 @@ public class Board extends JFrame {
         this.players = players;
         this.game = game;
         this.setSize(new Dimension(1000, 900));
-        
-        saveMenu = new JMenuBar();
-        JMenuItem saveButton = new JMenuItem("Save");
-        saveButton.setBackground(Color.red);
-        saveButton.setForeground(Color.white);
-        saveButton.setFont(new Font("Calibrie",Font.BOLD,15));
-        saveButton.addActionListener(e -> {
-            game.saveGame();
+        menuBar = new JMenuBar();
+        gameMenu = new JMenu("Options");
+        // Menu Items
+        newGameItem = new JMenuItem("New Game");
+        saveItem = new JMenuItem("Save");
+        quitItem = new JMenuItem("Quit");
+
+        // add action listeners 
+        saveItem.addActionListener(e -> {
+                game.saveGame();
         });
-        saveMenu.add(saveButton);
-        this.setJMenuBar(saveMenu);
+
+        newGameItem.addActionListener(e -> {
+            this.newGame();
+        });  
+
+        quitItem.addActionListener(e -> {
+            this.quitGame();
+        });  
+        // add menu items to "Game" menu
+        gameMenu.add(newGameItem);
+        gameMenu.add(saveItem);
+        gameMenu.addSeparator();
+        gameMenu.add(quitItem);
+
+
+        menuBar.add(gameMenu);
+        // saveMenu.add(saveButton);
+        this.setJMenuBar(menuBar);
+
+
         board = new Tile[13][13];
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
@@ -370,5 +396,12 @@ public class Board extends JFrame {
         pieces.forEach((e) -> {
             board[e.getColumn()][e.getRow()].add(e);
         });
+    }
+    private void newGame(){
+        this.dispose();
+        new StartUp();
+    }
+    private void quitGame(){
+        System.exit(0);
     }
 }

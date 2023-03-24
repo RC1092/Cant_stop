@@ -11,7 +11,13 @@ public class Board extends JFrame {
     private Game game;
     private JPanel gamePanel;
     private JPanel otherPanel;
-    private JMenuBar saveMenu;
+        // create "Option" menu
+    private JMenu gameMenu;
+    private JMenuItem newGameItem;
+    private JMenuItem saveItem;
+    private JMenuItem quitItem;
+    private JMenuBar menuBar;
+
     private JButton dice;
     private JButton endTurn;
 
@@ -19,17 +25,37 @@ public class Board extends JFrame {
         this.players = players;
         this.game = game;
         this.setSize(new Dimension(1000, 900));
-        
-        saveMenu = new JMenuBar();
-        JMenuItem saveButton = new JMenuItem("Save");
-        saveButton.setBackground(Color.red);
-        saveButton.setForeground(Color.white);
-        saveButton.setFont(new Font("Calibrie",Font.BOLD,15));
-        saveButton.addActionListener(e -> {
-            game.saveGame();
+        menuBar = new JMenuBar();
+        gameMenu = new JMenu("Options");
+        // Menu Items
+        newGameItem = new JMenuItem("New Game");
+        saveItem = new JMenuItem("Save");
+        quitItem = new JMenuItem("Quit");
+
+        // add action listeners 
+        saveItem.addActionListener(e -> {
+                game.saveGame();
         });
-        saveMenu.add(saveButton);
-        this.setJMenuBar(saveMenu);
+
+        newGameItem.addActionListener(e -> {
+            this.newGame();
+        });  
+
+        quitItem.addActionListener(e -> {
+            this.quitGame();
+        });  
+        // add menu items to "Game" menu
+        gameMenu.add(newGameItem);
+        gameMenu.add(saveItem);
+        gameMenu.addSeparator();
+        gameMenu.add(quitItem);
+
+
+        menuBar.add(gameMenu);
+        // saveMenu.add(saveButton);
+        this.setJMenuBar(menuBar);
+
+
         board = new Tile[13][13];
         getContentPane().setLayout(new BorderLayout());
         buildBoard();
@@ -62,79 +88,98 @@ public class Board extends JFrame {
 
     private void setLabels(int x, int y) {
         if ((x == 5 && y == 1)) {
-            board[x][y].setText("2");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("2"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 4 && y == 2)) {
-            board[x][y].setText("3");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("3"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 3 && y == 3)) {
-            board[x][y].setText("4");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("4"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 2 && y == 4)) {
-            board[x][y].setText("5");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("5"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 1 && y == 5)) {
-            board[x][y].setText("6");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("6"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 0 && y == 6)) {
-            board[x][y].setText("7");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("7"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 1 && y == 7)) {
-            board[x][y].setText("8");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("8"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 2 && y == 8)) {
-            board[x][y].setText("9");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("9"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 3 && y == 9)) {
-            board[x][y].setText("10");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("10"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 4 && y == 10)) {
-            board[x][y].setText("11");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("11"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 5 && y == 11)) {
-            board[x][y].setText("12");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("12"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 8 && y == 1)) {
-            board[x][y].setText("C");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("C"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 9 && y == 2)) {
-            board[x][y].setText("A");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("A"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 10 && y == 3)) {
-            board[x][y].setText("N");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("N"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 11 && y == 4)) {
-            board[x][y].setText("'T");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("T"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 11 && y == 8)) {
-            board[x][y].setText("S");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("S"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 10 && y == 9)) {
-            board[x][y].setText("T");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("T"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 9 && y == 10)) {
-            board[x][y].setText("O");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("O"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 8 && y == 11)) {
-            board[x][y].setText("P");
+            board[x][y].setLayout(new FlowLayout());
+            board[x][y].add(createBoardLabel("P"));
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         } else if ((x == 6 && y == 0)) {
@@ -156,6 +201,14 @@ public class Board extends JFrame {
             board[x][y].setBackground(Color.white);
             board[x][y].setEndTile();
         }
+    }
+    private JLabel createBoardLabel(String character){
+        JLabel number = new JLabel(character);
+        number.setFont(new Font("Calibrie",Font.BOLD,20));
+        number.setBackground(Color.white);
+        number.setForeground(Color.red);
+        number.setOpaque(true);
+        return number;
     }
 
     private boolean checkTile(int x, int y) {
@@ -360,5 +413,11 @@ public class Board extends JFrame {
             board[e.getColumn()][e.getRow()].remove(e);}
         });
 
+    private void newGame(){
+        this.dispose();
+        new StartUp();
+    }
+    private void quitGame(){
+        System.exit(0);
     }
 }

@@ -14,7 +14,7 @@ public class Tile extends JPanel {
         setOpaque(true);
         if (gameTile) {
             this.setBackground(Color.red);
-            this.setBorder(BorderFactory.createLineBorder(Color.white));
+            //this.setBorder(BorderFactory.createLineBorder(Color.white));
         } else {
             this.setVisible(false);
         }
@@ -81,6 +81,7 @@ public class Tile extends JPanel {
             g.setColor(Color.WHITE); // set color to white
             g.fillPolygon(xPoints, yPoints, 3); // fill triangle
             //setBorderPainted(false);
+
         }
         // Lower Right part of game
         else if ((getXValue() == 8 && getYValue() == 12) || (getXValue() == 9 && getYValue() == 11)
@@ -96,6 +97,7 @@ public class Tile extends JPanel {
             //setBorderPainted(false);
         } else {
             super.paintComponent(g);
+            this.setBorder(BorderFactory.createLineBorder(Color.white));
         }
     }
 

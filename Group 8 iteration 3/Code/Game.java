@@ -26,8 +26,6 @@ public class Game {
         ImageIcon originalIcon = new ImageIcon(Game.class.getResource("success.png"));
         ImageIcon resizedIcon = new ImageIcon(originalIcon.getImage().getScaledInstance(50, 50, java.awt.Image.SCALE_SMOOTH));
         JOptionPane.showMessageDialog(null, "Game saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE, resizedIcon);
-
-
     }
 
     public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer, HashMap<Integer, Player> turnOrder){

@@ -10,7 +10,7 @@ public class Player {
         this.color = color;
         columnsCaptured = new ArrayList<>();
         for (int i =0; i< 11; i++){
-            piecesList.add(new pieces(this.shape, this.color));
+            piecesList.add(null);
         }
     }
 
@@ -56,5 +56,11 @@ public class Player {
 
     public ArrayList<Integer> getColumns(){
         return columnsCaptured;
+    }
+
+    public pieces getPieceInColumn(int col){
+        if(this.piecesList.get(col-2) != null){
+            return this.piecesList.get(col-2);
+        }else {return null;}
     }
 }

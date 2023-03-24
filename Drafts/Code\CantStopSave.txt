@@ -1,6 +1,6 @@
 1
-1,Racool:2,Racool(:
-Racool:Triangle:Blue:0:
+1,Racool:2,Mujeeb:
+Racool:Square:Yellow:0:
 -1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:
-Racool(:Square:Yellow:0:
+Mujeeb:Star:Green:0:
 -1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:-1,-1:

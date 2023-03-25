@@ -20,6 +20,9 @@ public class Game {
         board.setCurrentPlayer();
 
     }
+    public void endTurn(){
+        turn.endTurn();
+    }
 
     public Turn getTurn() {
         return turn;

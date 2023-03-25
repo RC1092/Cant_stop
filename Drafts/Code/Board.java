@@ -266,7 +266,7 @@ public class Board extends JFrame {
         endTurn.setBackground(Color.white);
         endTurn.setForeground(Color.red);
         endTurn.addActionListener(e -> {
-            game.getTurn().endTurn();
+            game.endTurn();
         });
         gamePanel.add(endTurn);
 

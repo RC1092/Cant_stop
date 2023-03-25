@@ -20,6 +20,7 @@ public class Board extends JFrame {
 
     private JButton dice;
     private JButton endTurn;
+    private ArrayList<JLabel> labelsLst;
 
     public Board(Game game, ArrayList<Player> players) {
         this.players = players;
@@ -27,10 +28,14 @@ public class Board extends JFrame {
         this.setSize(new Dimension(1000, 900));
         menuBar = new JMenuBar();
         gameMenu = new JMenu("Options");
+        gameMenu.setFont(new Font("Calibrie",Font.BOLD,15));
         // Menu Items
         newGameItem = new JMenuItem("New Game");
+        newGameItem.setFont(new Font("Calibrie",Font.BOLD,15));
         saveItem = new JMenuItem("Save");
+        saveItem.setFont(new Font("Calibrie",Font.BOLD,15));
         quitItem = new JMenuItem("Quit");
+        quitItem.setFont(new Font("Calibrie",Font.BOLD,15));
 
         // add action listeners
         saveItem.addActionListener(e -> {
@@ -61,6 +66,7 @@ public class Board extends JFrame {
         setResizable(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //updatePlayerLabels(); //testing
     }
 
     private void buildBoard() {
@@ -268,9 +274,20 @@ public class Board extends JFrame {
         formatLabel(scores);
         infoPanel.add(scores);
 
+        labelsLst = new ArrayList<>();
         for (Player player : players) {
             JLabel playerName = new JLabel(player.getName());
+            /*Player current = game.getCurrentPlayer();
+            if (playerName.getText().equals(current.getName())){
+                playerName.setFont(new Font("Calibre", Font.BOLD, 18));
+                playerName.setBorder(BorderFactory.createLineBorder(Color.white));
+                playerName.setOpaque(true);
+                playerName.setBackground(Color.white);
+                playerName.setForeground(Color.red);
+            }
+            else{*/
             formatLabel(playerName);
+            labelsLst.add(playerName);
             infoPanel.add(playerName);
             JLabel playerScore = new JLabel(Integer.toString(player.getScore()));
             formatLabel(playerScore);
@@ -403,6 +420,20 @@ public class Board extends JFrame {
         pieces.forEach((e) -> {
             board[e.getColumn()][e.getRow()].add(e);
         });
+        setCurrentPlayer();
+    }
+    public void setCurrentPlayer(){
+        Player current = game.getCurrentPlayer();
+        for (JLabel label: labelsLst){
+            if (label.getText().equals(current.getName())){
+                label.setForeground(Color.red);
+                label.setBackground(Color.white);
+            }
+            else {
+                label.setBackground(Color.red);
+                label.setForeground(Color.white);
+            }
+        }
     }
 
     private void newGame() {

@@ -14,6 +14,8 @@ public class Game {
         dice = new Dice();
         board = new Board(this, players);
         turn = new Turn(players, dice, board);
+        board.setCurrentPlayer();
+
     }
 
     public Turn getTurn() {
@@ -57,4 +59,7 @@ public class Game {
         }
     }
 
+    public Player getCurrentPlayer() {
+        return turn.getTurnOrder().get(turn.getCurrentPlayerKey());
+    }
 }

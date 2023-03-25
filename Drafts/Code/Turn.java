@@ -166,6 +166,7 @@ public class Turn {
         }else {
             currentTurn +=1 ;
         }
+        board.setCurrentPlayer();
         board.updateGameBoard(player_Pieces);    
     }
 

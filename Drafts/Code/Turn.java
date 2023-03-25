@@ -22,7 +22,7 @@ public class Turn {
         this.board = board;
         this.setTurnOrder(new HashMap<Integer, Player>());
         currentTurn = 1;
-        //players.forEach(e -> InvalidColumns.addAll(e.getColumns()));
+        
         while (movementPieces.size() < 3){
             movementPieces.add(new pieces("Arrow", "White"));
         }
@@ -42,6 +42,7 @@ public class Turn {
             }
             turnOrder = turnOrderSetter;
         }
+        //System.out.println(turnOrder.get(1).getName() + turnOrder.get(2).getName());
     }
 
     public int getCurrentPlayerKey(){
@@ -91,6 +92,7 @@ public class Turn {
 
     //Called when a player selects their dice combination and moves their pieces appropriately
     public void movePiece(ArrayList<Integer> selected_combination){
+
         int col1 = selected_combination.get(0) + selected_combination.get(1); 
         int col2 = selected_combination.get(2) + selected_combination.get(3); 
         System.out.println("Combinations selected: "+col1+" "+col2);
@@ -99,16 +101,39 @@ public class Turn {
         if (runners.size() == 0){
             if(col1 == col2){
                 System.out.println("Case with no runners and same combination.");
-                pieces runner = new pieces("Arrow", "White");
-                runner.setLocation(board.getTile(col1-1,12-Math.abs(7-col1)-1));
-                runners.add(runner);
-            }else {
-                System.out.println("Case with no runners and different combination.");
+
                 pieces runner1 = new pieces("Arrow", "White");
-                runner1.setLocation(board.getTile(col1-1,12-Math.abs(7-col1)));
+                if(turnOrder.get(currentTurn).getPieceInColumn(col1) != null){
+                    pieces temp = turnOrder.get(currentTurn).getPieceInColumn(col1);
+                    runner1.setLocation(board.getTile(temp.getRow(),temp.getColumn()-2));   
+                }else{
+                    runner1.setLocation(board.getTile(col1-1,13-Math.abs(7-col1)-2));
+                }
+                
                 runners.add(runner1);
+            }
+
+            else {
+                System.out.println("Case with no runners and different combination.");
+
+                pieces runner1 = new pieces("Arrow", "White");
+                if(turnOrder.get(currentTurn).getPieceInColumn(col1) != null){
+                    pieces temp = turnOrder.get(currentTurn).getPieceInColumn(col1);
+                    runner1.setLocation(board.getTile(temp.getRow(),temp.getColumn()-1));   
+                }else{
+                    runner1.setLocation(board.getTile(col1-1,13-Math.abs(7-col1)-1));
+                }
+                
+                runners.add(runner1);
+
                 pieces runner2 = new pieces("Arrow", "White");
-                runner2.setLocation(board.getTile(col2-1,12-Math.abs(7-col2)));
+                if(turnOrder.get(currentTurn).getPieceInColumn(col2) != null){
+                    pieces temp = turnOrder.get(currentTurn).getPieceInColumn(col2);
+                    runner2.setLocation(board.getTile(temp.getRow(),temp.getColumn()-1));   
+                }else{
+                    runner2.setLocation(board.getTile(col2-1,13-Math.abs(7-col2)-1));
+                }
+                
                 runners.add(runner2);
             }
     
@@ -128,25 +153,40 @@ public class Turn {
                 System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});   
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
                     System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});
+
+
             if (cols.size() == 1){
                     System.out.println("Case with 1 or 2 runners where the one column is new ");
-                    pieces runner2 = new pieces("Arrow", "White");
-                    runner2.setLocation(board.getTile(cols.get(0)-1,12-Math.abs(7-cols.get(0))));
-                    runners.add(runner2);    
+
+                    pieces runner3 = new pieces("Arrow", "White");
+                if(turnOrder.get(currentTurn).getPieceInColumn(cols.get(0)) != null){
+                    pieces temp = turnOrder.get(currentTurn).getPieceInColumn(cols.get(0));
+                    runner3.setLocation(board.getTile(temp.getRow(),temp.getColumn()-1));   
+                }else{
+                    runner3.setLocation(board.getTile(cols.get(0)-1,13-Math.abs(7-cols.get(0))-1));
+                }
+                runners.add(runner3);    
             }
             if (cols.size() == 2){
                         System.out.println("Case with 1 or 2 runners where the both column are new ");
-                        pieces runner2 = new pieces("Arrow", "White");
-                        runner2.setLocation(board.getTile(cols.get(0)-1,12-Math.abs(7-cols.get(0))));
-                        runners.add(runner2);
-
-                        if (runners.size() < 3 ){
-                            if (col1 == col2){runner2.setLocation(board.getTile(cols.get(0)-1,12+1-Math.abs(7-cols.get(0))));}
-                            else {
-                            pieces runner3 = new pieces("Arrow", "White");
-                            runner3.setLocation(board.getTile(cols.get(1)-1,12-Math.abs(7-cols.get(1))));
-                            runners.add(runner3);}
+                        pieces runner3 = new pieces("Arrow", "White");
+                        if(turnOrder.get(currentTurn).getPieceInColumn(cols.get(0)) != null){
+                            pieces temp = turnOrder.get(currentTurn).getPieceInColumn(cols.get(0));
+                            runner3.setLocation(board.getTile(temp.getRow(),temp.getColumn()-1));   
+                        }else{
+                            runner3.setLocation(board.getTile(cols.get(0)-1,13-Math.abs(7-cols.get(0))-1));
                         }
+                        runners.add(runner3);
+
+                        if(runners.size()<3){
+                        pieces runner4 = new pieces("Arrow", "White");
+                        if(turnOrder.get(currentTurn).getPieceInColumn(cols.get(1)) != null){
+                            pieces temp = turnOrder.get(currentTurn).getPieceInColumn(cols.get(1));
+                            runner4.setLocation(board.getTile(temp.getRow(),temp.getColumn()-1));   
+                        }else{
+                            runner4.setLocation(board.getTile(cols.get(1)-1,13-Math.abs(7-cols.get(1))-1));
+                        }runners.add(runner4);
+                    }
             }
         
         }
@@ -157,21 +197,26 @@ public class Turn {
   
     public void endTurn(){ 
         int num = turnOrder.size();
+        
         Player current_player = turnOrder.get(currentTurn);
-        ArrayList<pieces> player_Pieces = turnOrder.get(currentTurn).getPieces();
-        runners.forEach(e -> {e.setAttributes(current_player.getColor(), current_player.getShape());player_Pieces.set(e.getRow()-1,e);});
+        current_player.updatePieces(runners);
+        board.removeRunners(runners);
+    
+        
+        board.updateGameBoard(current_player.getPieces());
         runners = new ArrayList<pieces>();
-        if(currentTurn == num +1){
+        if(currentTurn == num){
             currentTurn = 1;
         }else {
             currentTurn +=1 ;
         }
-        board.updateGameBoard(player_Pieces);    
+        
+            
     }
 
     public void endTurnBust(){
         int num = turnOrder.size();
-        if(currentTurn == num +1){
+        if(currentTurn == num ){
             currentTurn = 1;
         }else {
             currentTurn +=1 ;

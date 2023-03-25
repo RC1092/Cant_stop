@@ -59,8 +59,20 @@ public class Player {
     }
 
     public pieces getPieceInColumn(int col){
-        if(this.piecesList.get(col-2) != null){
-            return this.piecesList.get(col-2);
-        }else {return null;}
+        if(this.piecesList.get(col-2) == null){
+            return null;
+            
+        }else {return this.piecesList.get(col-2);}
+    }
+    public void updatePieces(ArrayList<pieces> runners){
+        runners.forEach(e -> {
+            if(piecesList.get(e.getRow()-1) == null){
+                pieces temp = new pieces(shape, color);
+                temp.setLocation(e.getTile());
+                piecesList.set(e.getRow()-1,temp);
+            }else{
+                piecesList.get(e.getRow()-1).setLocation(e.getTile());
+            }
+        });
     }
 }

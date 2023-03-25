@@ -92,7 +92,7 @@ public class pieces extends JButton{
     public void setLocation (Tile tile){
         location = tile;
     }
-    public void setAttributes(String color, String shape){
+    public void setAttributes(String shape, String color){
         this.color = color;
         this.shape = shape;
         paintComponent(getGraphics());

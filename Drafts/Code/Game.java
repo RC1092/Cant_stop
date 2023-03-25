@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JOptionPane;
+
+//import com.formdev.flatlaf.FlatDarkLaf;
+
 import javax.swing.ImageIcon;
 
 public class Game {
@@ -9,7 +12,7 @@ public class Game {
     private Dice dice;
     private Turn turn;
 
-    public Game(ArrayList<Player> players) {
+    public Game(ArrayList<Player> players){
         this.players = players;
         dice = new Dice();
         board = new Board(this, players);
@@ -36,14 +39,11 @@ public class Game {
             JOptionPane.showMessageDialog(null, "Game saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE,
                     resizedIcon);
 
-        } else {
-            // Continue game if user cancels
-        }
 
-    }
+    }}
 
     public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer,
-            HashMap<Integer, Player> turnOrder) {
+        HashMap<Integer, Player> turnOrder) {
         turn.setCurrentPlayerkey(currentPlayer);
         turn.setTurnOrder(turnOrder);
         for (int i = 0; i < players.size(); i++) {
@@ -56,10 +56,20 @@ public class Game {
                     pieces.get(j).setLocation(board.getTile(x, y));
                 }
             }
-        }
-    }
+        }}
+
 
     public Player getCurrentPlayer() {
         return turn.getTurnOrder().get(turn.getCurrentPlayerKey());
+    }
+    public static void main(String []args){
+
+        //FlatDarkLaf.setup();
+        Player p1 = new Player("Circle", "Blue", "p1");
+        Player p2 = new Player ("Square","Green","player2");
+        ArrayList<Player> players = new ArrayList<Player>();
+        players.add(p1);
+        players.add(p2);
+        Game game =  new Game(players);
     }
 }

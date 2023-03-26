@@ -11,7 +11,7 @@ public class Board extends JFrame {
     private Game game;
     private JPanel gamePanel;
     private JPanel otherPanel;
-        // create "Option" menu
+    // create "Option" menu
     private JMenu gameMenu;
     private JMenuItem newGameItem;
     private JMenuItem saveItem;
@@ -28,38 +28,36 @@ public class Board extends JFrame {
         this.setSize(new Dimension(1000, 900));
         menuBar = new JMenuBar();
         gameMenu = new JMenu("Options");
-        gameMenu.setFont(new Font("Calibrie",Font.BOLD,15));
+        gameMenu.setFont(new Font("Calibrie", Font.BOLD, 15));
         // Menu Items
         newGameItem = new JMenuItem("New Game");
-        newGameItem.setFont(new Font("Calibrie",Font.BOLD,15));
+        newGameItem.setFont(new Font("Calibrie", Font.BOLD, 15));
         saveItem = new JMenuItem("Save");
-        saveItem.setFont(new Font("Calibrie",Font.BOLD,15));
+        saveItem.setFont(new Font("Calibrie", Font.BOLD, 15));
         quitItem = new JMenuItem("Quit");
-        quitItem.setFont(new Font("Calibrie",Font.BOLD,15));
+        quitItem.setFont(new Font("Calibrie", Font.BOLD, 15));
 
-        // add action listeners 
+        // add action listeners
         saveItem.addActionListener(e -> {
-                game.saveGame();
+            game.saveGame();
         });
 
         newGameItem.addActionListener(e -> {
             this.newGame();
-        });  
+        });
 
         quitItem.addActionListener(e -> {
             this.quitGame();
-        });  
+        });
         // add menu items to "Game" menu
         gameMenu.add(newGameItem);
         gameMenu.add(saveItem);
         gameMenu.addSeparator();
         gameMenu.add(quitItem);
 
-
         menuBar.add(gameMenu);
         // saveMenu.add(saveButton);
         this.setJMenuBar(menuBar);
-
 
         board = new Tile[13][13];
         getContentPane().setLayout(new BorderLayout());
@@ -68,14 +66,14 @@ public class Board extends JFrame {
         setResizable(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //updatePlayerLabels(); //testing
+        // updatePlayerLabels(); //testing
     }
 
     private void buildBoard() {
         JPanel boardPanel = new JPanel(new GridLayout(13, 13));
         boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
-        
+
         for (int x = 0; x < 13; x++) {
             for (int y = 0; y < 13; y++) {
                 if (checkTile(x, y)) {
@@ -208,9 +206,10 @@ public class Board extends JFrame {
             board[x][y].setEndTile();
         }
     }
-    private JLabel createBoardLabel(String character){
+
+    private JLabel createBoardLabel(String character) {
         JLabel number = new JLabel(character);
-        number.setFont(new Font("Calibrie",Font.BOLD,20));
+        number.setFont(new Font("Calibrie", Font.BOLD, 20));
         number.setBackground(Color.white);
         number.setForeground(Color.red);
         number.setOpaque(true);
@@ -237,14 +236,13 @@ public class Board extends JFrame {
 
     private void buildSide() {
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
-        
+
         buttonPanel.setSize(new Dimension(344, buttonPanel.getHeight()));
         buttonPanel.setVisible(false);
         buttonPanel.removeAll();
         otherPanel = new JPanel(new GridLayout(3, 1));
         gamePanel = new JPanel(new GridLayout(3, 1));
-        
-    
+
         JPanel infoPanel = new JPanel(new GridLayout(players.size() + 1, 3));
         gamePanel.setBackground(Color.red);
         otherPanel.setBackground(Color.red);
@@ -280,15 +278,17 @@ public class Board extends JFrame {
         labelsLst = new ArrayList<>();
         for (Player player : players) {
             JLabel playerName = new JLabel(player.getName());
-            /*Player current = game.getCurrentPlayer();
-            if (playerName.getText().equals(current.getName())){
-                playerName.setFont(new Font("Calibre", Font.BOLD, 18));
-                playerName.setBorder(BorderFactory.createLineBorder(Color.white));
-                playerName.setOpaque(true);
-                playerName.setBackground(Color.white);
-                playerName.setForeground(Color.red);
-            }
-            else{*/
+            /*
+             * Player current = game.getCurrentPlayer();
+             * if (playerName.getText().equals(current.getName())){
+             * playerName.setFont(new Font("Calibre", Font.BOLD, 18));
+             * playerName.setBorder(BorderFactory.createLineBorder(Color.white));
+             * playerName.setOpaque(true);
+             * playerName.setBackground(Color.white);
+             * playerName.setForeground(Color.red);
+             * }
+             * else{
+             */
             formatLabel(playerName);
             labelsLst.add(playerName);
             infoPanel.add(playerName);
@@ -297,7 +297,6 @@ public class Board extends JFrame {
             infoPanel.add(playerScore);
         }
 
-    
         buttonPanel.add(otherPanel);
         buttonPanel.add(gamePanel);
         buttonPanel.add(infoPanel);
@@ -338,7 +337,7 @@ public class Board extends JFrame {
         dicePanel.add(new diceImage(dices.get(0).get(3)));
         otherPanel.add(label1);
         otherPanel.add(dicePanel);
-        if(dices.size() == 1){
+        if (dices.size() == 1) {
             label2.setText("You Have Busted");
             otherPanel.add(label2);
             JButton endTurn1 = new JButton("Next Turn");
@@ -347,13 +346,14 @@ public class Board extends JFrame {
             endTurn1.setBackground(Color.white);
             endTurn1.setForeground(Color.red);
             endTurn1.addActionListener(e -> {
-                game.getTurn().endTurnBust();});
+                game.getTurn().endTurnBust();
+            });
             gamePanel.add(endTurn1);
             otherPanel.setVisible(true);
             gamePanel.setVisible(true);
             return;
         }
-        
+
         otherPanel.add(label2);
         dicePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
@@ -364,109 +364,126 @@ public class Board extends JFrame {
         JPanel combinationPanel3 = new JPanel(new FlowLayout());
         combinationPanel3.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight() / 4));
 
-        if (dices.size() >1 ){
-        combinationPanel1.add(new diceImage(dices.get(1).get(0)));
-        combinationPanel1.add(new diceImage(dices.get(1).get(1)));
-        combinationPanel1.add(new JButton());
-        combinationPanel1.add(new diceImage(dices.get(1).get(2)));
-        combinationPanel1.add(new diceImage(dices.get(1).get(3)));
-        combinationPanel1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {movePiece(dices.get(0));}});
-        gamePanel.add(combinationPanel1);
+        if (dices.size() > 1) {
+            combinationPanel1.add(new diceImage(dices.get(1).get(0)));
+            combinationPanel1.add(new diceImage(dices.get(1).get(1)));
+            combinationPanel1.add(new JButton());
+            combinationPanel1.add(new diceImage(dices.get(1).get(2)));
+            combinationPanel1.add(new diceImage(dices.get(1).get(3)));
+            combinationPanel1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    movePiece(dices.get(0));
+                }
+            });
+            gamePanel.add(combinationPanel1);
         }
 
-        if(dices.size()>2){
-        combinationPanel2.add(new diceImage(dices.get(2).get(0)));
-        combinationPanel2.add(new diceImage(dices.get(2).get(1)));
-        combinationPanel2.add(new JButton());
-        combinationPanel2.add(new diceImage(dices.get(2).get(2)));
-        combinationPanel2.add(new diceImage(dices.get(2).get(3)));
-        combinationPanel2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {movePiece(dices.get(1));}});
-        gamePanel.add(combinationPanel2);
+        if (dices.size() > 2) {
+            combinationPanel2.add(new diceImage(dices.get(2).get(0)));
+            combinationPanel2.add(new diceImage(dices.get(2).get(1)));
+            combinationPanel2.add(new JButton());
+            combinationPanel2.add(new diceImage(dices.get(2).get(2)));
+            combinationPanel2.add(new diceImage(dices.get(2).get(3)));
+            combinationPanel2.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    movePiece(dices.get(1));
+                }
+            });
+            gamePanel.add(combinationPanel2);
         }
 
-        if(dices.size()>3){
-        combinationPanel3.add(new diceImage(dices.get(3).get(0)));
-        combinationPanel3.add(new diceImage(dices.get(3).get(1)));
-        combinationPanel3.add(new JButton());
-        combinationPanel3.add(new diceImage(dices.get(3).get(2)));
-        combinationPanel3.add(new diceImage(dices.get(3).get(3)));
-        combinationPanel3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {movePiece(dices.get(2));}});
-        gamePanel.add(combinationPanel3);
+        if (dices.size() > 3) {
+            combinationPanel3.add(new diceImage(dices.get(3).get(0)));
+            combinationPanel3.add(new diceImage(dices.get(3).get(1)));
+            combinationPanel3.add(new JButton());
+            combinationPanel3.add(new diceImage(dices.get(3).get(2)));
+            combinationPanel3.add(new diceImage(dices.get(3).get(3)));
+            combinationPanel3.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    movePiece(dices.get(2));
+                }
+            });
+            gamePanel.add(combinationPanel3);
         }
 
         otherPanel.setVisible(true);
         gamePanel.setVisible(true);
-        
-        
-
 
     }
 
-    public void movePiece(ArrayList<Integer> selected_combintion){
+    public void movePiece(ArrayList<Integer> selected_combintion) {
 
         gamePanel.setVisible(false);
         otherPanel.setVisible(false);
-        
+
         gamePanel.removeAll();
         otherPanel.removeAll();
         gamePanel.add(dice);
         gamePanel.add(endTurn);
         gamePanel.setVisible(true);
         otherPanel.setVisible(true);
-        if(selected_combintion == null){
+        if (selected_combintion == null) {
             return;
         }
         game.getTurn().movePiece(selected_combintion);
     }
 
-   
-
-    public Tile getTile(int x, int y){
+    public Tile getTile(int x, int y) {
         return board[x][y];
     }
-    public void updateGameBoard(ArrayList<pieces> pieces){
-        
-        
-        pieces.forEach((e) -> {if(e == null){}
-        else{
-            board[e.getColumn()][e.getRow()].setVisible(false); 
-            board[e.getColumn()][e.getRow()].add(e);
-            board[e.getColumn()][e.getRow()].setVisible(true);
-        }
+
+    public void updateGameBoard(ArrayList<pieces> pieces) {
+
+        pieces.forEach((e) -> {
+            if (e == null) {
+            } else {
+                board[e.getColumn()][e.getRow()].setVisible(false);
+                board[e.getColumn()][e.getRow()].add(e);
+                board[e.getColumn()][e.getRow()].setVisible(true);
+            }
         });
         setCurrentPlayer();
     }
-    public void setCurrentPlayer(){
+
+    public void setCurrentPlayer() {
         Player current = game.getCurrentPlayer();
-        for (JLabel label: labelsLst){
-            if (label.getText().equals(current.getName())){
+        for (JLabel label : labelsLst) {
+            if (label.getText().equals(current.getName())) {
                 label.setForeground(Color.red);
                 label.setBackground(Color.white);
-            }
-            else {
+            } else {
                 label.setBackground(Color.red);
                 label.setForeground(Color.white);
             }
         }
     }
-    public void removeRunners(ArrayList<pieces> pieces){
-        pieces.forEach((e) -> 
-            board[e.getColumn()][e.getRow()].remove(e)
-        );
-    }
-    private void newGame(){
-        this.dispose();
-        new StartUp();
-    }
-    private void quitGame(){
-        System.exit(0);
+
+    public void removeRunners(ArrayList<pieces> pieces) {
+        pieces.forEach((e) -> board[e.getColumn()][e.getRow()].remove(e));
     }
 
-    
+    private void newGame() {
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to start a new game?",
+                "Start a new Game", JOptionPane.YES_NO_OPTION);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            // Process further if user confirms
+            this.dispose();
+            new StartUp();
+        }
+    }
+
+    private void quitGame() {
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit the game?", "Quit Game",
+                JOptionPane.YES_NO_OPTION);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            // Process further if user confirms
+            System.exit(0);
+        }
+    }
+
 }

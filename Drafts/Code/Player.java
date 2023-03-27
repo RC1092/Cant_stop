@@ -64,6 +64,7 @@ public class Player {
             
         }else {return this.piecesList.get(col-2);}
     }
+    
     public void updatePieces(ArrayList<pieces> runners){
         runners.forEach(e -> {
             if(piecesList.get(e.getRow()-1) == null){

@@ -219,6 +219,13 @@ public class Turn {
 
 
     }
+    public boolean hasRunner(int diceRoll){
+        ArrayList<Integer> valids = new ArrayList<>();
+        runners.forEach(e -> valids.add(e.getRow()+1));
+        for (int valid: valids){
+            if (valid == diceRoll){
+                return true;}}
+        return false;}
 
     public void endTurnBust(){
         int num = turnOrder.size();

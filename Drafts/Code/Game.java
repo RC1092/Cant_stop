@@ -68,6 +68,9 @@ public class Game {
     public Player getCurrentPlayer() {
         return turn.getTurnOrder().get(turn.getCurrentPlayerKey());
     }
+    public int checkRunners(){
+        return turn.runnerCount();
+    }
 
     public static void main(String[] args) {
 

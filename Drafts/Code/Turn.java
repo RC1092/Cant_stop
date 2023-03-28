@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -204,6 +205,13 @@ public class Turn {
 
         Player current_player = turnOrder.get(currentTurn);
         current_player.updatePieces(runners);
+        for (pieces runner: runners){
+            if (runner.getTile().getBackground().equals(Color.white)){
+                current_player.captureColumn(runner.getTile().getRow()+1);
+                System.out.println(runner.getTile().getRow()+1);
+                board.updateScores();
+            }
+        }
         board.removeRunners(runners);
 
 

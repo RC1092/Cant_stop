@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Board extends JFrame {
@@ -20,7 +17,7 @@ public class Board extends JFrame {
 
     private JButton dice;
     private JButton endTurn;
-    private ArrayList<JLabel> labelsLst;
+    private ArrayList<JLabel> labelsLst, scoresLst;
 
     public Board(Game game, ArrayList<Player> players) {
         this.players = players;
@@ -276,24 +273,15 @@ public class Board extends JFrame {
         infoPanel.add(scores);
 
         labelsLst = new ArrayList<>();
+        scoresLst = new ArrayList<>();
         for (Player player : players) {
             JLabel playerName = new JLabel(player.getName());
-            /*
-             * Player current = game.getCurrentPlayer();
-             * if (playerName.getText().equals(current.getName())){
-             * playerName.setFont(new Font("Calibre", Font.BOLD, 18));
-             * playerName.setBorder(BorderFactory.createLineBorder(Color.white));
-             * playerName.setOpaque(true);
-             * playerName.setBackground(Color.white);
-             * playerName.setForeground(Color.red);
-             * }
-             * else{
-             */
             formatLabel(playerName);
             labelsLst.add(playerName);
             infoPanel.add(playerName);
             JLabel playerScore = new JLabel(Integer.toString(player.getScore()));
             formatLabel(playerScore);
+            scoresLst.add(playerScore);
             infoPanel.add(playerScore);
         }
 
@@ -525,21 +513,21 @@ public class Board extends JFrame {
         return select;
     }
     private boolean validRow(int diceRoll){
-        return !checkCaptured(diceRoll)&&(hasRunner(diceRoll)||emptyRow(diceRoll));
+        return checkNotCaptured(diceRoll) &&(hasRunner(diceRoll)||emptyRow(diceRoll));
     }
     private boolean hasRunner(int diceRoll){
         return game.getTurn().hasRunner(diceRoll);
     }
     private boolean emptyRow(int diceRoll){ //only called when there are available runners
-        return !game.getTurn().hasRunner(diceRoll) && !checkCaptured(diceRoll);
+        return !game.getTurn().hasRunner(diceRoll) && checkNotCaptured(diceRoll);
     }
-    private boolean checkCaptured(int diceRoll){
+    private boolean checkNotCaptured(int diceRoll){
         for (Player player: players){
             ArrayList<Integer> columns = player.getColumns();
             for (int columnNum: columns){
                 if (columnNum==diceRoll){
-                    return true;}}}
-        return false;
+                    return false;}}}
+        return true;
     }
 
     public void movePiece(ArrayList<Integer> selected_combintion) {
@@ -569,8 +557,10 @@ public class Board extends JFrame {
             if (e == null) {
             } else {
                 board[e.getColumn()][e.getRow()].setVisible(false);
-                board[e.getColumn()][e.getRow()].add(e);
+                if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
+                    board[e.getColumn()][e.getRow()].add(e);}
                 board[e.getColumn()][e.getRow()].setVisible(true);
+
             }
         });
         setCurrentPlayer();
@@ -586,6 +576,11 @@ public class Board extends JFrame {
                 label.setBackground(Color.red);
                 label.setForeground(Color.white);
             }
+        }
+    }
+    public void updateScores(){
+        for (int i=0; i<players.size(); i++){
+            scoresLst.get(i).setText(Integer.toString(players.get(i).getScore()));
         }
     }
 

@@ -508,7 +508,7 @@ public class Board extends JFrame {
                 panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
             }
         else{
-            if (!checkCaptured(diceRoll1)){
+            if ((game.checkRunners()<=2&&validRow(diceRoll1)||hasRunner(diceRoll1))){
                 panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
             }
         }

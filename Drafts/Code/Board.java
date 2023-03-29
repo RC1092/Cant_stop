@@ -1,8 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class Board extends JFrame {
@@ -11,7 +8,7 @@ public class Board extends JFrame {
     private Game game;
     private JPanel gamePanel;
     private JPanel otherPanel;
-        // create "Option" menu
+    // create "Option" menu
     private JMenu gameMenu;
     private JMenuItem newGameItem;
     private JMenuItem saveItem;
@@ -20,7 +17,7 @@ public class Board extends JFrame {
 
     private JButton dice;
     private JButton endTurn;
-    private ArrayList<JLabel> labelsLst;
+    private ArrayList<JLabel> labelsLst, scoresLst;
 
     public Board(Game game, ArrayList<Player> players) {
         this.players = players;
@@ -28,38 +25,36 @@ public class Board extends JFrame {
         this.setSize(new Dimension(1000, 900));
         menuBar = new JMenuBar();
         gameMenu = new JMenu("Options");
-        gameMenu.setFont(new Font("Calibrie",Font.BOLD,15));
+        gameMenu.setFont(new Font("Calibrie", Font.BOLD, 15));
         // Menu Items
         newGameItem = new JMenuItem("New Game");
-        newGameItem.setFont(new Font("Calibrie",Font.BOLD,15));
+        newGameItem.setFont(new Font("Calibrie", Font.BOLD, 15));
         saveItem = new JMenuItem("Save");
-        saveItem.setFont(new Font("Calibrie",Font.BOLD,15));
+        saveItem.setFont(new Font("Calibrie", Font.BOLD, 15));
         quitItem = new JMenuItem("Quit");
-        quitItem.setFont(new Font("Calibrie",Font.BOLD,15));
+        quitItem.setFont(new Font("Calibrie", Font.BOLD, 15));
 
-        // add action listeners 
+        // add action listeners
         saveItem.addActionListener(e -> {
-                game.saveGame();
+            game.saveGame();
         });
 
         newGameItem.addActionListener(e -> {
             this.newGame();
-        });  
+        });
 
         quitItem.addActionListener(e -> {
             this.quitGame();
-        });  
+        });
         // add menu items to "Game" menu
         gameMenu.add(newGameItem);
         gameMenu.add(saveItem);
         gameMenu.addSeparator();
         gameMenu.add(quitItem);
 
-
         menuBar.add(gameMenu);
         // saveMenu.add(saveButton);
         this.setJMenuBar(menuBar);
-
 
         board = new Tile[13][13];
         getContentPane().setLayout(new BorderLayout());
@@ -68,14 +63,14 @@ public class Board extends JFrame {
         setResizable(true);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //updatePlayerLabels(); //testing
+        // updatePlayerLabels(); //testing
     }
 
     private void buildBoard() {
         JPanel boardPanel = new JPanel(new GridLayout(13, 13));
         boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
-        
+
         for (int x = 0; x < 13; x++) {
             for (int y = 0; y < 13; y++) {
                 if (checkTile(x, y)) {
@@ -208,9 +203,10 @@ public class Board extends JFrame {
             board[x][y].setEndTile();
         }
     }
-    private JLabel createBoardLabel(String character){
+
+    private JLabel createBoardLabel(String character) {
         JLabel number = new JLabel(character);
-        number.setFont(new Font("Calibrie",Font.BOLD,20));
+        number.setFont(new Font("Calibrie", Font.BOLD, 20));
         number.setBackground(Color.white);
         number.setForeground(Color.red);
         number.setOpaque(true);
@@ -237,14 +233,13 @@ public class Board extends JFrame {
 
     private void buildSide() {
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
-        
+
         buttonPanel.setSize(new Dimension(344, buttonPanel.getHeight()));
         buttonPanel.setVisible(false);
         buttonPanel.removeAll();
         otherPanel = new JPanel(new GridLayout(3, 1));
         gamePanel = new JPanel(new GridLayout(3, 1));
-        
-    
+
         JPanel infoPanel = new JPanel(new GridLayout(players.size() + 1, 3));
         gamePanel.setBackground(Color.red);
         otherPanel.setBackground(Color.red);
@@ -278,26 +273,18 @@ public class Board extends JFrame {
         infoPanel.add(scores);
 
         labelsLst = new ArrayList<>();
+        scoresLst = new ArrayList<>();
         for (Player player : players) {
             JLabel playerName = new JLabel(player.getName());
-            /*Player current = game.getCurrentPlayer();
-            if (playerName.getText().equals(current.getName())){
-                playerName.setFont(new Font("Calibre", Font.BOLD, 18));
-                playerName.setBorder(BorderFactory.createLineBorder(Color.white));
-                playerName.setOpaque(true);
-                playerName.setBackground(Color.white);
-                playerName.setForeground(Color.red);
-            }
-            else{*/
             formatLabel(playerName);
             labelsLst.add(playerName);
             infoPanel.add(playerName);
             JLabel playerScore = new JLabel(Integer.toString(player.getScore()));
             formatLabel(playerScore);
+            scoresLst.add(playerScore);
             infoPanel.add(playerScore);
         }
 
-    
         buttonPanel.add(otherPanel);
         buttonPanel.add(gamePanel);
         buttonPanel.add(infoPanel);
@@ -338,7 +325,7 @@ public class Board extends JFrame {
         dicePanel.add(new diceImage(dices.get(0).get(3)));
         otherPanel.add(label1);
         otherPanel.add(dicePanel);
-        if(dices.size() == 1){
+        if (dices.size() == 1) {
             label2.setText("You Have Busted");
             otherPanel.add(label2);
             JButton endTurn1 = new JButton("Next Turn");
@@ -347,13 +334,14 @@ public class Board extends JFrame {
             endTurn1.setBackground(Color.white);
             endTurn1.setForeground(Color.red);
             endTurn1.addActionListener(e -> {
-                game.getTurn().endTurnBust();});
+                game.getTurn().endTurnBust();
+            });
             gamePanel.add(endTurn1);
             otherPanel.setVisible(true);
             gamePanel.setVisible(true);
             return;
         }
-        
+
         otherPanel.add(label2);
         dicePanel.setBorder(BorderFactory.createLineBorder(Color.BLUE));
 
@@ -364,109 +352,261 @@ public class Board extends JFrame {
         JPanel combinationPanel3 = new JPanel(new FlowLayout());
         combinationPanel3.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight() / 4));
 
-        if (dices.size() >1 ){
-        combinationPanel1.add(new diceImage(dices.get(1).get(0)));
-        combinationPanel1.add(new diceImage(dices.get(1).get(1)));
-        combinationPanel1.add(new JButton());
-        combinationPanel1.add(new diceImage(dices.get(1).get(2)));
-        combinationPanel1.add(new diceImage(dices.get(1).get(3)));
-        combinationPanel1.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {movePiece(dices.get(0));}});
-        gamePanel.add(combinationPanel1);
+
+
+        if (dices.size() > 1) {
+            combinationPanel1.add(new diceImage(dices.get(1).get(0)));
+            combinationPanel1.add(new diceImage(dices.get(1).get(1)));
+            combinationPanel1.add(new JButton());
+            combinationPanel1.add(new diceImage(dices.get(1).get(2)));
+            combinationPanel1.add(new diceImage(dices.get(1).get(3)));
+
+            JPanel littlePanel = new JPanel(new GridLayout(2,1));
+            addButtons(dices.get(1),littlePanel);
+            //if (addButtons((dices.get(1).get(0)+dices.get(1).get(1)),(dices.get(1).get(2))+dices.get(1).get(3),littlePanel)){
+                combinationPanel1.add(littlePanel);
+            //}
+
+
+            /*combinationPanel1.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    movePiece(dices.get(0));
+                }
+            });*/
+            gamePanel.add(combinationPanel1);
         }
 
-        if(dices.size()>2){
-        combinationPanel2.add(new diceImage(dices.get(2).get(0)));
-        combinationPanel2.add(new diceImage(dices.get(2).get(1)));
-        combinationPanel2.add(new JButton());
-        combinationPanel2.add(new diceImage(dices.get(2).get(2)));
-        combinationPanel2.add(new diceImage(dices.get(2).get(3)));
-        combinationPanel2.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {movePiece(dices.get(1));}});
-        gamePanel.add(combinationPanel2);
+        if (dices.size() > 2) {
+            combinationPanel2.add(new diceImage(dices.get(2).get(0)));
+            combinationPanel2.add(new diceImage(dices.get(2).get(1)));
+            combinationPanel2.add(new JButton());
+            combinationPanel2.add(new diceImage(dices.get(2).get(2)));
+            combinationPanel2.add(new diceImage(dices.get(2).get(3)));
+
+            JPanel littlePanel = new JPanel(new GridLayout(2,1));
+            addButtons(dices.get(2),littlePanel);
+           // if (addButtons((dices.get(2).get(0)+dices.get(2).get(1)),(dices.get(2).get(2))+dices.get(2).get(3),littlePanel)){
+                combinationPanel2.add(littlePanel);
+            //}
+
+            /*combinationPanel2.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    movePiece(dices.get(1));
+                }
+            });*/
+            gamePanel.add(combinationPanel2);
         }
 
-        if(dices.size()>3){
-        combinationPanel3.add(new diceImage(dices.get(3).get(0)));
-        combinationPanel3.add(new diceImage(dices.get(3).get(1)));
-        combinationPanel3.add(new JButton());
-        combinationPanel3.add(new diceImage(dices.get(3).get(2)));
-        combinationPanel3.add(new diceImage(dices.get(3).get(3)));
-        combinationPanel3.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {movePiece(dices.get(2));}});
-        gamePanel.add(combinationPanel3);
+        if (dices.size() > 3) {
+            combinationPanel3.add(new diceImage(dices.get(3).get(0)));
+            combinationPanel3.add(new diceImage(dices.get(3).get(1)));
+            combinationPanel3.add(new JButton());
+            combinationPanel3.add(new diceImage(dices.get(3).get(2)));
+            combinationPanel3.add(new diceImage(dices.get(3).get(3)));
+            JPanel littlePanel = new JPanel(new GridLayout(2,1));
+            addButtons(dices.get(3),littlePanel);
+            //if (addButtons((dices.get(3).get(0)+dices.get(3).get(1)),(dices.get(3).get(2))+dices.get(3).get(3),littlePanel)){
+                combinationPanel3.add(littlePanel);
+            //}
+
+            /*combinationPanel3.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    movePiece(dices.get(2));
+                }
+            });*/
+            gamePanel.add(combinationPanel3);
         }
 
         otherPanel.setVisible(true);
         gamePanel.setVisible(true);
-        
-        
-
 
     }
+    private boolean addButtons(ArrayList<Integer> diceCombo, JPanel panel){
+        System.out.println(game.checkRunners());
+        int diceRoll1 = diceCombo.get(0)+diceCombo.get(1);
+        int diceRoll2 = diceCombo.get(2)+diceCombo.get(3);
+        if (diceRoll1!=diceRoll2){
+        if (game.checkRunners()<2){ //case: at least two runners are available
+            if (validRow(diceRoll1)&&validRow(diceRoll2)){ //case both columns open
+                panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),diceCombo));
+            }
+            else if (validRow(diceRoll2)){ //case one is not open
+                ArrayList<Integer> newCombo = new ArrayList<>();
+                newCombo.add(diceCombo.get(2));
+                newCombo.add(diceCombo.get(3));
+                newCombo.add(diceCombo.get(0));
+                newCombo.add(diceCombo.get(1));
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)),newCombo));
+            }
+            else if (validRow(diceRoll1)){ //case other one is not open
+                /*ArrayList<Integer> newCombo = new ArrayList<>();
+                newCombo.add(diceCombo.get(0));
+                newCombo.add(diceCombo.get(1));
+                newCombo.add(diceCombo.get(2));
+                newCombo.add(diceCombo.get(3));*/
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
+            }}
+        else if(game.checkRunners()==2){
+            if (validRow(diceRoll1)&&validRow(diceRoll2)) {
+                if ((emptyRow(diceRoll1) && hasRunner(diceRoll2)) || (emptyRow(diceRoll2) && hasRunner(diceRoll1))) { //can use both
+                    panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),
+                            diceCombo));
+                } else if (hasRunner(diceRoll2) && hasRunner(diceRoll1)) {
+                    panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),
+                            diceCombo));
+                } else {
+                    panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo));
+                    ArrayList<Integer> newCombo = new ArrayList<>();
+                    newCombo.add(diceCombo.get(2));
+                    newCombo.add(diceCombo.get(3));
+                    newCombo.add(diceCombo.get(0));
+                    newCombo.add(diceCombo.get(1));
+                    panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo));
+                }}}
+        else if (game.checkRunners()==3){
+            if (hasRunner(diceRoll1)&&hasRunner(diceRoll2)){
+                panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),
+                        diceCombo));
+            }
+            else if(hasRunner(diceRoll1)){
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
+            }
+            else if (hasRunner(diceRoll2)){
+                ArrayList<Integer> newCombo = new ArrayList<>();
+                newCombo.add(diceCombo.get(2));
+                newCombo.add(diceCombo.get(3));
+                newCombo.add(diceCombo.get(0));
+                newCombo.add(diceCombo.get(1));
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo));
+            }
+        }
+            }
+            else if (validRow(diceRoll2)){ //case one is not open
+                ArrayList<Integer> newCombo2 = new ArrayList<>();
+                newCombo2.add(diceCombo.get(2));
+                newCombo2.add(diceCombo.get(3));
+                newCombo2.add(diceCombo.get(0));
+                newCombo2.add(diceCombo.get(1));
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)),newCombo2));
+                }
+            else if (validRow(diceRoll1)){ //case other one is not open
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
+            }
+        else{
+            if ((game.checkRunners()<=2&&validRow(diceRoll1)||hasRunner(diceRoll1))){
+                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
+            }
+        }
+        return true;}
 
-    public void movePiece(ArrayList<Integer> selected_combintion){
+
+    private JButton buildButton(String columns, ArrayList<Integer> diceCombo){
+        JButton select = new JButton(columns);
+        select.setForeground(Color.white);
+        select.setBackground(Color.red);
+        //select.setBorder(BorderFactory.createLineBorder(Color.red));
+        select.setFont(new Font("Calibrie",Font.BOLD,15));
+        select.addActionListener(e->movePiece(diceCombo));
+        return select;
+    }
+    private boolean validRow(int diceRoll){
+        return checkNotCaptured(diceRoll) &&(hasRunner(diceRoll)||emptyRow(diceRoll));
+    }
+    private boolean hasRunner(int diceRoll){
+        return game.getTurn().hasRunner(diceRoll);
+    }
+    private boolean emptyRow(int diceRoll){ //only called when there are available runners
+        return !game.getTurn().hasRunner(diceRoll) && checkNotCaptured(diceRoll);
+    }
+    private boolean checkNotCaptured(int diceRoll){
+        for (Player player: players){
+            ArrayList<Integer> columns = player.getColumns();
+            for (int columnNum: columns){
+                if (columnNum==diceRoll){
+                    return false;}}}
+        return true;
+    }
+
+    public void movePiece(ArrayList<Integer> selected_combintion) {
 
         gamePanel.setVisible(false);
         otherPanel.setVisible(false);
-        
+
         gamePanel.removeAll();
         otherPanel.removeAll();
         gamePanel.add(dice);
         gamePanel.add(endTurn);
         gamePanel.setVisible(true);
         otherPanel.setVisible(true);
-        if(selected_combintion == null){
+        if (selected_combintion == null) {
             return;
         }
         game.getTurn().movePiece(selected_combintion);
     }
 
-   
-
-    public Tile getTile(int x, int y){
+    public Tile getTile(int x, int y) {
         return board[x][y];
     }
-    public void updateGameBoard(ArrayList<pieces> pieces){
-        
-        
-        pieces.forEach((e) -> {if(e == null){}
-        else{
-            board[e.getColumn()][e.getRow()].setVisible(false); 
-            board[e.getColumn()][e.getRow()].add(e);
-            board[e.getColumn()][e.getRow()].setVisible(true);
-        }
+
+    public void updateGameBoard(ArrayList<pieces> pieces) {
+
+        pieces.forEach((e) -> {
+            if (e == null) {
+            } else {
+                board[e.getColumn()][e.getRow()].setVisible(false);
+                if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
+                    board[e.getColumn()][e.getRow()].add(e);}
+                board[e.getColumn()][e.getRow()].setVisible(true);
+
+            }
         });
         setCurrentPlayer();
     }
-    public void setCurrentPlayer(){
+
+    public void setCurrentPlayer() {
         Player current = game.getCurrentPlayer();
-        for (JLabel label: labelsLst){
-            if (label.getText().equals(current.getName())){
+        for (JLabel label : labelsLst) {
+            if (label.getText().equals(current.getName())) {
                 label.setForeground(Color.red);
                 label.setBackground(Color.white);
-            }
-            else {
+            } else {
                 label.setBackground(Color.red);
                 label.setForeground(Color.white);
             }
         }
     }
-    public void removeRunners(ArrayList<pieces> pieces){
-        pieces.forEach((e) -> 
-            board[e.getColumn()][e.getRow()].remove(e)
-        );
-    }
-    private void newGame(){
-        this.dispose();
-        new StartUp();
-    }
-    private void quitGame(){
-        System.exit(0);
+    public void updateScores(){
+        for (int i=0; i<players.size(); i++){
+            scoresLst.get(i).setText(Integer.toString(players.get(i).getScore()));
+        }
     }
 
-    
+    public void removeRunners(ArrayList<pieces> pieces) {
+        pieces.forEach((e) -> board[e.getColumn()][e.getRow()].remove(e));
+    }
+
+    private void newGame() {
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to start a new game?",
+                "Start a new Game", JOptionPane.YES_NO_OPTION);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            // Process further if user confirms
+            this.dispose();
+            new StartUp();
+        }
+    }
+
+    private void quitGame() {
+        int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to quit the game?", "Quit Game",
+                JOptionPane.YES_NO_OPTION);
+
+        if (choice == JOptionPane.YES_OPTION) {
+            // Process further if user confirms
+            System.exit(0);
+        }
+    }
+
 }

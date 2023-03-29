@@ -1,3 +1,4 @@
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,7 +64,8 @@ public class Turn {
         //Stores the dice pairs into combinations as ordered ArrayList. So [1,2,3,4] means the pairs 1,2 + 3,4
         combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
 
-        if (runners.size() == 1 || runners.size() == 0 || runners.size() == 2){
+        if (runners.size() == 1 || runners.size() == 0 || runners.size() == 2)
+        {
             combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
             combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(2), values.get(3), values.get(0))));
             combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(3), values.get(2), values.get(0))));
@@ -88,6 +90,9 @@ public class Turn {
 
         }
         return combinations;
+    }
+    public int runnerCount(){
+        return runners.size();
     }
 
     //Called when a player selects their dice combination and moves their pieces appropriately
@@ -200,6 +205,13 @@ public class Turn {
 
         Player current_player = turnOrder.get(currentTurn);
         current_player.updatePieces(runners);
+        for (pieces runner: runners){
+            if (runner.getTile().getBackground().equals(Color.white)){
+                current_player.captureColumn(runner.getTile().getRow()+1);
+                System.out.println(runner.getTile().getRow()+1);
+                board.updateScores();
+            }
+        }
         board.removeRunners(runners);
 
 
@@ -215,6 +227,13 @@ public class Turn {
 
 
     }
+    public boolean hasRunner(int diceRoll){
+        ArrayList<Integer> valids = new ArrayList<>();
+        runners.forEach(e -> valids.add(e.getRow()+1));
+        for (int valid: valids){
+            if (valid == diceRoll){
+                return true;}}
+        return false;}
 
     public void endTurnBust(){
         int num = turnOrder.size();

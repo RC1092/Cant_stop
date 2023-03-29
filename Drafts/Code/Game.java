@@ -12,7 +12,7 @@ public class Game {
     private Dice dice;
     private Turn turn;
 
-    public Game(ArrayList<Player> players){
+    public Game(ArrayList<Player> players) {
         this.players = players;
         dice = new Dice();
         board = new Board(this, players);
@@ -20,7 +20,8 @@ public class Game {
         board.setCurrentPlayer();
 
     }
-    public void endTurn(){
+
+    public void endTurn() {
         turn.endTurn();
     }
 
@@ -42,37 +43,44 @@ public class Game {
             JOptionPane.showMessageDialog(null, "Game saved successfully", "Success", JOptionPane.INFORMATION_MESSAGE,
                     resizedIcon);
 
-
-    }}
+        }
+    }
 
     public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer,
-        HashMap<Integer, Player> turnOrder) {
+            HashMap<Integer, Player> turnOrder) {
         turn.setCurrentPlayerkey(currentPlayer);
         turn.setTurnOrder(turnOrder);
         for (int i = 0; i < players.size(); i++) {
             ArrayList<pieces> pieces = players.get(i).getPieces();
             ArrayList<ArrayList<Integer>> playerPieceLocations = pieceLocations.get(i);
             for (int j = 0; j < playerPieceLocations.size(); j++) {
-                int x = playerPieceLocations.get(j).get(0);
-                int y = playerPieceLocations.get(j).get(1);
-                if (x >= 0) {
+                if (playerPieceLocations.get(j) != null) {
+                    int x = playerPieceLocations.get(j).get(0);
+                    int y = playerPieceLocations.get(j).get(1);
+                    pieces.set(j, new pieces(players.get(i).getShape(), players.get(i).getColor()));
                     pieces.get(j).setLocation(board.getTile(x, y));
-                }
+                } 
             }
-        }}
-
+            board.updateGameBoard(pieces);
+        }
+    }
 
     public Player getCurrentPlayer() {
         return turn.getTurnOrder().get(turn.getCurrentPlayerKey());
     }
-    public static void main(String []args){
+    public int checkRunners(){
+        return turn.runnerCount();
+    }
 
-        //FlatDarkLaf.setup();
+
+    public static void main(String[] args) {
+
+        // FlatDarkLaf.setup();
         Player p1 = new Player("Circle", "Blue", "p1");
-        Player p2 = new Player ("Square","Green","player2");
+        Player p2 = new Player("Square", "Green", "player2");
         ArrayList<Player> players = new ArrayList<Player>();
         players.add(p1);
         players.add(p2);
-        Game game =  new Game(players);
+        Game game = new Game(players);
     }
 }

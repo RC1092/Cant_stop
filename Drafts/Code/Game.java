@@ -18,7 +18,6 @@ public class Game {
         board = new Board(this, players);
         turn = new Turn(players, dice, board);
         board.setCurrentPlayer();
-
     }
 
     public void endTurn() {
@@ -46,8 +45,7 @@ public class Game {
         }
     }
 
-    public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer,
-            HashMap<Integer, Player> turnOrder) {
+    public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer, HashMap<Integer, Player> turnOrder, ArrayList<ArrayList<Integer>> capturedColumns) {
         turn.setCurrentPlayerkey(currentPlayer);
         turn.setTurnOrder(turnOrder);
         for (int i = 0; i < players.size(); i++) {
@@ -63,6 +61,20 @@ public class Game {
             }
             board.updateGameBoard(pieces);
         }
+
+        for (int i = 0; i < players.size(); i++){
+            ArrayList<Integer> playerCaptured = capturedColumns.get(i);
+            System.out.println(playerCaptured);
+            if (playerCaptured != null){
+                for (int j = 0; j < playerCaptured.size(); j++){
+                    System.out.println();;
+                    players.get(i).captureColumn(playerCaptured.get(j));
+                    turn.addCapturedColumn(playerCaptured.get(j));
+                    board.capturedColumn(playerCaptured.get(j) - 1);
+                    board.updateScores();
+                }
+            }
+        }
     }
 
     public Player getCurrentPlayer() {
@@ -71,7 +83,6 @@ public class Game {
     public int checkRunners(){
         return turn.runnerCount();
     }
-
 
     public static void main(String[] args) {
 

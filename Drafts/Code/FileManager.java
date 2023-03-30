@@ -54,6 +54,14 @@ public class FileManager {
                         saveData += "n:";
                     }
                 }
+                saveData += System.getProperty("line.separator");
+                if (player.getColumns().size() > 0) {
+                    for (int column : player.getColumns()) {
+                        saveData += column + ":";
+                    }
+                } else {
+                    saveData += "c:";
+                }
                 saveWriter.write(saveData + System.getProperty("line.separator"));
             }
             saveWriter.close();
@@ -102,18 +110,18 @@ public class FileManager {
             }
             players = new ArrayList<>();
             String[] p1 = lines.get(2).split(":");
-            String[] p2 = lines.get(4).split(":");
+            String[] p2 = lines.get(5).split(":");
             players.add(new Player(p1[1], p1[2], p1[0]));
             scores.add(p1[3]);
             players.add(new Player(p2[1], p2[2], p2[0]));
             scores.add(p2[3]);
-            if (lines.size() > 6) {
-                String[] p3 = lines.get(6).split(":");
+            if (lines.size() > 8) {
+                String[] p3 = lines.get(8).split(":");
                 players.add(new Player(p3[1], p3[2], p3[0]));
                 scores.add(p3[3]);
             }
-            if (lines.size() > 8) {
-                String[] p4 = lines.get(8).split(":");
+            if (lines.size() > 11) {
+                String[] p4 = lines.get(11).split(":");
                 players.add(new Player(p4[1], p4[2], p4[0]));
                 scores.add(p4[3]);
             }
@@ -121,7 +129,6 @@ public class FileManager {
         } else {
             players = new ArrayList<>();
             fileWindow(players, scores);
-            ;
         }
     }
 
@@ -176,14 +183,20 @@ public class FileManager {
     private void loadGame(JFrame frame) {
         Game game = new Game(players);
         ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> capturedColumns = new ArrayList<>();
         ArrayList<String[]> tempPlayerPieces = new ArrayList<>();
+        ArrayList<String[]> tempCapturedColumns = new ArrayList<>();
         tempPlayerPieces.add(lines.get(3).split(":"));
-        tempPlayerPieces.add(lines.get(5).split(":"));
-        if (lines.size() > 6) {
-            tempPlayerPieces.add(lines.get(7).split(":"));
-        }
+        tempCapturedColumns.add(lines.get(4).split(":"));
+        tempPlayerPieces.add(lines.get(6).split(":"));
+        tempCapturedColumns.add(lines.get(7).split(":"));
         if (lines.size() > 8) {
             tempPlayerPieces.add(lines.get(9).split(":"));
+            tempCapturedColumns.add(lines.get(10).split(":"));
+        }
+        if (lines.size() > 11) {
+            tempPlayerPieces.add(lines.get(12).split(":"));
+            tempCapturedColumns.add(lines.get(13).split(":"));
         }
         for (String[] playerPieces : tempPlayerPieces) {
             ArrayList<ArrayList<Integer>> individualPieceLocations = new ArrayList<>();
@@ -201,13 +214,25 @@ public class FileManager {
             }
             pieceLocations.add(individualPieceLocations);
         }
+
+        for (String[] columns : tempCapturedColumns) {
+            ArrayList<Integer> cols = new ArrayList<>();
+            if (columns[0].equals("c")) {
+                capturedColumns.add(null);
+            } else {
+                for (int i = 0; i < columns.length; i++) {
+                    cols.add(Integer.parseInt(columns[i]));
+                }
+                capturedColumns.add(cols);
+            }
+        }
+
         HashMap<Integer, Player> playOrder = new HashMap<>();
         String[] playOrderLst = lines.get(1).split(":");
         ArrayList<String[]> tempPlayParser = new ArrayList<>();
         for (String item : playOrderLst) {
             tempPlayParser.add(item.split(","));
         }
-
         for (int i = 0; i < tempPlayParser.size(); i++) {
             for (Player player : players) {
                 if (player.getName().equals(tempPlayParser.get(i)[1])) {
@@ -216,7 +241,7 @@ public class FileManager {
             }
         }
 
-        game.loadGame(pieceLocations, Integer.parseInt(lines.get(0)), playOrder);
+        game.loadGame(pieceLocations, Integer.parseInt(lines.get(0)), playOrder, capturedColumns);
 
         frame.dispose();
     }

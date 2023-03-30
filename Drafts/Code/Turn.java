@@ -251,8 +251,7 @@ public class Turn {
         /* for (pieces runner: runners){
             if (runner.getTile().getBackground().equals(Color.white)){
                 current_player.captureColumn(runner.getTile().getRow()+1);
-                System.out.println(runner.getTile().getRow()+1);
-                board.updateScores();
+                System.out.println("here");
             }
         } */
         board.removeRunners(runners);

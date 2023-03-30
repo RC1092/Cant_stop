@@ -41,15 +41,6 @@ public class Turn {
         }
     }
 
-    public void displayTurnOrder(){
-        HashMap<Integer, Player> turnOrder = this.getTurnOrder();
-        String turnOrderMessage = "Turn Order is" + System.getProperty("line.separator");
-        for (int i = 0; i < players.size(); i++){
-            turnOrderMessage += (i+1) + ": "+ turnOrder.get(i+1).getName() + System.getProperty("line.separator");
-        }
-        JOptionPane.showMessageDialog(null, turnOrderMessage, "Turn Order", JOptionPane.INFORMATION_MESSAGE);
-    }
-
     public int getCurrentPlayerKey(){
         return currentTurn;
     }

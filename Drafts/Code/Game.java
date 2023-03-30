@@ -28,6 +28,15 @@ public class Game {
         return turn;
     }
 
+    public void displayTurnOrder(){
+        HashMap<Integer, Player> turnOrder = turn.getTurnOrder();
+        String turnOrderMessage = "Turn Order is" + System.getProperty("line.separator");
+        for (int i = 0; i < players.size(); i++){
+            turnOrderMessage += (i+1) + ": "+ turnOrder.get(i+1).getName() + System.getProperty("line.separator");
+        }
+        JOptionPane.showMessageDialog(null, turnOrderMessage, "Turn Order", JOptionPane.INFORMATION_MESSAGE);
+    }
+
     public void saveGame() {
         int choice = JOptionPane.showConfirmDialog(null, "Are you sure you want to save the game?", "Save Game",
                 JOptionPane.YES_NO_OPTION);
@@ -75,6 +84,7 @@ public class Game {
                 }
             }
         }
+        this.displayTurnOrder();
     }
 
     public Player getCurrentPlayer() {

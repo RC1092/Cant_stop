@@ -593,6 +593,12 @@ public class Board extends JFrame {
             }
         }
     }
+    
+    public void updateScores(){
+        for (int i=0; i<players.size(); i++){
+            scoresLst.get(i).setText(Integer.toString(players.get(i).getScore()));
+        }
+    }
 
     public void removeRunners(ArrayList<pieces> pieces) {
         pieces.forEach((e) -> board[e.getColumn()][e.getRow()].remove(e));

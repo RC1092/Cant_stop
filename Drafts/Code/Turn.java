@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import javax.lang.model.element.Element;
+import javax.swing.JOptionPane;
 
 public class Turn {
     private ArrayList<Player> players;
@@ -22,8 +23,6 @@ public class Turn {
         this.board = board;
         this.setTurnOrder(new HashMap<Integer, Player>());
         currentTurn = 1;
-
-
     }
 
     public void setTurnOrder(HashMap<Integer,Player> order){
@@ -40,7 +39,15 @@ public class Turn {
             }
             turnOrder = turnOrderSetter;
         }
-        //System.out.println(turnOrder.get(1).getName() + turnOrder.get(2).getName());
+    }
+
+    public void displayTurnOrder(){
+        HashMap<Integer, Player> turnOrder = this.getTurnOrder();
+        String turnOrderMessage = "Turn Order is" + System.getProperty("line.separator");
+        for (int i = 0; i < players.size(); i++){
+            turnOrderMessage += (i+1) + ": "+ turnOrder.get(i+1).getName() + System.getProperty("line.separator");
+        }
+        JOptionPane.showMessageDialog(null, turnOrderMessage, "Turn Order", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public int getCurrentPlayerKey(){
@@ -258,7 +265,13 @@ public class Turn {
         board.updateGameBoard(runners);
     }
 
-  
+    public void addCapturedColumn(int col){
+        capturedColumns.add(col);
+    }
+
+    public ArrayList<Integer> getCapturedColumn(){
+        return capturedColumns;
+    }
     public void endTurn(){ 
         int num = turnOrder.size();
 

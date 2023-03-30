@@ -85,6 +85,8 @@ public class Board extends JFrame {
             }
         }
 
+        
+
     }
 
     private void setLabels(int x, int y) {
@@ -556,6 +558,7 @@ public class Board extends JFrame {
         pieces.forEach((e) -> {
             if (e == null) {
             } else {
+        
                 board[e.getColumn()][e.getRow()].setVisible(false);
                 if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
                     board[e.getColumn()][e.getRow()].add(e);}
@@ -606,6 +609,22 @@ public class Board extends JFrame {
         if (choice == JOptionPane.YES_OPTION) {
             // Process further if user confirms
             System.exit(0);
+        }
+    }
+
+    public void capturedColumn(int col){
+        boolean start = false;
+        for(int i = 0; i<13;i++){
+            if(board[i][col].checkEndTile() == true){
+                System.out.println("Column end tile:"+i+col);
+                start = !start;
+                continue;
+            }
+            if(start = true){
+                
+                board[i][col].removeAll();
+                board[i][col].setBackground(Color.GRAY);
+            }
         }
     }
 

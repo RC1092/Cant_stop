@@ -7,6 +7,7 @@ public class pieces extends JButton{
     private String shape;
     private String color;
     private Tile location;
+    private boolean canMove;
     public pieces(String shape, String color){
 
         //this.setPreferredSize(new Dimension(120,120));
@@ -17,6 +18,7 @@ public class pieces extends JButton{
         this.setText(color);
         this.setBackground(Color.RED);
         this.setForeground(Color.getColor(color,Color.BLACK));
+        canMove = true;
         setColor();    
     }
     
@@ -90,7 +92,8 @@ public class pieces extends JButton{
 
 
     public void setLocation (Tile tile){
-        location = tile;
+        if(canMove == true){
+        location = tile;}
     }
     public void setAttributes(String shape, String color){
         this.color = color;
@@ -107,5 +110,11 @@ public class pieces extends JButton{
     }
     public int getColumn(){
         return location.getColumn();
+    }
+    public void cantMove(){
+        canMove = false;
+    }
+    public void canMove(){
+        canMove = true;
     }
 }

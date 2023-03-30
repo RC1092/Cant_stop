@@ -205,12 +205,13 @@ public class Turn {
 
         Player current_player = turnOrder.get(currentTurn);
         current_player.updatePieces(runners);
-        /*for (pieces runner: runners){
-            if (runner.getTile().getBackground().equals(Color.white)){
-                current_player.captureColumn(runner.getTile().getRow()+1);
-                System.out.println("here");
+        for (pieces runner: runners){
+            int currentCol = board.TESTcheckEndTile(runner.getTile());
+            if (currentCol!=0){
+                current_player.captureColumn(currentCol);
+                board.updateScoreLabels();
             }
-        }*/
+        }
         board.removeRunners(runners);
 
 
@@ -226,6 +227,8 @@ public class Turn {
 
 
     }
+
+
     public boolean hasRunner(int diceRoll){
         ArrayList<Integer> valids = new ArrayList<>();
         runners.forEach(e -> valids.add(e.getRow()+1));

@@ -203,6 +203,44 @@ public class Board extends JFrame {
             board[x][y].setEndTile();
         }
     }
+    public int TESTcheckEndTile(Tile tile){
+        int x = tile.getColumn();
+        int y = tile.getRow();
+        if ((x == 5 && y == 1)) {
+            board[x][y].setBackground(Color.BLACK); //setting black to test
+            return 2;}
+        else if ((x == 4 && y == 2)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 3;}
+        else if ((x == 3 && y == 3)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 4;
+        } else if ((x == 2 && y == 4)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 5;
+        } else if ((x == 1 && y == 5)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 6;
+        } else if ((x == 0 && y == 6)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 7;
+        } else if ((x == 1 && y == 7)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 8;
+        } else if ((x == 2 && y == 8)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 9;
+        } else if ((x == 3 && y == 9)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 10;
+        } else if ((x == 4 && y == 10)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 11;
+        } else if ((x == 5 && y == 11)) {
+            board[x][y].setBackground(Color.BLACK);
+            return 12;
+    }
+    return 0;}
 
     private JLabel createBoardLabel(String character) {
         JLabel number = new JLabel(character);
@@ -563,14 +601,23 @@ public class Board extends JFrame {
         return board[x][y];
     }
 
+    public void updateScoreLabels(){
+        for(int i=0; i< players.size();i++){
+            int playerScore = players.get(i).getScore();
+            if (!Integer.toString(playerScore).equals(scoresLst.get(i).getText())){
+                scoresLst.get(i).setText(Integer.toString(playerScore));
+
+            }
+        }
+    }
     public void updateGameBoard(ArrayList<pieces> pieces) {
 
         pieces.forEach((e) -> {
             if (e == null) {
             } else {
                 board[e.getColumn()][e.getRow()].setVisible(false);
-                if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
-                    board[e.getColumn()][e.getRow()].add(e);}
+                //if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
+                board[e.getColumn()][e.getRow()].add(e);//}
                 board[e.getColumn()][e.getRow()].setVisible(true);
 
             }

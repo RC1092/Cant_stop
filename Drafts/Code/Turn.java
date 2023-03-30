@@ -57,17 +57,26 @@ public class Turn {
     //Called when player rolls dice on their turn
     public ArrayList<ArrayList<Integer>> getDiceCombinations() {
         ArrayList<ArrayList<Integer>> combinations = new ArrayList<>();
+        ArrayList<ArrayList<Integer>> validCombos = new ArrayList<>();
         ArrayList<Integer> values = dice.makeTurnRoll();
+
         //Stores the dice pairs into combinations as ordered ArrayList. So [1,2,3,4] means the pairs 1,2 + 3,4
         combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
+        /*if (runners.size() == 1 || runners.size() == 0 || runners.size() == 2)
+        {*/
+        combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
+        combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(2), values.get(3), values.get(0))));
+        combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(3), values.get(2), values.get(0))));
 
-        if (runners.size() == 1 || runners.size() == 0 || runners.size() == 2)
-        {
-            combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
-            combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(2), values.get(3), values.get(0))));
-            combinations.add(new ArrayList<>(Arrays.asList(values.get(1), values.get(3), values.get(2), values.get(0))));
-            
+        for (ArrayList<Integer> combo: combinations){
+            int diceRoll1 = combo.get(0)+combo.get(1);
+            int diceRoll2 = combo.get(2)+combo.get(3);
+            if (isColValid(diceRoll1)||isColValid(diceRoll2)){
+                validCombos.add(combo);
+
+            }
         }
+       /* }
         else if(runners.size() == 3){
             ArrayList<Integer> valids = new ArrayList<>();
             runners.forEach(e -> valids.add(e.getRow()+1));
@@ -85,8 +94,36 @@ public class Turn {
             }
 
 
+        }*/
+        return validCombos;
+    }
+    private boolean isColValid(int diceRoll){
+        if (runners.size()==0){
+            if (freeColumn(diceRoll)){
+                return true;}
         }
-        return combinations;
+        else if (runners.size()==1||runners.size()==2){
+            if (freeColumn(diceRoll)||hasRunner(diceRoll)){
+                return true;
+            }
+        }
+        else if (runners.size()==3){
+            if(hasRunner(diceRoll)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean freeColumn(int diceRoll){
+        return !hasRunner(diceRoll) && checkNotCaptured(diceRoll);
+    }
+    public boolean checkNotCaptured(int diceRoll){
+        for (Player player: players){
+            ArrayList<Integer> columns = player.getColumns();
+            for (int columnNum: columns){
+                if (columnNum==diceRoll){
+                    return false;}}}
+        return true;
     }
     public int runnerCount(){
         return runners.size();

@@ -591,12 +591,7 @@ public class Board extends JFrame {
         return !game.getTurn().hasRunner(diceRoll) && checkNotCaptured(diceRoll);
     }
     private boolean checkNotCaptured(int diceRoll){
-        for (Player player: players){
-            ArrayList<Integer> columns = player.getColumns();
-            for (int columnNum: columns){
-                if (columnNum==diceRoll){
-                    return false;}}}
-        return true;
+        return game.getTurn().checkNotCaptured(diceRoll);
     }
 
     public void movePiece(ArrayList<Integer> selected_combintion) {

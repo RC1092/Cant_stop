@@ -14,8 +14,7 @@ public class Turn {
     //Stores the turn order as a key value pair, keys are 1-numberofplayers (e.g 1,2,3,4) indicating the order they move in. Values are the Player objects. 
     private HashMap<Integer, Player> turnOrder;
     private ArrayList<pieces> runners = new ArrayList<pieces>();
-
-    private ArrayList<pieces> movementPieces = new ArrayList<pieces>();
+    private ArrayList<Integer> capturedColumns = new ArrayList<Integer>();
 
     public Turn(ArrayList<Player> players, Dice dice,Board board){
         this.players = players;
@@ -24,9 +23,7 @@ public class Turn {
         this.setTurnOrder(new HashMap<Integer, Player>());
         currentTurn = 1;
 
-        while (movementPieces.size() < 3){
-            movementPieces.add(new pieces("Arrow", "White"));
-        }
+
     }
 
     public void setTurnOrder(HashMap<Integer,Player> order){
@@ -103,6 +100,10 @@ public class Turn {
         System.out.println("Combinations selected: "+col1+" "+col2);
         runners.forEach(e -> System.out.println("Runner location before change"+" "+e.getColumn()+" " +e.getRow()));
         ArrayList<Integer> cols= new ArrayList<Integer>(){{add(col1); add(col2);}};
+        cols.removeIf((e) -> capturedColumns.contains(e));
+        if(cols.size() ==0){
+
+        }
         if (runners.size() == 0){
             if(col1 == col2){
                 System.out.println("Case with no runners and same combination.");
@@ -110,7 +111,11 @@ public class Turn {
                 pieces runner1 = new pieces("Arrow", "White");
                 if(turnOrder.get(currentTurn).getPieceInColumn(col1) != null){
                     pieces temp = turnOrder.get(currentTurn).getPieceInColumn(col1);
+                    if(temp.getColumn()-2 < 0){
+                        runner1.setLocation(board.getTile(temp.getRow(),temp.getColumn()-1));
+                    }else{
                     runner1.setLocation(board.getTile(temp.getRow(),temp.getColumn()-2));
+                    }
                 }else{
                     runner1.setLocation(board.getTile(col1-1,13-Math.abs(7-col1)-2));
                 }
@@ -146,18 +151,34 @@ public class Turn {
         else if(runners.size() == 3){
             System.out.println("Case with 3 runners");
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});   
-            runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                    System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});
-
+                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));
+                if(board.getTile(e.getColumn(),e.getRow()).checkEndTile()){
+                    e.cantMove();
                 }
-        else {
+            }});
+            runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
+                    System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));
+                    if(board.getTile(e.getColumn(),e.getRow()).checkEndTile()){
+                        e.cantMove();
+                    }
+            }});
 
-            
+        }
+        else {
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});   
+                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));
+                if(board.getTile(e.getColumn(),e.getRow()).checkEndTile()){
+                    e.cantMove();
+                }
+            }});
+
+
             runners.forEach((e) -> {if(cols.contains(e.getRow()+1)){e.setLocation(board.getTile(e.getRow(),e.getColumn()-1));
-                    System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));}});
+                System.out.println("Column Match");cols.remove((Integer)(e.getRow()+1));
+                if(board.getTile(e.getColumn(),e.getRow()).checkEndTile()){
+                    e.cantMove();
+                }
+                }});
 
 
             if (cols.size() == 1){
@@ -195,7 +216,8 @@ public class Turn {
             }
         
         }
-        runners.forEach(e -> System.out.println("Runner location after change"+" "+e.getColumn()+" " +e.getRow()));
+        runners.forEach((e) -> {
+            System.out.println("Runner location after change"+" "+e.getColumn()+" " +e.getRow());});
         board.updateGameBoard(runners);
     }
 
@@ -205,6 +227,31 @@ public class Turn {
 
         Player current_player = turnOrder.get(currentTurn);
         current_player.updatePieces(runners);
+        for (int x = 0; x < 13; x++) {
+            for (int y = 0; y < 13; y++) {
+                if(board.getTile(x, y).checkEndTile()){
+
+                }
+
+            }
+        }
+        runners.forEach((e) -> {
+            if(board.getTile(e.getColumn(),e.getRow()).checkEndTile()){
+
+                current_player.captureColumn(e.getRow()+1);
+                capturedColumns.add(e.getRow()+1);
+                board.capturedColumn(e.getRow());
+                board.updateScores();
+                if(current_player.checkWinner()){
+                    winningDisplay winner = new winningDisplay(board,current_player);
+                };
+            }
+        }
+        );
+        /* for (pieces runner: runners){
+            if (runner.getTile().getBackground().equals(Color.white)){
+                current_player.captureColumn(runner.getTile().getRow()+1);
+                System.out.println("here");
         for (pieces runner: runners){
             int currentCol = board.TESTcheckEndTile(runner.getTile());
             if (currentCol!=0){
@@ -212,6 +259,7 @@ public class Turn {
                 board.updateScoreLabels();
             }
         }
+        } */
         board.removeRunners(runners);
 
 

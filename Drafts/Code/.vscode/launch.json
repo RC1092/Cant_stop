@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "StartUp",
+            "request": "launch",
+            "mainClass": "StartUp",
+            "projectName": "Code_cb730b24"
+        },
+        {
+            "type": "java",
+            "name": "Game",
+            "request": "launch",
+            "mainClass": "Game",
+            "projectName": "Code_cb730b24"
+        },
+        {
+            "type": "java",
             "name": "Can't Stop",
             "request": "launch",
             "mainClass": "${file}"

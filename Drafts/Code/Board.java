@@ -205,44 +205,6 @@ public class Board extends JFrame {
             board[x][y].setEndTile();
         }
     }
-    /*public int checkEndTile(Tile tile){
-        int x = tile.getColumn();
-        int y = tile.getRow();
-        if ((x == 5 && y == 1)) {
-            board[x][y].setBackground(Color.BLACK); //setting black to test
-            return 2;}
-        else if ((x == 4 && y == 2)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 3;}
-        else if ((x == 3 && y == 3)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 4;
-        } else if ((x == 2 && y == 4)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 5;
-        } else if ((x == 1 && y == 5)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 6;
-        } else if ((x == 0 && y == 6)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 7;
-        } else if ((x == 1 && y == 7)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 8;
-        } else if ((x == 2 && y == 8)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 9;
-        } else if ((x == 3 && y == 9)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 10;
-        } else if ((x == 4 && y == 10)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 11;
-        } else if ((x == 5 && y == 11)) {
-            board[x][y].setBackground(Color.BLACK);
-            return 12;
-    }
-    return 0;}*/
 
     private JLabel createBoardLabel(String character) {
         JLabel number = new JLabel(character);
@@ -274,7 +236,7 @@ public class Board extends JFrame {
     private void buildSide() {
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
 
-        buttonPanel.setSize(new Dimension(344, buttonPanel.getHeight()));
+        buttonPanel.setSize(new Dimension(400, 900));
         buttonPanel.setVisible(false);
         buttonPanel.removeAll();
         otherPanel = new JPanel(new GridLayout(3, 1));

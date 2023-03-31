@@ -59,7 +59,7 @@ public class Turn {
         ArrayList<Integer> values = dice.makeTurnRoll();
 
         //Stores the dice pairs into combinations as ordered ArrayList. So [1,2,3,4] means the pairs 1,2 + 3,4
-        combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
+        validCombos.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));
         /*if (runners.size() == 1 || runners.size() == 0 || runners.size() == 2)
         {*/
         combinations.add(new ArrayList<>(Arrays.asList(values.get(0), values.get(1), values.get(2), values.get(3))));

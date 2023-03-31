@@ -22,7 +22,7 @@ public class Board extends JFrame {
     public Board(Game game, ArrayList<Player> players) {
         this.players = players;
         this.game = game;
-        this.setSize(new Dimension(1000, 900));
+        this.setSize(new Dimension(1200, 900));
         menuBar = new JMenuBar();
         gameMenu = new JMenu("Options");
         gameMenu.setFont(new Font("Calibrie", Font.BOLD, 15));
@@ -68,6 +68,7 @@ public class Board extends JFrame {
 
     private void buildBoard() {
         JPanel boardPanel = new JPanel(new GridLayout(13, 13));
+        boardPanel.setPreferredSize(new Dimension(700,900));
         boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
 
@@ -236,7 +237,7 @@ public class Board extends JFrame {
     private void buildSide() {
         JPanel buttonPanel = new JPanel(new GridLayout(3, 1));
 
-        buttonPanel.setSize(new Dimension(400, 900));
+        buttonPanel.setPreferredSize(new Dimension(500, 900));
         buttonPanel.setVisible(false);
         buttonPanel.removeAll();
         otherPanel = new JPanel(new GridLayout(3, 1));

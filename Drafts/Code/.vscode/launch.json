@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ImageImport",
+            "request": "launch",
+            "mainClass": "ImageImport",
+            "projectName": "Code_cb730b24"
+        },
+        {
+            "type": "java",
+            "name": "tutorial",
+            "request": "launch",
+            "mainClass": "tutorial",
+            "projectName": "Code_cb730b24"
+        },
+        {
+            "type": "java",
             "name": "StartUp",
             "request": "launch",
             "mainClass": "StartUp",

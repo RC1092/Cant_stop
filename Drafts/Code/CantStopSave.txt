@@ -1,0 +1,8 @@
+1
+1,p1:2,player2:
+p1:Circle:Blue:0:
+n:n:n:n:n:n:n:n:n:n:n:
+c:
+player2:Square:Green:0:
+n:n:n:n:n:n:n:n:n:n:n:
+c:

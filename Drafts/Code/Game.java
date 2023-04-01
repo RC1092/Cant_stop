@@ -18,21 +18,25 @@ public class Game {
         board = new Board(this, players);
         turn = new Turn(players, dice, board);
         board.setCurrentPlayer();
+        if (turn.getCurrentplayer().getAI()) {
+            turn.AIGamePlay();
+        }
     }
 
     public void endTurn() {
         turn.endTurn();
+
     }
 
     public Turn getTurn() {
         return turn;
     }
 
-    public void displayTurnOrder(){
+    public void displayTurnOrder() {
         HashMap<Integer, Player> turnOrder = turn.getTurnOrder();
         String turnOrderMessage = "Turn Order is" + System.getProperty("line.separator");
-        for (int i = 0; i < players.size(); i++){
-            turnOrderMessage += (i+1) + ": "+ turnOrder.get(i+1).getName() + System.getProperty("line.separator");
+        for (int i = 0; i < players.size(); i++) {
+            turnOrderMessage += (i + 1) + ": " + turnOrder.get(i + 1).getName() + System.getProperty("line.separator");
         }
         JOptionPane.showMessageDialog(null, turnOrderMessage, "Turn Order", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -54,7 +58,8 @@ public class Game {
         }
     }
 
-    public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer, HashMap<Integer, Player> turnOrder, ArrayList<ArrayList<Integer>> capturedColumns) {
+    public void loadGame(ArrayList<ArrayList<ArrayList<Integer>>> pieceLocations, int currentPlayer,
+            HashMap<Integer, Player> turnOrder, ArrayList<ArrayList<Integer>> capturedColumns) {
         turn.setCurrentPlayerkey(currentPlayer);
         turn.setTurnOrder(turnOrder);
         for (int i = 0; i < players.size(); i++) {
@@ -66,17 +71,18 @@ public class Game {
                     int y = playerPieceLocations.get(j).get(1);
                     pieces.set(j, new pieces(players.get(i).getShape(), players.get(i).getColor()));
                     pieces.get(j).setLocation(board.getTile(x, y));
-                } 
+                }
             }
             board.updateGameBoard(pieces);
         }
 
-        for (int i = 0; i < players.size(); i++){
+        for (int i = 0; i < players.size(); i++) {
             ArrayList<Integer> playerCaptured = capturedColumns.get(i);
             System.out.println(playerCaptured);
-            if (playerCaptured != null){
-                for (int j = 0; j < playerCaptured.size(); j++){
-                    System.out.println();;
+            if (playerCaptured != null) {
+                for (int j = 0; j < playerCaptured.size(); j++) {
+                    System.out.println();
+                    ;
                     players.get(i).captureColumn(playerCaptured.get(j));
                     turn.addCapturedColumn(playerCaptured.get(j));
                     board.capturedColumn(playerCaptured.get(j) - 1);
@@ -90,7 +96,8 @@ public class Game {
     public Player getCurrentPlayer() {
         return turn.getTurnOrder().get(turn.getCurrentPlayerKey());
     }
-    public int checkRunners(){
+
+    public int checkRunners() {
         return turn.runnerCount();
     }
 

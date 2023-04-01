@@ -18,10 +18,12 @@ public class Board extends JFrame {
     private JButton dice;
     private JButton endTurn;
     private ArrayList<JLabel> labelsLst, scoresLst;
+    public ArrayList<JButton> validChoice;
 
     public Board(Game game, ArrayList<Player> players) {
         this.players = players;
         this.game = game;
+        this.validChoice = new ArrayList<>();
         this.setSize(new Dimension(1200, 900));
         menuBar = new JMenuBar();
         gameMenu = new JMenu("Options");
@@ -68,7 +70,7 @@ public class Board extends JFrame {
 
     private void buildBoard() {
         JPanel boardPanel = new JPanel(new GridLayout(13, 13));
-        boardPanel.setPreferredSize(new Dimension(700,900));
+        boardPanel.setPreferredSize(new Dimension(700, 900));
         boardPanel.setBackground(new Color(149, 240, 252));
         getContentPane().add(boardPanel, BorderLayout.CENTER);
 
@@ -85,8 +87,6 @@ public class Board extends JFrame {
                 boardPanel.add(board[x][y]);
             }
         }
-
-        
 
     }
 
@@ -258,6 +258,10 @@ public class Board extends JFrame {
         dice.setForeground(Color.red);
         gamePanel.add(dice);
 
+        for (int i = 0; i < this.players.size(); i++) {
+            this.players.get(i).rollButton(dice);
+        }
+
         endTurn = new JButton("End Turn");
         endTurn.setFont(new Font("Calibre", Font.BOLD, 20));
         endTurn.setOpaque(true);
@@ -303,6 +307,10 @@ public class Board extends JFrame {
         label.setForeground(Color.white);
     }
 
+    public void rollDiceAction() {
+        RollDice();
+    }
+
     private void RollDice() {
         Turn turn = game.getTurn();
         ArrayList<ArrayList<Integer>> dices = turn.getDiceCombinations();
@@ -336,6 +344,9 @@ public class Board extends JFrame {
             endTurn1.setOpaque(true);
             endTurn1.setBackground(Color.white);
             endTurn1.setForeground(Color.red);
+            if (turn.getCurrentplayer().getAI()) {
+                game.getTurn().endTurnBust();
+            }
             endTurn1.addActionListener(e -> {
                 game.getTurn().endTurnBust();
             });
@@ -355,8 +366,6 @@ public class Board extends JFrame {
         JPanel combinationPanel3 = new JPanel(new FlowLayout());
         combinationPanel3.setSize(new Dimension(otherPanel.getWidth(), otherPanel.getHeight() / 4));
 
-
-
         if (dices.size() > 1) {
             combinationPanel1.add(new diceImage(dices.get(1).get(0)));
             combinationPanel1.add(new diceImage(dices.get(1).get(1)));
@@ -364,19 +373,22 @@ public class Board extends JFrame {
             combinationPanel1.add(new diceImage(dices.get(1).get(2)));
             combinationPanel1.add(new diceImage(dices.get(1).get(3)));
 
-            JPanel littlePanel = new JPanel(new GridLayout(2,1));
-            addButtons(dices.get(1),littlePanel);
-            //if (addButtons((dices.get(1).get(0)+dices.get(1).get(1)),(dices.get(1).get(2))+dices.get(1).get(3),littlePanel)){
-                combinationPanel1.add(littlePanel);
-            //}
+            JPanel littlePanel = new JPanel(new GridLayout(2, 1));
+            addButtons(dices.get(1), littlePanel);
+            // if
+            // (addButtons((dices.get(1).get(0)+dices.get(1).get(1)),(dices.get(1).get(2))+dices.get(1).get(3),littlePanel)){
+            combinationPanel1.add(littlePanel);
+            // }
 
-
-            /*combinationPanel1.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    movePiece(dices.get(0));
-                }
-            });*/
+            /*
+             * combinationPanel1.addMouseListener(new MouseAdapter() {
+             * 
+             * @Override
+             * public void mouseClicked(MouseEvent e) {
+             * movePiece(dices.get(0));
+             * }
+             * });
+             */
             gamePanel.add(combinationPanel1);
         }
 
@@ -387,18 +399,22 @@ public class Board extends JFrame {
             combinationPanel2.add(new diceImage(dices.get(2).get(2)));
             combinationPanel2.add(new diceImage(dices.get(2).get(3)));
 
-            JPanel littlePanel = new JPanel(new GridLayout(2,1));
-            addButtons(dices.get(2),littlePanel);
-           // if (addButtons((dices.get(2).get(0)+dices.get(2).get(1)),(dices.get(2).get(2))+dices.get(2).get(3),littlePanel)){
-                combinationPanel2.add(littlePanel);
-            //}
+            JPanel littlePanel = new JPanel(new GridLayout(2, 1));
+            addButtons(dices.get(2), littlePanel);
+            // if
+            // (addButtons((dices.get(2).get(0)+dices.get(2).get(1)),(dices.get(2).get(2))+dices.get(2).get(3),littlePanel)){
+            combinationPanel2.add(littlePanel);
+            // }
 
-            /*combinationPanel2.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    movePiece(dices.get(1));
-                }
-            });*/
+            /*
+             * combinationPanel2.addMouseListener(new MouseAdapter() {
+             * 
+             * @Override
+             * public void mouseClicked(MouseEvent e) {
+             * movePiece(dices.get(1));
+             * }
+             * });
+             */
             gamePanel.add(combinationPanel2);
         }
 
@@ -408,18 +424,22 @@ public class Board extends JFrame {
             combinationPanel3.add(new JButton());
             combinationPanel3.add(new diceImage(dices.get(3).get(2)));
             combinationPanel3.add(new diceImage(dices.get(3).get(3)));
-            JPanel littlePanel = new JPanel(new GridLayout(2,1));
-            addButtons(dices.get(3),littlePanel);
-            //if (addButtons((dices.get(3).get(0)+dices.get(3).get(1)),(dices.get(3).get(2))+dices.get(3).get(3),littlePanel)){
-                combinationPanel3.add(littlePanel);
-            //}
+            JPanel littlePanel = new JPanel(new GridLayout(2, 1));
+            addButtons(dices.get(3), littlePanel);
+            // if
+            // (addButtons((dices.get(3).get(0)+dices.get(3).get(1)),(dices.get(3).get(2))+dices.get(3).get(3),littlePanel)){
+            combinationPanel3.add(littlePanel);
+            // }
 
-            /*combinationPanel3.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    movePiece(dices.get(2));
-                }
-            });*/
+            /*
+             * combinationPanel3.addMouseListener(new MouseAdapter() {
+             * 
+             * @Override
+             * public void mouseClicked(MouseEvent e) {
+             * movePiece(dices.get(2));
+             * }
+             * });
+             */
             gamePanel.add(combinationPanel3);
         }
 
@@ -427,133 +447,177 @@ public class Board extends JFrame {
         gamePanel.setVisible(true);
 
     }
-    private void addButtons(ArrayList<Integer> diceCombo, JPanel panel){
-        int diceRoll1 = diceCombo.get(0)+diceCombo.get(1);
-        int diceRoll2 = diceCombo.get(2)+diceCombo.get(3);
+
+    public void addButtons(ArrayList<Integer> diceCombo, JPanel panel) {
+        int diceRoll1 = diceCombo.get(0) + diceCombo.get(1);
+        int diceRoll2 = diceCombo.get(2) + diceCombo.get(3);
+        ArrayList<JButton> validChoice = new ArrayList<>();
         boolean anyButton = false;
-        if (diceRoll1!=diceRoll2){
+        if (diceRoll1 != diceRoll2) {
             System.out.print(game.checkRunners());
             System.out.println("runner list");
-        if (game.checkRunners()<2){ //case: at least two runners are available
-            if (validRow(diceRoll1)&&validRow(diceRoll2)){//case both columns open
-                System.out.println("less then 2 runners and both buttons");
-                panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),diceCombo));
-                anyButton = true;}
-            else if (validRow(diceRoll2)){ //case one is not open
-                System.out.println("less then 2 runners only one button");
-                ArrayList<Integer> newCombo = new ArrayList<>();
-                newCombo.add(diceCombo.get(2));
-                newCombo.add(diceCombo.get(3));
-                newCombo.add(diceCombo.get(0));
-                newCombo.add(diceCombo.get(1));
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)),newCombo));
-                anyButton = true;
-            }
-            else if (validRow(diceRoll1)){ //case other one is not open
-                System.out.println("less then 2 runners only one button");
-                /*ArrayList<Integer> newCombo = new ArrayList<>();
-                newCombo.add(diceCombo.get(0));
-                newCombo.add(diceCombo.get(1));
-                newCombo.add(diceCombo.get(2));
-                newCombo.add(diceCombo.get(3));*/
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
-                anyButton = true;
-            }}
-        else if(game.checkRunners()==2){
-            if (validRow(diceRoll1)&&validRow(diceRoll2)) {
-                if ((emptyRow(diceRoll1) && hasRunner(diceRoll2)) || (emptyRow(diceRoll2) && hasRunner(diceRoll1))) { //can use both
-                    System.out.println("2 runners but one is empty and one has runner");
-                    panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),
-                            diceCombo));
+            if (game.checkRunners() < 2) { // case: at least two runners are available
+                if (validRow(diceRoll1) && validRow(diceRoll2)) {// case both columns open
+                    System.out.println("less then 2 runners and both buttons");
+                    JButton tempJButton = buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ")
+                            .concat(Integer.toString(diceRoll2)), diceCombo);
+                    panel.add(tempJButton);
                     anyButton = true;
-                } else if (hasRunner(diceRoll2) && hasRunner(diceRoll1)) {
-                    System.out.println("2 runners but both have runners");
-                    panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),
-                            diceCombo));
-                    anyButton = true;
-                } else {
-                    System.out.println("2 runners but only one choice");
-                    panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo));
+                    this.validChoice.add(tempJButton);
+                    System.out.println(validChoice.size());
+                } else if (validRow(diceRoll2)) { // case one is not open
+                    System.out.println("less then 2 runners only one button");
                     ArrayList<Integer> newCombo = new ArrayList<>();
                     newCombo.add(diceCombo.get(2));
                     newCombo.add(diceCombo.get(3));
                     newCombo.add(diceCombo.get(0));
                     newCombo.add(diceCombo.get(1));
-                    panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo));
+                    JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
                     anyButton = true;
-                }}
-            else if (validRow(diceRoll2)){ //case one is not open
-                System.out.println("less then 2 runners only one button");
-                ArrayList<Integer> newCombo = new ArrayList<>();
-                newCombo.add(diceCombo.get(2));
-                newCombo.add(diceCombo.get(3));
-                newCombo.add(diceCombo.get(0));
-                newCombo.add(diceCombo.get(1));
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)),newCombo));
-                anyButton = true;
+                    System.out.println(validChoice.size());
+                } else if (validRow(diceRoll1)) { // case other one is not open
+                    System.out.println("less then 2 runners only one button");
+                    /*
+                     * ArrayList<Integer> newCombo = new ArrayList<>();
+                     * newCombo.add(diceCombo.get(0));
+                     * newCombo.add(diceCombo.get(1));
+                     * newCombo.add(diceCombo.get(2));
+                     * newCombo.add(diceCombo.get(3));
+                     */
+                    JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
+                    anyButton = true;
+                    System.out.println(validChoice.size());
+                }
+            } else if (game.checkRunners() == 2) {
+                if (validRow(diceRoll1) && validRow(diceRoll2)) {
+                    if ((emptyRow(diceRoll1) && hasRunner(diceRoll2))
+                            || (emptyRow(diceRoll2) && hasRunner(diceRoll1))) { // can use both
+                        System.out.println("2 runners but one is empty and one has runner");
+                        JButton tempJButton = buildButton(
+                                "Columns ".concat(Integer.toString(diceRoll1)).concat(" and ")
+                                        .concat(Integer.toString(diceRoll2)),
+                                diceCombo);
+                        panel.add(tempJButton);
+                        this.validChoice.add(tempJButton);
+                        anyButton = true;
+                        System.out.println(validChoice.size());
+                    } else if (hasRunner(diceRoll2) && hasRunner(diceRoll1)) {
+                        System.out.println("2 runners but both have runners");
+                        JButton tempJButton = buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ")
+                                .concat(Integer.toString(diceRoll2)), diceCombo);
+                        panel.add(tempJButton);
+                        this.validChoice.add(tempJButton);
+                        System.out.println(validChoice.size());
+                        anyButton = true;
+                    } else {
+                        System.out.println("2 runners but only one choice");
+                        panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo));
+                        ArrayList<Integer> newCombo = new ArrayList<>();
+                        newCombo.add(diceCombo.get(2));
+                        newCombo.add(diceCombo.get(3));
+                        newCombo.add(diceCombo.get(0));
+                        newCombo.add(diceCombo.get(1));
+                        JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo);
+                        panel.add(tempJButton);
+                        this.validChoice.add(tempJButton);
+                        anyButton = true;
+                        System.out.println(validChoice.size());
+                    }
+                } else if (validRow(diceRoll2)) { // case one is not open
+                    System.out.println("less then 2 runners only one button");
+                    ArrayList<Integer> newCombo = new ArrayList<>();
+                    newCombo.add(diceCombo.get(2));
+                    newCombo.add(diceCombo.get(3));
+                    newCombo.add(diceCombo.get(0));
+                    newCombo.add(diceCombo.get(1));
+                    JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
+                    anyButton = true;
+                    System.out.println(validChoice.size());
+                } else if (validRow(diceRoll1)) { // case other one is not open
+                    System.out.println("less then 2 runners only one button");
+                    JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
+                    anyButton = true;
+                    System.out.println(validChoice.size());
+                }
+            } else if (game.checkRunners() == 3) {
+                if (hasRunner(diceRoll1) && hasRunner(diceRoll2)) {
+                    System.out.println("3 runners both have buttons");
+                    JButton tempJButton = buildButton(
+                            "Columns ".concat(Integer.toString(diceRoll1)).concat(" and ")
+                                    .concat(Integer.toString(diceRoll2)),
+                            diceCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
+                    anyButton = true;
+                    System.out.println(validChoice.size());
+                } else if (hasRunner(diceRoll1)) {
+                    System.out.println("3 runners only one button");
+                    JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
+                    anyButton = true;
+                    System.out.println(validChoice.size());
+                } else if (hasRunner(diceRoll2)) {
+                    System.out.println("3 runners only one button");
+                    ArrayList<Integer> newCombo = new ArrayList<>();
+                    newCombo.add(diceCombo.get(2));
+                    newCombo.add(diceCombo.get(3));
+                    newCombo.add(diceCombo.get(0));
+                    newCombo.add(diceCombo.get(1));
+                    JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo);
+                    panel.add(tempJButton);
+                    this.validChoice.add(tempJButton);
+                    anyButton = true;
+                    System.out.println(validChoice.size());
+                }
             }
-            else if (validRow(diceRoll1)){ //case other one is not open
-                System.out.println("less then 2 runners only one button");
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
-                anyButton = true;
-            }}
-        else if (game.checkRunners()==3){
-            if (hasRunner(diceRoll1)&&hasRunner(diceRoll2)){
-                System.out.println("3 runners both have buttons");
-                panel.add(buildButton("Columns ".concat(Integer.toString(diceRoll1)).concat(" and ").concat(Integer.toString(diceRoll2)),
-                        diceCombo));
-                anyButton = true;
-            }
-            else if(hasRunner(diceRoll1)){
-                System.out.println("3 runners only one button");
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
-                anyButton = true;
-            }
-            else if (hasRunner(diceRoll2)){
-                System.out.println("3 runners only one button");
-                ArrayList<Integer> newCombo = new ArrayList<>();
-                newCombo.add(diceCombo.get(2));
-                newCombo.add(diceCombo.get(3));
-                newCombo.add(diceCombo.get(0));
-                newCombo.add(diceCombo.get(1));
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll2)), newCombo));
-                anyButton = true;
-            }
-        }
-            }
-        else{
-            if ((game.checkRunners()<=2&&validRow(diceRoll1)||hasRunner(diceRoll1))){
+        } else {
+            if ((game.checkRunners() <= 2 && validRow(diceRoll1) || hasRunner(diceRoll1))) {
                 System.out.println("same combo");
                 System.out.println(diceCombo);
-                panel.add(buildButton("Column ".concat(Integer.toString(diceRoll1)),diceCombo));
+                JButton tempJButton = buildButton("Column ".concat(Integer.toString(diceRoll1)), diceCombo);
+                panel.add(tempJButton);
+                validChoice.add(tempJButton);
                 anyButton = true;
+                System.out.println(validChoice.size());
             }
         }
-        if (!anyButton){
+        if (!anyButton) {
 
         }
-        }
+    }
 
-
-    private JButton buildButton(String columns, ArrayList<Integer> diceCombo){
+    private JButton buildButton(String columns, ArrayList<Integer> diceCombo) {
         JButton select = new JButton(columns);
         select.setForeground(Color.white);
         select.setBackground(Color.red);
-        //select.setBorder(BorderFactory.createLineBorder(Color.red));
-        select.setFont(new Font("Calibrie",Font.BOLD,15));
-        select.addActionListener(e->movePiece(diceCombo));
+        // select.setBorder(BorderFactory.createLineBorder(Color.red));
+        select.setFont(new Font("Calibrie", Font.BOLD, 15));
+        select.addActionListener(e -> movePiece(diceCombo));
         return select;
     }
-    private boolean validRow(int diceRoll){
-        return checkNotCaptured(diceRoll) &&(hasRunner(diceRoll)||emptyRow(diceRoll));
+
+    private boolean validRow(int diceRoll) {
+        return checkNotCaptured(diceRoll) && (hasRunner(diceRoll) || emptyRow(diceRoll));
     }
-    private boolean hasRunner(int diceRoll){
+
+    private boolean hasRunner(int diceRoll) {
         return game.getTurn().hasRunner(diceRoll);
     }
-    private boolean emptyRow(int diceRoll){ //only called when there are available runners
+
+    private boolean emptyRow(int diceRoll) { // only called when there are available runners
         return !game.getTurn().hasRunner(diceRoll) && checkNotCaptured(diceRoll);
     }
-    private boolean checkNotCaptured(int diceRoll){
+
+    private boolean checkNotCaptured(int diceRoll) {
         return game.getTurn().checkNotCaptured(diceRoll);
     }
 
@@ -578,24 +642,25 @@ public class Board extends JFrame {
         return board[x][y];
     }
 
-    public void updateScoreLabels(){
-        for(int i=0; i< players.size();i++){
+    public void updateScoreLabels() {
+        for (int i = 0; i < players.size(); i++) {
             int playerScore = players.get(i).getScore();
-            if (!Integer.toString(playerScore).equals(scoresLst.get(i).getText())){
+            if (!Integer.toString(playerScore).equals(scoresLst.get(i).getText())) {
                 scoresLst.get(i).setText(Integer.toString(playerScore));
 
             }
         }
     }
+
     public void updateGameBoard(ArrayList<pieces> pieces) {
 
         pieces.forEach((e) -> {
             if (e == null) {
             } else {
-        
+
                 board[e.getColumn()][e.getRow()].setVisible(false);
-                //if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
-                board[e.getColumn()][e.getRow()].add(e);//}
+                // if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){
+                board[e.getColumn()][e.getRow()].add(e);// }
                 board[e.getColumn()][e.getRow()].setVisible(true);
 
             }
@@ -613,11 +678,12 @@ public class Board extends JFrame {
                 label.setBackground(Color.red);
                 label.setForeground(Color.white);
             }
+
         }
     }
-    
-    public void updateScores(){
-        for (int i=0; i<players.size(); i++){
+
+    public void updateScores() {
+        for (int i = 0; i < players.size(); i++) {
             scoresLst.get(i).setText(Integer.toString(players.get(i).getScore()));
         }
     }
@@ -647,16 +713,16 @@ public class Board extends JFrame {
         }
     }
 
-    public void capturedColumn(int col){
+    public void capturedColumn(int col) {
         boolean start = false;
-        for(int i = 0; i<13;i++){
-            if(board[i][col].checkEndTile() == true){
-                System.out.println("Column end tile:"+i+col);
+        for (int i = 0; i < 13; i++) {
+            if (board[i][col].checkEndTile() == true) {
+                System.out.println("Column end tile:" + i + col);
                 start = !start;
                 continue;
             }
-            if(start = true){
-                
+            if (start = true) {
+
                 board[i][col].removeAll();
                 board[i][col].setBackground(Color.GRAY);
             }

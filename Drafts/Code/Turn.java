@@ -148,7 +148,9 @@ public class Turn {
     }
     public void movePiece(int diceRoll){
         for (pieces runner:runners){
-            if (runner.getRow()+1==diceRoll){
+            
+            if (runner.getRow()+1==diceRoll && !(board.getTile(runner.getColumn(), runner.getRow()).checkEndTile())){
+                
                 runner.setLocation(board.getTile(runner.getRow(), runner.getColumn() - 1));
                 if (board.getTile(runner.getColumn(), runner.getRow()).checkEndTile()) {
                     runner.cantMove();
@@ -157,6 +159,7 @@ public class Turn {
                 return;
             }
         }
+        if (runners.size() !=3){
         pieces runner1 = new pieces("Arrow", "White");
         if (turnOrder.get(currentTurn).getPieceInColumn(diceRoll) != null) {
             pieces temp = turnOrder.get(currentTurn).getPieceInColumn(diceRoll);
@@ -165,7 +168,10 @@ public class Turn {
             runner1.setLocation(board.getTile(diceRoll - 1, 13 - Math.abs(7 - diceRoll) - 1));
         }
 
-        runners.add(runner1);
+        if(!capturedColumns.contains(runner1.getRow()+1)){
+            runners.add(runner1);
+        }
+    }
         board.updateGameBoard(runners);
 
     }

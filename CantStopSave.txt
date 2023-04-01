@@ -1,0 +1,8 @@
+2
+1,Type yo:2,ame here:
+Type yo:Circle:Yellow:0:
+n:n:n:n:n:n:n:n:n:n:n:
+c:
+ame here:Square:Blue:0:
+n:n:n:n:n:n:n:n:n:n:n:
+c:

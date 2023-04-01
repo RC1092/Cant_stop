@@ -7,9 +7,10 @@ import java.util.Set;
 public class ChoosePieces extends JFrame {
     private int numPlayers;
     private JPanel selection;
-    private final String[] shapes, colors;
-    private ArrayList<JComboBox<String>> shapeLst, colorLst;
+    private final String[] shapes, colors, ai_;
+    private ArrayList<JComboBox<String>> shapeLst, colorLst, aiLst;
     private ArrayList<JTextField> nameLst;
+    // private ArrayList<ButtonGroup> aiLst;
     private ArrayList<Player> playerLst;
     private JLabel dupeWarning;
 
@@ -18,10 +19,10 @@ public class ChoosePieces extends JFrame {
         this.setLayout(new BorderLayout());
         this.shapes = new String[] { " ", "Circle", "Square", "Triangle", "Star" };
         this.colors = new String[] { " ", "Blue", "Yellow", "Green", "Pink", "Orange", "Purple" };
-        // this.ai = new String[]{"Player","AI Easy","AI Hard"};
+        this.ai_ = new String[] { "Player", "AI Easy", "AI Hard" };
         shapeLst = new ArrayList<>();
         colorLst = new ArrayList<>();
-        // aiLst = new ArrayList<>();
+        aiLst = new ArrayList<>();
         nameLst = new ArrayList<>();
         playerLst = new ArrayList<>();
         JPanel header = new JPanel(new FlowLayout());
@@ -80,7 +81,7 @@ public class ChoosePieces extends JFrame {
     private void buildChoicePanel() {
         for (int i = 0; i < numPlayers; i++) {
             JPanel background = new JPanel(new BorderLayout());
-            JPanel choices = new JPanel(new GridLayout(3, 1));
+            JPanel choices = new JPanel(new GridLayout(4, 1));
             JPanel player = new JPanel(new FlowLayout());
             JLabel playerNumber = new JLabel("Player ".concat(Integer.toString(i + 1)));
 
@@ -96,10 +97,11 @@ public class ChoosePieces extends JFrame {
             JLabel color = new JLabel("Color: ");
             JLabel shape = new JLabel("Shape: ");
             JLabel name = new JLabel("Name: ");
-            // JLabel ai = new JLabel("")
+            JLabel ai = new JLabel("");
             formatLabel(color);
             formatLabel(shape);
             formatLabel(name);
+            formatLabel(ai);
 
             background.add(choices, BorderLayout.CENTER);
             background.add(player, BorderLayout.NORTH);
@@ -109,35 +111,36 @@ public class ChoosePieces extends JFrame {
             chooseShape.setFont(new Font("Calibre", Font.BOLD, 20));
             chooseShape.setBackground(Color.white);
             shapeLst.add(chooseShape);
+
             JComboBox<String> chooseColor = new JComboBox<>(colors);
             chooseColor.setFont(new Font("Calibre", Font.BOLD, 20));
             chooseColor.setBackground(Color.white);
             colorLst.add(chooseColor);
+
             JTextField chooseName = new JTextField("Type your name here");
             chooseName.setFont(new Font("Calibre", Font.PLAIN, 20));
             chooseName.setBackground(Color.white);
             nameLst.add(chooseName);
-            /*
-             * JComboBox<String> chooseAi = new JComboBox<>(ai);
-             * chooseAi.setFont(new Font("Calibre",Font.BOLD,20));
-             * chooseAi.setBackground(Color.white);
-             * aiLst.add(chooseAi);
-             */
 
-            /*
-             * JRadioButton notAi = new JRadioButton("Player");
-             * notAi.setBackground(Color.red);
-             * notAi.setForeground(Color.white);
-             * notAi.setFont(new Font("Calibre", Font.BOLD, 20));
-             * JRadioButton aiEasy = new JRadioButton("AI Easy");
-             * aiEasy.setBackground(Color.red);
-             * aiEasy.setForeground(Color.white);
-             * aiEasy.setFont(new Font("Calibre", Font.BOLD, 20));
-             * JRadioButton aiHard = new JRadioButton("AI Hard");
-             * aiHard.setBackground(Color.red);
-             * aiHard.setForeground(Color.white);
-             * aiHard.setFont(new Font("Calibre", Font.BOLD, 20));
-             */
+            JComboBox<String> chooseAi = new JComboBox<>(ai_);
+            chooseAi.setFont(new Font("Calibre", Font.BOLD, 20));
+            chooseAi.setBackground(Color.white);
+            aiLst.add(chooseAi);
+
+            JRadioButton notAi = new JRadioButton("Player");
+            notAi.setBackground(Color.red);
+            notAi.setForeground(Color.white);
+            notAi.setFont(new Font("Calibre", Font.BOLD, 20));
+
+            JRadioButton aiEasy = new JRadioButton("AI Easy");
+            aiEasy.setBackground(Color.red);
+            aiEasy.setForeground(Color.white);
+            aiEasy.setFont(new Font("Calibre", Font.BOLD, 20));
+
+            JRadioButton aiHard = new JRadioButton("AI Hard");
+            aiHard.setBackground(Color.red);
+            aiHard.setForeground(Color.white);
+            aiHard.setFont(new Font("Calibre", Font.BOLD, 20));
 
             JPanel panel = new JPanel(new FlowLayout());
             panel.setBackground(Color.red);
@@ -157,12 +160,17 @@ public class ChoosePieces extends JFrame {
             panel3.add(name);
             panel3.add(chooseName);
 
-            /*
-             * JPanel panel4 = new JPanel(new FlowLayout());
-             * panel4.setBackground(Color.red);
-             * choices.add(panel4);
-             * panel4.add(chooseAi);
-             */
+            JPanel panel4 = new JPanel(new FlowLayout());
+            // ButtonGroup buttonGroup = new ButtonGroup();
+            // buttonGroup.add(notAi);
+            // buttonGroup.add(aiEasy);
+            // buttonGroup.add(aiHard);
+            panel4.setBackground(Color.red);
+            choices.add(panel4);
+            // panel4.add(notAi);
+            // panel4.add(aiEasy);
+            // panel4.add(aiHard);
+            panel4.add(chooseAi);
 
         }
     }
@@ -219,23 +227,36 @@ public class ChoosePieces extends JFrame {
     private void createPlayer(int playerNumber) {
         String playerShape = (String) shapeLst.get(playerNumber).getSelectedItem();
         String playerColor = (String) colorLst.get(playerNumber).getSelectedItem();
+        // String playerType = (String)
+        // aiLst.get(playerNumber).getSelection().getActionCommand();
+        String playerType = (String) aiLst.get(playerNumber).getSelectedItem();
+        System.out.println(aiLst.size());
+        System.out.println(playerType);
         String playerName = nameLst.get(playerNumber).getText();
-        playerLst.add(new Player(playerShape, playerColor, playerName));
+        if (playerType.equals("Player")) {
+            playerLst.add(new Player(playerShape, playerColor, playerName));
+        } else {
+            playerLst.add(new AI_Player(playerShape, playerColor, playerName));
+        }
+        // System.out.println(playerLst.get(playerNumber).AIPlayer);
     }
 
     private void checkValidChoices() {
-        if (checkDuplicates() && noBlanks()){
-            //System.out.println("yay");
-            for (int i=0; i<numPlayers; i++){
-                createPlayer(i);}
+        if (checkDuplicates() && noBlanks()) {
+            // System.out.println("yay");
+            for (int i = 0; i < numPlayers; i++) {
+                createPlayer(i);
+            }
             setVisible(false);
             Game game = new Game(playerLst);
             game.displayTurnOrder();
-        } else{ 
-            dupeWarning.setText("Make sure you have selected unique choices. (Name, Shape and Color must be different)");
-            JOptionPane.showMessageDialog(null, "Make sure you have selected unique choices. (Name, Shape and Color must be different)", "Game Failed",JOptionPane.ERROR_MESSAGE);
+        } else {
+            dupeWarning
+                    .setText("Make sure you have selected unique choices. (Name, Shape and Color must be different)");
+            JOptionPane.showMessageDialog(null,
+                    "Make sure you have selected unique choices. (Name, Shape and Color must be different)",
+                    "Game Failed", JOptionPane.ERROR_MESSAGE);
         }
-
 
     }
 }

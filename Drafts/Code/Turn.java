@@ -1,16 +1,10 @@
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.Random;
-import java.util.TimerTask;
-import java.util.concurrent.TimeUnit;
 
-import javax.lang.model.element.Element;
-import javax.swing.JOptionPane;
 import javax.swing.Timer;
 
 public class Turn {
@@ -152,7 +146,7 @@ public class Turn {
     public int runnerCount() {
         return runners.size();
     }
-    public void movePieceTest(int diceRoll){
+    public void movePiece(int diceRoll){
         for (pieces runner:runners){
             if (runner.getRow()+1==diceRoll){
                 runner.setLocation(board.getTile(runner.getRow(), runner.getColumn() - 1));
@@ -174,7 +168,7 @@ public class Turn {
     }
     // Called when a player selects their dice combination and moves their pieces
     // appropriately
-    public void movePiece(ArrayList<Integer> selected_combination) {
+    /*public void movePiece(ArrayList<Integer> selected_combination) {
 
         int col1 = selected_combination.get(0) + selected_combination.get(1);
         int col2 = selected_combination.get(2) + selected_combination.get(3);
@@ -320,7 +314,7 @@ public class Turn {
             System.out.println("Runner location after change" + " " + e.getColumn() + " " + e.getRow());
         });
         board.updateGameBoard(runners);
-    }
+    }*/
 
     public void addCapturedColumn(int col) {
         capturedColumns.add(col);

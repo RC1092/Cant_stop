@@ -635,9 +635,9 @@ public class Board extends JFrame {
         if (selected_combination == 0) {
             return;
         }
-        game.getTurn().movePieceTest(selected_combination);
+        game.getTurn().movePiece(selected_combination);
         if (selected_combination2 != 0){
-            game.getTurn().movePieceTest(selected_combination2);
+            game.getTurn().movePiece(selected_combination2);
         }
     }
 

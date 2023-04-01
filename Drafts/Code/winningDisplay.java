@@ -58,7 +58,7 @@ public class winningDisplay extends JFrame{
     }
 
     public void startNewGame(JFrame parent){
-        StartUp newGame = new StartUp();
+        new StartUp();
         parent.dispose();
         this.dispose();    
     }

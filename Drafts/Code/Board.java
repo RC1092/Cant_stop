@@ -749,7 +749,7 @@ public class Board extends JFrame {
     }
 
     public void tutorial(){
-        tutorial t1 = new tutorial(null);
+        new tutorial(null);
     }
 
 }

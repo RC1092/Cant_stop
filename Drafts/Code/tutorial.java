@@ -164,10 +164,4 @@ public class tutorial extends JFrame{
         
     }
     
-
-    
-    public static void main(String [] args){
-        tutorial t = new tutorial(null);
-
-    }
 }

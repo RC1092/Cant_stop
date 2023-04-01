@@ -656,10 +656,11 @@ public class Board extends JFrame {
     }
 
     public void updateGameBoard(ArrayList<pieces> pieces) {
-
+        System.out.println(pieces.size());
         pieces.forEach((e) -> {
             if (e == null) {
-            } else {
+            }
+            else if (checkNotCaptured(e.getRow()+1)||board[e.getColumn()][e.getRow()].checkEndTile()){
 
                 board[e.getColumn()][e.getRow()].setVisible(false);
                 // if (board[e.getColumn()][e.getRow()].getBackground().equals(Color.red)){

@@ -71,7 +71,7 @@ public class ChoosePieces extends JFrame {
 
     private void back() {
         setVisible(false);
-        StartUp start = new StartUp();
+        new StartUp();
     }
 
     private void formatLabel(JLabel label) {
@@ -265,6 +265,6 @@ public class ChoosePieces extends JFrame {
     }
 
     public void tutorial() {
-        tutorial t1 = new tutorial(null);
+        new tutorial(null);
     }
 }

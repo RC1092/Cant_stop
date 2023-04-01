@@ -100,15 +100,4 @@ public class Game {
     public int checkRunners() {
         return turn.runnerCount();
     }
-
-    public static void main(String[] args) {
-
-        // FlatDarkLaf.setup();
-        Player p1 = new Player("Circle", "Blue", "p1");
-        Player p2 = new Player("Square", "Green", "player2");
-        ArrayList<Player> players = new ArrayList<Player>();
-        players.add(p1);
-        players.add(p2);
-        Game game = new Game(players);
-    }
 }

@@ -389,7 +389,7 @@ public class Turn {
                 board.capturedColumn(e.getRow());
                 board.updateScores();
                 if (current_player.checkWinner()) {
-                    winningDisplay winner = new winningDisplay(board, current_player);
+                    new winningDisplay(board, current_player);
                 }
                 ;
             }

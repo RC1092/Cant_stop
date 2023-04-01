@@ -53,7 +53,7 @@ public class ChoosePieces extends JFrame {
         startGame.addActionListener(e -> checkValidChoices());
         menuBar = new JMenuBar();
         JMenuItem tutorial = new JMenuItem("Tutorial");
-        tutorial.addActionListener((e)-> tutorial());
+        tutorial.addActionListener((e) -> tutorial());
         menuBar.add(tutorial);
         selection = new JPanel();
         setFrameSize();
@@ -263,7 +263,8 @@ public class ChoosePieces extends JFrame {
         }
 
     }
-    public void tutorial(){
+
+    public void tutorial() {
         tutorial t1 = new tutorial(null);
     }
 }

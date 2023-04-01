@@ -383,7 +383,7 @@ public class Turn {
         }
         runners.forEach((e) -> {
             if (board.getTile(e.getColumn(), e.getRow()).checkEndTile()) {
-
+                //e.setText("Blue");
                 current_player.captureColumn(e.getRow() + 1);
                 capturedColumns.add(e.getRow() + 1);
                 board.capturedColumn(e.getRow());

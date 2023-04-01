@@ -34,6 +34,9 @@ public class StartUp extends JFrame {
         start.setBackground(Color.red);
         menuBar = new JMenuBar();
         JMenuItem tutorial = new JMenuItem("Tutorial");
+        tutorial.setForeground(Color.white);
+        tutorial.setBackground(Color.red);
+        tutorial.setFont(new Font("Calibrie", Font.BOLD, 15));
         tutorial.addActionListener((e)-> tutorial());
         menuBar.add(tutorial);
 

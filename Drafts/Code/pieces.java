@@ -15,6 +15,8 @@ public class pieces extends JButton{
         this.shape = shape;
         this.color = color;
         location = new Tile(-1,-1, false);
+        this.setText(" ");
+        //this.setFont(new Font("Calibrie",Font.PLAIN,50));
         this.setBackground(Color.RED);
         this.setForeground(Color.getColor(color,Color.BLACK));
         canMove = true;
@@ -116,4 +118,5 @@ public class pieces extends JButton{
     public void canMove(){
         canMove = true;
     }
+    public String getColor(){ return color;}
 }

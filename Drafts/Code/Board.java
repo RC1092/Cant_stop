@@ -18,6 +18,7 @@ public class Board extends JFrame {
     private JButton dice;
     private JButton endTurn;
     private ArrayList<JLabel> labelsLst, scoresLst;
+    private JLabel[] boardLabels;
     public ArrayList<JButton> validChoice;
 
     public Board(Game game, ArrayList<Player> players) {
@@ -49,17 +50,17 @@ public class Board extends JFrame {
             this.quitGame();
         });
         // add menu items to "Game" menu
-        gameMenu.add(newGameItem);
-        gameMenu.add(saveItem);
-        gameMenu.addSeparator();
-        gameMenu.add(quitItem);
 
         JMenuItem tutorial = new JMenuItem("Tutorial");
         tutorial.setFont(new Font("Calibrie", Font.BOLD, 15));
         tutorial.addActionListener((e)-> tutorial());
         
         menuBar.add(gameMenu);
-        menuBar.add(tutorial);
+        gameMenu.add(newGameItem);
+        gameMenu.add(saveItem);
+        gameMenu.add(tutorial);
+        gameMenu.addSeparator();
+        gameMenu.add(quitItem);
         // saveMenu.add(saveButton);
         this.setJMenuBar(menuBar);
 
@@ -74,6 +75,7 @@ public class Board extends JFrame {
     }
 
     private void buildBoard() {
+        boardLabels = new JLabel[13];
         JPanel boardPanel = new JPanel(new GridLayout(13, 13));
         boardPanel.setPreferredSize(new Dimension(700, 900));
         boardPanel.setBackground(new Color(149, 240, 252));
@@ -218,6 +220,14 @@ public class Board extends JFrame {
         number.setBackground(Color.white);
         number.setForeground(Color.red);
         number.setOpaque(true);
+        try{
+            int index = Integer.parseInt(character);
+            boardLabels[index] = number;
+        }
+        catch(NumberFormatException e){
+            System.out.println(character);
+        }
+
         return number;
     }
 

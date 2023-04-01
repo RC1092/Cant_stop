@@ -390,6 +390,12 @@ public class Turn {
     public void AIGamePlay() {
         for (int i = 0; i < 3; i++) {
 
+            Random rand = new Random();
+            if (rand.nextFloat() < 0.1) {
+                endTurnBust();
+                break;
+            }
+
             board.rollDiceAction();
 
             board.validChoice.get(0).addActionListener(new ActionListener() {

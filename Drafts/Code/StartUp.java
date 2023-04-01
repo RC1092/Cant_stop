@@ -11,6 +11,7 @@ public class StartUp extends JFrame {
     private Timer timer;
     private JLabel cantStop;
     private JPanel start;
+    private JMenuBar menuBar;
     private FileManager file;
 
     public StartUp() {
@@ -31,6 +32,10 @@ public class StartUp extends JFrame {
         select.setBackground(Color.red);
         start = new JPanel(new FlowLayout());
         start.setBackground(Color.red);
+        menuBar = new JMenuBar();
+        JMenuItem tutorial = new JMenuItem("Tutorial");
+        tutorial.addActionListener((e)-> tutorial());
+        menuBar.add(tutorial);
 
         cantStop = new JLabel("");
         cantStop.setFont(new Font("Calibre", Font.BOLD, 50));
@@ -65,6 +70,7 @@ public class StartUp extends JFrame {
         getContentPane().add(title);
         getContentPane().add(select);
         getContentPane().add(start);
+        this.setJMenuBar(menuBar);
         GridBagConstraints c = new GridBagConstraints();
         c.anchor = GridBagConstraints.PAGE_END;
         title.add(cantStop, c);
@@ -122,6 +128,10 @@ public class StartUp extends JFrame {
             // System.out.println(String.join("",displayed));
             cantStop.setText(String.join("", displayed));
         }
+    }
+
+    public void tutorial(){
+        tutorial t1 = new tutorial(null);
     }
 
     public static void main(String[] argv) {

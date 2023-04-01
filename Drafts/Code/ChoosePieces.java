@@ -10,6 +10,7 @@ public class ChoosePieces extends JFrame {
     private final String[] shapes, colors, ai_;
     private ArrayList<JComboBox<String>> shapeLst, colorLst, aiLst;
     private ArrayList<JTextField> nameLst;
+    private JMenuBar menuBar;
     // private ArrayList<ButtonGroup> aiLst;
     private ArrayList<Player> playerLst;
     private JLabel dupeWarning;
@@ -50,7 +51,10 @@ public class ChoosePieces extends JFrame {
         header.add(back);
         header.add(startGame);
         startGame.addActionListener(e -> checkValidChoices());
-
+        menuBar = new JMenuBar();
+        JMenuItem tutorial = new JMenuItem("Tutorial");
+        tutorial.addActionListener((e)-> tutorial());
+        menuBar.add(tutorial);
         selection = new JPanel();
         setFrameSize();
         buildChoicePanel();
@@ -58,7 +62,7 @@ public class ChoosePieces extends JFrame {
         getContentPane().add(header, BorderLayout.NORTH);
         getContentPane().add(selection, BorderLayout.CENTER);
         getContentPane().add(dupeWarning, BorderLayout.SOUTH);
-
+        this.setJMenuBar(menuBar);
         setResizable(false);
         setVisible(true);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -258,5 +262,8 @@ public class ChoosePieces extends JFrame {
                     "Game Failed", JOptionPane.ERROR_MESSAGE);
         }
 
+    }
+    public void tutorial(){
+        tutorial t1 = new tutorial(null);
     }
 }

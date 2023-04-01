@@ -54,7 +54,12 @@ public class Board extends JFrame {
         gameMenu.addSeparator();
         gameMenu.add(quitItem);
 
+        JMenuItem tutorial = new JMenuItem("Tutorial");
+        tutorial.setFont(new Font("Calibrie", Font.BOLD, 15));
+        tutorial.addActionListener((e)-> tutorial());
+        
         menuBar.add(gameMenu);
+        menuBar.add(tutorial);
         // saveMenu.add(saveButton);
         this.setJMenuBar(menuBar);
 
@@ -731,6 +736,10 @@ public class Board extends JFrame {
                 board[i][col].setBackground(Color.GRAY);
             }
         }
+    }
+
+    public void tutorial(){
+        tutorial t1 = new tutorial(null);
     }
 
 }

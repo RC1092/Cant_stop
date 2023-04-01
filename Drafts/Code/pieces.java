@@ -15,7 +15,6 @@ public class pieces extends JButton{
         this.shape = shape;
         this.color = color;
         location = new Tile(-1,-1, false);
-        this.setText(color);
         this.setBackground(Color.RED);
         this.setForeground(Color.getColor(color,Color.BLACK));
         canMove = true;

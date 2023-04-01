@@ -1,8 +1,8 @@
 2
-1,Type yo:2,ame here:
-Type yo:Circle:Yellow:0:
-n:n:n:n:n:n:n:n:n:n:n:
-c:
-ame here:Square:Blue:0:
-n:n:n:n:n:n:n:n:n:n:n:
+1,millie:2,gus gus:
+millie:Triangle:Purple:1:
+n:n:n:n:5,1:n:7,9:8,10:9,5:10,6:n:
+6:
+gus gus:Star:Blue:0:
+1,7:n:3,8:4,7:n:6,8:7,8:n:n:10,7:n:
 c:

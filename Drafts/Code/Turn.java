@@ -150,6 +150,9 @@ public class Turn {
         for (pieces runner:runners){
             if (runner.getRow()+1==diceRoll){
                 runner.setLocation(board.getTile(runner.getRow(), runner.getColumn() - 1));
+                if (board.getTile(runner.getColumn(), runner.getRow()).checkEndTile()) {
+                    runner.cantMove();
+                }
                 board.updateGameBoard(runners);
                 return;
             }

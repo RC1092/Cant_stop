@@ -152,7 +152,26 @@ public class Turn {
     public int runnerCount() {
         return runners.size();
     }
+    public void movePieceTest(int diceRoll){
+        for (pieces runner:runners){
+            if (runner.getRow()+1==diceRoll){
+                runner.setLocation(board.getTile(runner.getRow(), runner.getColumn() - 1));
+                board.updateGameBoard(runners);
+                return;
+            }
+        }
+        pieces runner1 = new pieces("Arrow", "White");
+        if (turnOrder.get(currentTurn).getPieceInColumn(diceRoll) != null) {
+            pieces temp = turnOrder.get(currentTurn).getPieceInColumn(diceRoll);
+            runner1.setLocation(board.getTile(temp.getRow(), temp.getColumn() - 1));
+        } else {
+            runner1.setLocation(board.getTile(diceRoll - 1, 13 - Math.abs(7 - diceRoll) - 1));
+        }
 
+        runners.add(runner1);
+        board.updateGameBoard(runners);
+
+    }
     // Called when a player selects their dice combination and moves their pieces
     // appropriately
     public void movePiece(ArrayList<Integer> selected_combination) {
@@ -379,7 +398,7 @@ public class Turn {
         } else {
             currentTurn += 1;
         }
-        board.movePiece(null);
+        board.movePiece(0,0);
         board.removeRunners(runners);
         runners = new ArrayList<pieces>();
         if (getCurrentplayer().getAI()) {

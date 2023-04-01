@@ -188,7 +188,10 @@ public class Turn {
                     runner1.setLocation(board.getTile(col1 - 1, 13 - Math.abs(7 - col1) - 2));
                 }
 
-                runners.add(runner1);
+                if(!capturedColumns.contains(runner1.getRow()+1)){
+                    runners.add(runner1);
+                }
+                
             }
 
             else {
@@ -202,7 +205,9 @@ public class Turn {
                     runner1.setLocation(board.getTile(col1 - 1, 13 - Math.abs(7 - col1) - 1));
                 }
 
-                runners.add(runner1);
+                if(!capturedColumns.contains(runner1.getRow()+1)){
+                    runners.add(runner1);
+                }
 
                 pieces runner2 = new pieces("Arrow", "White");
                 if (turnOrder.get(currentTurn).getPieceInColumn(col2) != null) {
@@ -212,27 +217,33 @@ public class Turn {
                     runner2.setLocation(board.getTile(col2 - 1, 13 - Math.abs(7 - col2) - 1));
                 }
 
-                runners.add(runner2);
+                if(!capturedColumns.contains(runner2.getRow()+1)){
+                    runners.add(runner2);
+                }
             }
 
         } else if (runners.size() == 3) {
             System.out.println("Case with 3 runners");
             runners.forEach((e) -> {
-                if (cols.contains(e.getRow() + 1)) {
+                if (cols.contains(e.getRow() + 1)&& !(board.getTile(e.getColumn(), e.getRow()).checkEndTile())) {
                     e.setLocation(board.getTile(e.getRow(), e.getColumn() - 1));
                     System.out.println("Column Match");
                     cols.remove((Integer) (e.getRow() + 1));
                     if (board.getTile(e.getColumn(), e.getRow()).checkEndTile()) {
+                        
+                        System.out.println("cant move pieces in "+(e.getRow()+1));
                         e.cantMove();
                     }
                 }
             });
             runners.forEach((e) -> {
-                if (cols.contains(e.getRow() + 1)) {
+                if (cols.contains(e.getRow() + 1)&& !(board.getTile(e.getColumn(), e.getRow()).checkEndTile())) {
                     e.setLocation(board.getTile(e.getRow(), e.getColumn() - 1));
                     System.out.println("Column Match");
                     cols.remove((Integer) (e.getRow() + 1));
                     if (board.getTile(e.getColumn(), e.getRow()).checkEndTile()) {
+                        
+                        System.out.println("cant move pieces in "+(e.getRow()+1));
                         e.cantMove();
                     }
                 }
@@ -240,22 +251,26 @@ public class Turn {
 
         } else {
             runners.forEach((e) -> {
-                if (cols.contains(e.getRow() + 1)) {
+                if (cols.contains(e.getRow() + 1)&& !(board.getTile(e.getColumn(), e.getRow()).checkEndTile())) {
                     e.setLocation(board.getTile(e.getRow(), e.getColumn() - 1));
                     System.out.println("Column Match");
                     cols.remove((Integer) (e.getRow() + 1));
                     if (board.getTile(e.getColumn(), e.getRow()).checkEndTile()) {
+                        
+                        System.out.println("cant move pieces in "+(e.getRow()+1));
                         e.cantMove();
                     }
                 }
             });
 
             runners.forEach((e) -> {
-                if (cols.contains(e.getRow() + 1)) {
+                if (cols.contains(e.getRow() + 1)&& !(board.getTile(e.getColumn(), e.getRow()).checkEndTile())) {
                     e.setLocation(board.getTile(e.getRow(), e.getColumn() - 1));
                     System.out.println("Column Match");
                     cols.remove((Integer) (e.getRow() + 1));
                     if (board.getTile(e.getColumn(), e.getRow()).checkEndTile()) {
+                        
+                        System.out.println("cant move pieces in "+(e.getRow()+1));
                         e.cantMove();
                     }
                 }
@@ -271,7 +286,9 @@ public class Turn {
                 } else {
                     runner3.setLocation(board.getTile(cols.get(0) - 1, 13 - Math.abs(7 - cols.get(0)) - 1));
                 }
-                runners.add(runner3);
+                if(!capturedColumns.contains(runner3.getRow()+1)){
+                    runners.add(runner3);
+                }
             }
             if (cols.size() == 2) {
                 System.out.println("Case with 1 or 2 runners where the both column are new ");
@@ -282,7 +299,9 @@ public class Turn {
                 } else {
                     runner3.setLocation(board.getTile(cols.get(0) - 1, 13 - Math.abs(7 - cols.get(0)) - 1));
                 }
-                runners.add(runner3);
+                if(!capturedColumns.contains(runner3.getRow()+1)){
+                    runners.add(runner3);
+                }
 
                 if (runners.size() < 3) {
                     pieces runner4 = new pieces("Arrow", "White");
@@ -292,7 +311,9 @@ public class Turn {
                     } else {
                         runner4.setLocation(board.getTile(cols.get(1) - 1, 13 - Math.abs(7 - cols.get(1)) - 1));
                     }
-                    runners.add(runner4);
+                    if(!capturedColumns.contains(runner4.getRow()+1)){
+                        runners.add(runner4);
+                    }
                 }
             }
 

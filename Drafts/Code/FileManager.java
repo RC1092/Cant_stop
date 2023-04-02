@@ -84,7 +84,7 @@ public class FileManager {
                     return true;
                     // lines.add(data);
                 }
-
+                myReader.close();
             } catch (IOException e) {
                 System.out.println("IOException reading file");
             }

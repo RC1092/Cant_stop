@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Random;
 
 public class Dice {
@@ -8,9 +7,6 @@ public class Dice {
     public Dice(){
         rand = new Random();
     }
-
-    //todo Dice Swing interfacing so that we see dice images on the board
-
     
     public ArrayList<Integer> makeTurnRoll(){
         ArrayList<Integer> turnRolls = new ArrayList<Integer>();
@@ -26,7 +22,6 @@ public class Dice {
             turnOrderRolls.add(roll() + roll());
         }
 
-        //Logic for duplicate rolls being rerolled still needs to be implemented
         return turnOrderRolls;
     }
 

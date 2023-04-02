@@ -34,6 +34,9 @@ public class StartUp extends JFrame {
         start.setBackground(Color.red);
         menuBar = new JMenuBar();
         JMenuItem tutorial = new JMenuItem("Tutorial");
+        tutorial.setForeground(Color.white);
+        tutorial.setBackground(Color.red);
+        tutorial.setFont(new Font("Calibrie", Font.BOLD, 15));
         tutorial.addActionListener((e)-> tutorial());
         menuBar.add(tutorial);
 
@@ -108,7 +111,7 @@ public class StartUp extends JFrame {
     public void setNumPlayers() {
         if (!(dropDown.getSelectedItem()).equals(" ")) {
             int numPlayers = Integer.parseInt((String) dropDown.getSelectedItem());
-            ChoosePieces choose = new ChoosePieces(numPlayers);
+            new ChoosePieces(numPlayers);
             setVisible(false);
         }
     }
@@ -131,10 +134,10 @@ public class StartUp extends JFrame {
     }
 
     public void tutorial(){
-        tutorial t1 = new tutorial(null);
+        new tutorial(null);
     }
 
     public static void main(String[] argv) {
-        StartUp start = new StartUp();
+        new StartUp();
     }
 }

@@ -1,5 +1,6 @@
 
 import javax.swing.*;
+import javax.swing.border.Border;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,10 +21,11 @@ public class tutorial extends JFrame{
         this.setSize(new Dimension(1400,700));
         this.setBackground(Color.RED);
         panel = new JPanel(new GridLayout(1,2));
-        JPanel left = new JPanel(new GridLayout(1,1));
+        JPanel left = new JPanel(new GridBagLayout());
         JButton next = new JButton("next");
-        JPanel right = new JPanel(new GridLayout(1,1));
+        JPanel right = new JPanel(new GridBagLayout());
         JButton prev = new JButton("prev");
+        //JPanel bottomPanel = new JPanel(new FlowLayout());
         
         
   
@@ -39,6 +41,18 @@ public class tutorial extends JFrame{
         image.setForeground(Color.RED);
         image.setBackground(Color.BLACK);
 
+        prev.setBackground(Color.white);
+        prev.setForeground(Color.red);
+        prev.setFont(new Font("Calibrie",Font.BOLD,25));
+
+        next.setBackground(Color.white);
+        next.setForeground(Color.red);
+        next.setFont(new Font("Calibrie",Font.BOLD,25));
+        GridBagConstraints c = new GridBagConstraints();
+        c.anchor = GridBagConstraints.CENTER;
+
+        panel.setBackground(Color.white);
+        //bottomPanel.setBackground(Color.red);
         
         page1();
         
@@ -54,7 +68,16 @@ public class tutorial extends JFrame{
         
         panel.add(description);
 
-        this.getContentPane().add(panel);
+        panel.setBorder(BorderFactory.createLineBorder(Color.red,20));
+        this.getContentPane().add(panel,BorderLayout.CENTER);
+        //this.getContentPane().add(bottomPanel,BorderLayout.SOUTH);
+        left.add(prev, c);
+        right.add(next, c);
+        left.setBackground(Color.red);
+        right.setBackground(Color.red);
+
+
+
         this.getContentPane().add(left,BorderLayout.WEST);
         this.getContentPane().add(right,BorderLayout.EAST);
         setLocationRelativeTo(null);
@@ -142,10 +165,4 @@ public class tutorial extends JFrame{
         
     }
     
-
-    
-    public static void main(String [] args){
-    
-
-    }
 }

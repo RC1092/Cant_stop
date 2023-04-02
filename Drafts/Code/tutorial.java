@@ -81,6 +81,7 @@ public class tutorial extends JFrame{
     }
 
     private void page3(){
+        image.setText("");
         description.setFont(new Font("Arial", Font.BOLD + Font.ITALIC,20));
         description.setText("<html>1. a) New game: starts a new game, all unsaved game progress will be lost. <br/>   1. b)Save Game: saves the current game progress including player name, player pieces(6), captured columns(4),runners(5) and player scores(3).<br/>   1. c) Quit: quits the game and deletes all unsaved game progress. <br/>"+ 
         "2. This is the dice area where you can roll a dice and choose dice combinations. You can also choose to end your turn. <br/> 3. This is the player names of each player accompanied by their score, where the score is the number of columns capture.A white background indicate the current player turn.<br/> 4. A captured column denoted by gray tiles and player piece at the top of the column to indicate the player that captured it.<br/>5. A Runner(more information on next page)<br/>6. A player piece(more information on next page)"+

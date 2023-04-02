@@ -46,7 +46,7 @@ public class FileManager {
             saveWriter.write(turnOrderString + System.getProperty("line.separator"));
             for (Player player : players) {
                 String saveData = player.getName() + ":" + player.getShape() + ":" + player.getColor() + ":"
-                        + player.getScore() + ":" + System.getProperty("line.separator");
+                        + player.getScore() + ":" + String.valueOf(player.getAI()) + System.getProperty("line.separator");
                 for (pieces piece : player.getPieces()) {
                     if (piece != null) {
                         saveData += piece.getTile().getPosition() + ":";
@@ -111,18 +111,34 @@ public class FileManager {
             players = new ArrayList<>();
             String[] p1 = lines.get(2).split(":");
             String[] p2 = lines.get(5).split(":");
-            players.add(new Player(p1[1], p1[2], p1[0]));
+            if (Boolean.parseBoolean(p1[4])){
+                players.add(new AI_Player(p1[1], p1[2], p1[0]));
+            }else{
+                players.add(new Player(p1[1], p1[2], p1[0]));
+            }
             scores.add(p1[3]);
-            players.add(new Player(p2[1], p2[2], p2[0]));
+            if (Boolean.parseBoolean(p2[4])){
+                players.add(new AI_Player(p2[1], p2[2], p2[0]));
+            }else{
+                players.add(new Player(p2[1], p2[2], p2[0]));
+            }
             scores.add(p2[3]);
             if (lines.size() > 8) {
                 String[] p3 = lines.get(8).split(":");
-                players.add(new Player(p3[1], p3[2], p3[0]));
+                if (Boolean.parseBoolean(p2[4])){
+                    players.add(new AI_Player(p3[1], p3[2], p3[0]));
+                }else{
+                    players.add(new Player(p3[1], p3[2], p3[0]));
+                }
                 scores.add(p3[3]);
             }
             if (lines.size() > 11) {
                 String[] p4 = lines.get(11).split(":");
-                players.add(new Player(p4[1], p4[2], p4[0]));
+                if (Boolean.parseBoolean(p2[4])){
+                    players.add(new AI_Player(p4[1], p4[2], p4[0]));
+                }else{
+                    players.add(new Player(p4[1], p4[2], p4[0]));
+                }
                 scores.add(p4[3]);
             }
             fileWindow(players, scores);

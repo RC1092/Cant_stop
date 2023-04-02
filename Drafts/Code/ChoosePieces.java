@@ -20,7 +20,7 @@ public class ChoosePieces extends JFrame {
         this.setLayout(new BorderLayout());
         this.shapes = new String[] { " ", "Circle", "Square", "Triangle", "Star" };
         this.colors = new String[] { " ", "Blue", "Yellow", "Green", "Pink", "Orange", "Purple" };
-        this.ai_ = new String[] { "Player", "AI Easy", "AI Hard" };
+        this.ai_ = new String[] { "Player", "AI Easy"};
         shapeLst = new ArrayList<>();
         colorLst = new ArrayList<>();
         aiLst = new ArrayList<>();
